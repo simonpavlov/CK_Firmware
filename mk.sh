@@ -15,7 +15,7 @@ function clean() {
 }
 
 function run() {
-   build && cd $SRCDIR/data && ../build/src/main;
+   build && cd $SRCDIR/data && ../build/src/tests/menu_test;
 }
 
 if [[ $2 != "" || $1 == "" ]]; then echo -e $USAGE && exit 1; fi

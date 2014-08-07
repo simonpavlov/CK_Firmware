@@ -1,5 +1,5 @@
 #include <emul/emulator.h>
-#include "lib/menu/menu.h"
+#include <menu/menu.h>
 
 int main(){
 	emul_init(320, 240);
@@ -15,8 +15,13 @@ int main(){
 
 	refresh_video_buffer();
 
-	while(1);
+	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
+		if(get_event() == EVT_EXIT){
+			printf("Goodbye!\n");
+			return 0;
+		}
 
-	printf("OK!\n");
+		SDL_Delay(100);
+	}
 	return 0;
 }

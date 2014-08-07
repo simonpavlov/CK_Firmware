@@ -1,4 +1,5 @@
 #include "../menu.h"
+#include <string.h>
 
 int	FW_ScreenWidth;		//Ширина дисплея
 int	FW_ScreenHeight;	//Высота дисплея
