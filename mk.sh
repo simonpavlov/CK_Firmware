@@ -2,7 +2,7 @@
 
 SRCDIR=`dirname ${BASH_SOURCE[0]}`
 USAGE="USAGE: mk.sh [COMMAND]\n\tc clean - Clean directory\n\tb build - Build project\
-\n\tr run - Run project"
+\n\tr run - Run menu test\n\tk kill - Kill menu test"
 
 function build() {
     echo "mkdir ${SRCDIR}/build; cd ${SRCDIR}/build && cmake .. && make"
@@ -15,7 +15,11 @@ function clean() {
 }
 
 function run() {
-   build && cd $SRCDIR/data && ../build/src/tests/menu_test;
+   build && cd $SRCDIR/data && ../build/src/tests/menu_test &
+}
+
+function kill_test() {
+   kill -31 `ps | grep menu_test | awk '{print $1}'`
 }
 
 if [[ $2 != "" || $1 == "" ]]; then echo -e $USAGE && exit 1; fi
@@ -27,4 +31,6 @@ case $1 in
         clean ;;
     "r" | "run")
         run;;
+    "k" | "kill")
+        kill_test;;
 esac

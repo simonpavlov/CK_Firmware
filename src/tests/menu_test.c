@@ -7,10 +7,19 @@ int main(){
 
 	menu_init(get_video_buffer(), 320, 240);
 
-	if(font_init("Lat2-VGA32x16.psf") == NORMAL){
-		//font_stdout();
-		
-		draw_char('S', 128, 0);
+	CKF_Font * font;
+
+	font = font_init("Lat2-VGA32x16.psf");
+	if(!font){
+		printf("Font not load.\n");
+		return 0xFFFFF;
+	}
+
+	font_stdout(font);
+
+	int i;
+	for(i = 0; i < 5; i++){
+		draw_char(font, 'D', 80 + i, 10 + i * 32);
 	}
 
 	refresh_video_buffer();

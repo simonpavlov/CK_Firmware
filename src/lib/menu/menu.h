@@ -1,5 +1,5 @@
-#ifndef FW_MENU
-#define FW_MENU
+#ifndef CKF_MENU
+#define CKF_MENU
 
 #include "font.h"
 

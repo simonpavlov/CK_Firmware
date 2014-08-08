@@ -2,121 +2,125 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned int revers_read_4_byte(FILE *f_in);
-
 typedef struct{
         //unsigned char magic[4];
         unsigned int version;
-        unsigned int headersize;    /* offset of bitmaps in file */
+        unsigned int header_size;    /* offset of bitmaps in file */
         unsigned int flags;
         unsigned int length;        /* number of glyphs */
-        unsigned int charsize;      /* number of bytes for each character */
+        unsigned int char_size;      /* number of bytes for each character */
         unsigned int height, width; /* max dimensions of glyphs */
-        /* charsize = height * ((width + 7) / 8) */
+        /* char_size = height * ((width + 7) / 8) */
 }psf2;
 
-FontInitStatus font_init(const char *file_name){
+CKF_Font * font_init(const char *file_name){
 	char psf2_magic[4] = {0x72, 0xb5, 0x4a, 0x86};
 
 	FILE * f_in;
+	CKF_Font * font;
 	psf2 font_psf2;
 
 	f_in = fopen(file_name, "rb");
-	if(!f_in) return ERROR_OPEN;
+	if(!f_in) return NULL;
+
+	font = malloc(sizeof(CKF_Font));
+	if(!font) return NULL;
 	
 	char ch;
 	int i;
 	for(i = 0; i < 4; i++){
 		ch = getc(f_in);
 		if(ch != psf2_magic[i]){
-			return ERROR_FILE;
+			return NULL;
 		}
 	}
 
 	fread(&font_psf2.version, 4, 1, f_in);
 	//Добавить чекер
-	fread(&font_psf2.headersize, 4, 1, f_in);
+	fread(&font_psf2.header_size, 4, 1, f_in);
 	fread(&font_psf2.flags, 4, 1, f_in);
 	//Чекер
 	fread(&font_psf2.length, 4, 1, f_in);
-	fread(&font_psf2.charsize, 4, 1, f_in);
+	fread(&font_psf2.char_size, 4, 1, f_in);
 	fread(&font_psf2.height, 4, 1, f_in);
 	fread(&font_psf2.width, 4, 1, f_in);
 
 #ifdef DEBUG
-	printf("version:	%u\n", font_psf2.version);
-	printf("headersize:	%u\n", font_psf2.headersize);
-	printf("flags:		%u\n", font_psf2.flags);
-	printf("length:		%u\n", font_psf2.length);
-	printf("charsize:	%u\n", font_psf2.charsize);
-	printf("height:		%u\n", font_psf2.height);
-	printf("width:		%u\n", font_psf2.width);
+	printf("version:		%u\n", font_psf2.version);
+	printf("header_size:	%u\n", font_psf2.header_size);
+	printf("flags:			%u\n", font_psf2.flags);
+	printf("length:			%u\n", font_psf2.length);
+	printf("char_size:		%u\n", font_psf2.char_size);
+	printf("height:			%u\n", font_psf2.height);
+	printf("width:			%u\n", font_psf2.width);
 #endif
 
-	FW_Font.length		= font_psf2.length;
-	FW_Font.charsize	= font_psf2.charsize;
-	FW_Font.height		= font_psf2.height;
-	FW_Font.width		= font_psf2.width;
+	font->length		= font_psf2.length;
+	font->char_size		= font_psf2.char_size;
+	font->height		= font_psf2.height;
+	font->width			= font_psf2.width;
+	font->width_byte	= (font_psf2.width + 7) / 8;
 
-	FW_Font.glyphs = malloc(FW_Font.charsize * FW_Font.length);
-	if(!FW_Font.glyphs) return ERROR_MEMORY;
+	font->glyphs = malloc(font_psf2.char_size * font_psf2.length);
+	if(!font->glyphs) return NULL;
 
-	fread(FW_Font.glyphs, FW_Font.charsize, FW_Font.length, f_in);
+	fread(font->glyphs, font_psf2.char_size, font_psf2.length, f_in);
 	//Ещё чекер
 
 	fclose(f_in);
 
-	return NORMAL;
+	return font;
 }
 
-void font_quit(){
-	free(FW_Font.glyphs);
-}
+//Следующая функция нуждается в доработке!!!
+void draw_char(CKF_Font *font, char ch, int x, int y){
+	extern int CKF_ScreenWidth;
+	extern int CKF_ScreenHeght;
+	extern char *CKF_VideoBuffer;
 
-void draw_char(char ch, int x, int y){
-	extern int FW_ScreenWidth;
-	extern int FW_ScreenHeght;
-	extern char *FW_VideoBuffer;
+	CKF_Font local_font;
+	int screen_width_byte, offset_byte;
+	char *first_line, *cur_line, *last_line;
 
-	int width_byte, offset_byte;
+	local_font = *font;
 
-	width_byte = FW_ScreenWidth / 8;
+	screen_width_byte = CKF_ScreenWidth / 8;
 	offset_byte = x % 8;
 
-	int i;
-	if(offset_byte){
-		printf("offset_byte: %d\n", offset_byte);
-	}
-	else{
-		for(i = 0; i < FW_Font.height; i++){
-			int k;
-			for(k = 0; k < FW_Font.width / 8; k++){
-				*(FW_VideoBuffer + i * width_byte + x / 8 + k) =
-				*(FW_Font.glyphs + ch * FW_Font.charsize + i * FW_Font.width / 8 + k);
-			}
-		}
-	}
+	first_line	= CKF_VideoBuffer + y * screen_width_byte;
+	cur_line	= first_line;
+	last_line	= first_line + local_font.height * screen_width_byte;
 
+	printf("offset_byte: %d\n", offset_byte);
+
+	int i_line;
+	for(i_line = 0; i_line < local_font.height; i_line++){
+		int i_byte;
+		for(i_byte = 0; i_byte < local_font.width_byte; i_byte++){
+			*(cur_line + x / 8 + i_byte) |= *(local_font.glyphs + ch * local_font.char_size + i_line * local_font.width_byte + i_byte) >> offset_byte;
+			*(cur_line + x / 8 + i_byte + 1) |= *(local_font.glyphs + ch * local_font.char_size + i_line * local_font.width_byte + i_byte) << (8 - offset_byte);
+		}
+
+		cur_line += screen_width_byte;
+	}
 }
 
-void font_stdout(){
+void font_stdout(CKF_Font *font){
 	int i;
-	for(i = 0; i < FW_Font.length; i++){
+	for(i = 0; i < font->length; i++){
 		printf("Glyphs number:%4d\n", i);
 
 		int y;
-		for(y = 0; y < FW_Font.height; y++){
+		for(y = 0; y < font->height; y++){
 
-			int k, width_byte;
-			width_byte = (FW_Font.width + 7) / 8;
-			for(k = 0; k < width_byte; k++){
+			int k;
+			for(k = 0; k < font->width_byte; k++){
 
 				int x;
 				for(x = 7; x >= 0; x--){
 					char ch;
 
-					if((*(FW_Font.glyphs + i * FW_Font.charsize + y * width_byte + k)
-						>> x) & 1) ch = '#';
+					if((*(font->glyphs + i * font->char_size + y * font->width_byte + k) >> x) & 1) ch = '#';
 					else ch = '_';
 
 					putchar(ch);
