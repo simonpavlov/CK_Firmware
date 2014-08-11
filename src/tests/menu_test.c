@@ -21,6 +21,9 @@ int main(){
 	for(i = 0; i < 5; i++){
 		draw_char(font, 'D', 80 + i, 10 + i * 32);
 	}
+	for(i = 0; i < 5; i++){
+		draw_char(font, '9', 100 + i, 10 + i * 32);
+	}
 
 	refresh_video_buffer();
 

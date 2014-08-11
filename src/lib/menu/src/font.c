@@ -45,7 +45,7 @@ CKF_Font * font_init(const char *file_name){
 	fread(&font_psf2.height, 4, 1, f_in);
 	fread(&font_psf2.width, 4, 1, f_in);
 
-#ifdef DEBUG
+	#ifdef DEBUG
 	printf("version:		%u\n", font_psf2.version);
 	printf("header_size:	%u\n", font_psf2.header_size);
 	printf("flags:			%u\n", font_psf2.flags);
@@ -53,7 +53,7 @@ CKF_Font * font_init(const char *file_name){
 	printf("char_size:		%u\n", font_psf2.char_size);
 	printf("height:			%u\n", font_psf2.height);
 	printf("width:			%u\n", font_psf2.width);
-#endif
+	#endif
 
 	font->length		= font_psf2.length;
 	font->char_size		= font_psf2.char_size;
@@ -72,7 +72,6 @@ CKF_Font * font_init(const char *file_name){
 	return font;
 }
 
-//Следующая функция нуждается в доработке!!!
 void draw_char(CKF_Font *font, char ch, int x, int y){
 	extern int CKF_ScreenWidth;
 	extern int CKF_ScreenHeght;
@@ -80,35 +79,40 @@ void draw_char(CKF_Font *font, char ch, int x, int y){
 
 	CKF_Font local_font;
 	int screen_width_byte, offset_byte;
-	char *first_line, *cur_line, *last_line;
+	unsigned char *cur_byte_screen, *cur_byte_glyph;
 
 	local_font = *font;
 
 	screen_width_byte = CKF_ScreenWidth / 8;
 	offset_byte = x % 8;
 
-	first_line	= CKF_VideoBuffer + y * screen_width_byte;
-	cur_line	= first_line;
-	last_line	= first_line + local_font.height * screen_width_byte;
+	cur_byte_screen		= CKF_VideoBuffer + y * screen_width_byte + x / 8;
+	cur_byte_glyph		= local_font.glyphs + ch * local_font.char_size;
 
+	#ifdef DEBUG
 	printf("offset_byte: %d\n", offset_byte);
+	#endif
 
 	int i_line;
 	for(i_line = 0; i_line < local_font.height; i_line++){
 		int i_byte;
+
 		for(i_byte = 0; i_byte < local_font.width_byte; i_byte++){
-			*(cur_line + x / 8 + i_byte) |= *(local_font.glyphs + ch * local_font.char_size + i_line * local_font.width_byte + i_byte) >> offset_byte;
-			*(cur_line + x / 8 + i_byte + 1) |= *(local_font.glyphs + ch * local_font.char_size + i_line * local_font.width_byte + i_byte) << (8 - offset_byte);
+			unsigned char output_byte = *(cur_byte_glyph + i_byte);
+
+			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
+			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
 		}
 
-		cur_line += screen_width_byte;
+		cur_byte_screen += screen_width_byte;
+		cur_byte_glyph	+= local_font.width_byte;
 	}
 }
 
 void font_stdout(CKF_Font *font){
 	int i;
 	for(i = 0; i < font->length; i++){
-		printf("Glyphs number:%4d\n", i);
+		printf("Glyphs %c number %4d:\n", i, i);
 
 		int y;
 		for(y = 0; y < font->height; y++){

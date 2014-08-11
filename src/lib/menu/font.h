@@ -17,6 +17,7 @@ CKF_Font * font_init(const char *file_name);
 
 /*
 Выводит символ ch, используя шрифт font. Верхний левый угол по координатам x, y.
+!!! Нет проверки на выход символа за пределы экрана.
 */
 void draw_char(CKF_Font *font, char ch, int x, int y);
 
