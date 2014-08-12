@@ -4,6 +4,7 @@ project (CKFirmware)
 set (CMAKE_C_FLAGS_DEBUG "-D DEBUG")
 
 include_directories (${CMAKE_SOURCE_DIR}/src/lib)
+include_directories (${CMAKE_SOURCE_DIR}/data/fonts_in_headers)
 
 find_package (SDL REQUIRED)
 if (NOT SDL_FOUND)
