@@ -5,19 +5,19 @@
 typedef struct{
         //unsigned char magic[4];
         unsigned int version;
-        unsigned int header_size;    /* offset of bitmaps in file */
+        unsigned int header_size;	/* offset of bitmaps in file */
         unsigned int flags;
-        unsigned int length;        /* number of glyphs */
-        unsigned int char_size;      /* number of bytes for each character */
-        unsigned int height, width; /* max dimensions of glyphs */
+        unsigned int length;		/* number of glyphs */
+        unsigned int char_size;		/* number of bytes for each character */
+        unsigned int height, width;	/* max dimensions of glyphs */
         /* char_size = height * ((width + 7) / 8) */
 }psf2;
 
 char psf2_magic[4] = {0x72, 0xb5, 0x4a, 0x86};
 
-extern int CKF_ScreenWidth;
-extern int CKF_ScreenHeght;
-extern char *CKF_VideoBuffer;
+extern int ScreenWidth;
+extern int ScreenHeght;
+extern char *VideoBuffer;
 
 size_t bread(void *ptr, size_t size, const void *buffer){
 	int i, j;
@@ -29,6 +29,7 @@ size_t bread(void *ptr, size_t size, const void *buffer){
 	return size;
 }
 
+//TODO: инициализация из BDF шрифта
 CKF_Font * ffont_init(const char *file_name){
 	FILE * f_in;
 	CKF_Font * font;
@@ -132,6 +133,7 @@ CKF_Font * bfont_init(const char *buffer){
 	return font;
 }
 
+//TODO: проверка на выход за границцы экрана
 void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
 	CKF_Font local_font;
 	int screen_width_byte, offset_byte;
@@ -139,10 +141,10 @@ void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
 
 	local_font = *font;
 
-	screen_width_byte = CKF_ScreenWidth / 8;
+	screen_width_byte = ScreenWidth / 8;
 	offset_byte = x % 8;
 
-	cur_byte_screen		= CKF_VideoBuffer + y * screen_width_byte + x / 8;
+	cur_byte_screen		= VideoBuffer + y * screen_width_byte + x / 8;
 	cur_byte_glyph		= local_font.glyphs + ch * local_font.char_size;
 
 	int i_line;
@@ -161,19 +163,19 @@ void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
 	}
 }
 
+//TODO: проверка на выход за границцы экрана
 size_t draw_string(CKF_Font *font, const char *str, int x, int y){
-	CKF_Font local_font;
-	int max_ch, len_str, i, max_i;
+	int max_ch, len_str, i, max_i, font_width;
 
-	local_font = *font;
+	font_width = font->width;
 
-	max_ch = (CKF_ScreenWidth - x) / local_font.width;
+	max_ch = (ScreenWidth - x) / font_width;
 	len_str = strlen(str);
 	if(max_ch < len_str) max_i = max_ch;
 	else max_i = len_str;
 
 	for(i = 0; i < max_i; i++){
-		draw_char(font, str[i], x + i * local_font.width, y);
+		draw_char(font, str[i], x + i * font_width, y);
 	}
 
 	return max_i;

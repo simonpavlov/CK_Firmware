@@ -1,53 +1,60 @@
 #include <emul/emulator.h>
 #include <menu/menu.h>
 
-#include <Uni2_VGA28x16_psf.h>
+#include <Uni3_Terminus20x10_psf.h>
 
 int main(){
 	emul_init(320, 240);
 	atexit(emul_quit);
 
-	menu_init(get_video_buffer(), 320, 240);
+	CKF_Font *font, *test_font;
 
-	CKF_Font *font1, *font2;
+	//test_font = ffont_init("experiment/Pixel-UniCode.psf");
 
-	font1 = ffont_init("Lat2-VGA32x16.psf");
-	if(!font1){
-		printf("Font 1 not load.\n");
-		return 0xFFFFF;
-	}
-
-	printf("\n");
-
-	font2 = bfont_init(Uni2_VGA28x16_psf);
-	if(!font2){
+	font = bfont_init(Uni3_Terminus20x10_psf);
+	if(!font){
 		printf("Font 2 not load.\n");
 		return 0xFFFFF;
 	}
 
+	menu_init(get_video_buffer(), 320, 240, font);
+
 	printf("\n");
 
-	//font_stdout(font1);	
-	//font_stdout(font2);
+	//draw_string(font, "draw_string(font, \"this_string\", 43, 200);",  0, 200);
+	//draw_string(font, "draw_string(font, \"this_string\", 43, 200);", 50, 100);
+	//draw_string(test_font, "Pixel-Unicode.psf", 10, 0);
 
-	int i;
-	for(i = 0; i < 5; i++){
-		draw_char(font1, 200, 80 + i, 10 + i * 32);
-	}
-	for(i = 0; i < 5; i++){
-		draw_char(font2, 200, 100 + i, 10 + i * 32);
-	}
-
-	draw_string(font2, "draw_string(font2, \"this_string\", 43, 200);", 43, 200);
-
-	refresh_video_buffer();
+	menu_draw();
 
 	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
-		if(get_event() == EVT_EXIT){
-			printf("Goodbye!\n");
-			return 0;
+
+		switch(get_event()){
+			case EVT_EXIT:
+				printf("Goodbye!\n");
+				return 0;
+				break;
+
+			case EVT_PRESS_UP:
+				menu_up();
+				clear_src();
+				menu_draw();
+				break;
+
+			case EVT_PRESS_DOWN:
+				menu_down();
+				clear_src();
+				menu_draw();
+				break;
+
+			case EVT_PRESS_ENTER:
+				menu_enter();
+				clear_src();
+				menu_draw();
+				break;
 		}
 
+		refresh_video_buffer();
 		SDL_Delay(100);
 	}
 	return 0;

@@ -25,14 +25,14 @@ CKF_Font * bfont_init(const char *buffer);
 
 /*
 Выводит символ ch, используя шрифт font. Верхний левый угол по координатам x, y.
-!!! Нет проверки на выход символа за пределы экрана.
+TODO:!!! Нет проверки на выход символа за пределы экрана.
 */
 void draw_char(CKF_Font *font, unsigned char ch, int x, int y);
 
 /*
 Выводит максимальное количесто символов из строки str, используя шрифт font.
-Верхний левый угол по координатам x, y.
-!!!Обрабатывается выход только за правую границу.
+Верхний левый угол по координатам x, y. Вернёт количество выведеных символов.
+TODO:!!! Обрабатывается выход только за правую границу.
 */
 size_t draw_string(CKF_Font *font, const char *str, int x, int y);
 
@@ -42,3 +42,4 @@ size_t draw_string(CKF_Font *font, const char *str, int x, int y);
 void font_stdout(CKF_Font *font);
 
 #endif
+
