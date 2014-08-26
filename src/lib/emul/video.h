@@ -2,11 +2,12 @@
 #define EMUL_VIDEO
 
 #include <SDL/SDL.h>
+#include "manager.h"
 
 /*
  * Возвращает указатель на буфер видеопамяти
  */
-char * get_video_buffer();
+ScreenInfo * get_screen_info();
 
 /*
  * Синхронизирует буфер и экран

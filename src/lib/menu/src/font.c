@@ -1,6 +1,7 @@
 #include "../font.h"
 #include <stdio.h>
 #include <string.h>
+#include <emul/emulator.h>
 
 typedef struct{
         //unsigned char magic[4];
@@ -15,9 +16,7 @@ typedef struct{
 
 char psf2_magic[4] = {0x72, 0xb5, 0x4a, 0x86};
 
-extern int ScreenWidth;
-extern int ScreenHeght;
-extern char *VideoBuffer;
+extern ScreenInfo *MenuScreen;
 
 size_t bread(void *ptr, size_t size, const void *buffer){
 	int i, j;
@@ -141,10 +140,10 @@ void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
 
 	local_font = *font;
 
-	screen_width_byte = ScreenWidth / 8;
+	screen_width_byte = MenuScreen->width / 8;
 	offset_byte = x % 8;
 
-	cur_byte_screen		= VideoBuffer + y * screen_width_byte + x / 8;
+	cur_byte_screen		= MenuScreen->buffer + y * screen_width_byte + x / 8;
 	cur_byte_glyph		= local_font.glyphs + ch * local_font.char_size;
 
 	int i_line;
@@ -169,7 +168,7 @@ size_t draw_string(CKF_Font *font, const char *str, int x, int y){
 
 	font_width = font->width;
 
-	max_ch = (ScreenWidth - x) / font_width;
+	max_ch = (MenuScreen->width - x) / font_width;
 	len_str = strlen(str);
 	if(max_ch < len_str) max_i = max_ch;
 	else max_i = len_str;

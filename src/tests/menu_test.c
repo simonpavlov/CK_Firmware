@@ -17,7 +17,7 @@ int main(){
 		return 0xFFFFF;
 	}
 
-	menu_init(get_video_buffer(), 320, 240, font);
+	menu_init(get_screen_info(), font);
 
 	printf("\n");
 

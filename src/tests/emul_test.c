@@ -13,7 +13,7 @@ int main(int argc, char **argv){
 	atexit(emul_quit); //Добавление уничтожения эмулятора на авто выполнение,
 					   //при завершении программы
 
-	char *buf = get_video_buffer();
+	char *buf = get_screen_info()->buffer;
 
 	int i, j;
 	for(i = 0; i < DISPW * DISPH / 8; i++){

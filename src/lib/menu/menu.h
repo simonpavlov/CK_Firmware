@@ -2,11 +2,12 @@
 #define CKF_MENU
 
 #include "font.h"
+#include <emul/emulator.h>
 
 /*
 Инициализация меню
 */
-void menu_init(char *video_buffer, int width, int height, CKF_Font *font);
+void menu_init(ScreenInfo *screen, CKF_Font *font);
 
 /*
 Отрисовка меню

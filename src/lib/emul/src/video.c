@@ -1,11 +1,10 @@
 #include "../video.h"
 
 extern SDL_Surface *Screen;
-extern char *Display;
-extern int DispW, DispH;
+extern ScreenInfo MainScreen;
 
-char * get_video_buffer(){
-	return Display;
+ScreenInfo * get_screen_info(){
+	return &MainScreen;
 }
 
 void refresh_video_buffer(){
@@ -20,15 +19,15 @@ void refresh_video_buffer(){
 	Uint32 pix_numb;
 	Uint32 *buf;
 
-	for(y = 0; y < DispH; y++){
+	for(y = 0; y < MainScreen.height; y++){
 
 #ifdef DEBUG
 			printf("%3d: ", y);
 #endif
 
-		for(x = 0; x < DispW; x++){
-			pix_numb = y * DispW + x;
-			color = ((*(Display + pix_numb / 8) >> (7 - pix_numb % 8)) & 1)?
+		for(x = 0; x < MainScreen.width; x++){
+			pix_numb = y * MainScreen.width + x;
+			color = ((*(MainScreen.buffer + pix_numb / 8) >> (7 - pix_numb % 8)) & 1)?
 				brush: background;
 
 			buf = (Uint32 *) Screen->pixels + y * Screen->pitch / 4 + x;
@@ -36,7 +35,7 @@ void refresh_video_buffer(){
 			*buf = color;
 
 #ifdef DEBUG
-				printf("%c", ((*(Display + pix_numb / 8) >> (7 - pix_numb % 8)) & 1)? '#': '_');
+				printf("%c", ((*(MainScreen.buffer + pix_numb / 8) >> (7 - pix_numb % 8)) & 1)? '#': '_');
 #endif
 		}
 
