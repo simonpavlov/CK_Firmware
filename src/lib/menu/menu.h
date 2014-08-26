@@ -5,6 +5,28 @@
 #include <emul/emulator.h>
 
 /*
+Отдельный пункт меню
+*/
+typedef struct{
+	struct CKF_MenuItem *next;
+	struct CKF_MenuItem *prev;
+
+	char 				*name;
+	void 				(*call_back)();
+	struct CKF_MenuList	*child;
+}CKF_MenuItem;
+
+/*
+Лист меню
+*/
+typedef struct{
+	struct CKF_MenuList *parent;
+
+	struct CKF_MenuItem *vertex;
+	int count;
+}CKF_MenuList;
+
+/*
 Инициализация меню
 */
 void menu_init(ScreenInfo *screen, CKF_Font *font);

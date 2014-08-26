@@ -33,4 +33,6 @@ case $1 in
         run;;
     "k" | "kill")
         kill_test;;
+     *)
+	echo -e $USAGE
 esac
