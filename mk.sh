@@ -5,8 +5,12 @@ USAGE="USAGE: mk.sh [COMMAND]\n\tc clean - Clean directory\n\tb build - Build pr
 \n\tr run - Run menu test\n\tk kill - Kill menu test"
 
 function build() {
+    echo "${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
+         ${SRCDIR}/data/the_menu_structure/menu.md.h"
+    ${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
+         ${SRCDIR}/data/the_menu_structure/menu.md.h
     echo "mkdir ${SRCDIR}/build; cd ${SRCDIR}/build && cmake .. && make"
-    mkdir ${SRCDIR}/build; cd build && cmake .. && make && cd ..
+    mkdir ${SRCDIR}/build; cd build && cmake .. && make && cd .. ;
 }
 
 function clean() {
