@@ -40,6 +40,9 @@ enum Event get_event(){
 
 				return EVT_PRESS_ENTER;
 			}
+			else if(evt.key.keysym.sym == SDLK_q){
+				return EVT_EXIT;
+			}
 
 			break;
 

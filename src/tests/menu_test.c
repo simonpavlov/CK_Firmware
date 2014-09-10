@@ -55,7 +55,7 @@ int main(){
 		}
 
 		refresh_video_buffer();
-		SDL_Delay(100);
+		SDL_Delay(10);
 	}
 	return 0;
 }
