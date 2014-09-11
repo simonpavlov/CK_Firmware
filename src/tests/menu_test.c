@@ -1,5 +1,5 @@
 #include <emul/emulator.h>
-#include <menu/menu.h>
+#include <UI/UI.h>
 
 #include <Uni3_Terminus20x10_psf.h>
 
@@ -17,7 +17,7 @@ int main(){
 		return 0xFFFFF;
 	}
 
-	menu_init(get_screen_info(), font);
+	UI_init(get_screen_info(), font);
 
 	printf("\n");
 
@@ -25,7 +25,7 @@ int main(){
 	//draw_string(font, "draw_string(font, \"this_string\", 43, 200);", 50, 100);
 	//draw_string(test_font, "Pixel-Unicode.psf", 10, 0);
 
-	menu_draw();
+	UI_draw();
 
 	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
 
@@ -36,21 +36,21 @@ int main(){
 				break;
 
 			case EVT_PRESS_UP:
-				menu_up();
-				clear_src();
-				menu_draw();
+				UI_up();
+				UI_clear_src();
+				UI_draw();
 				break;
 
 			case EVT_PRESS_DOWN:
-				menu_down();
-				clear_src();
-				menu_draw();
+				UI_down();
+				UI_clear_src();
+				UI_draw();
 				break;
 
 			case EVT_PRESS_ENTER:
-				menu_enter();
-				clear_src();
-				menu_draw();
+				UI_enter();
+				UI_clear_src();
+				UI_draw();
 				break;
 		}
 

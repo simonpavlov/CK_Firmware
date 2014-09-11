@@ -1,7 +1,8 @@
 set (MENU_SRC
-	src/font.c
-	src/menu.c
-	src/menu_tree.c
+	src/UI.c
+	src/UI_font.c
+	src/UI_tree.c
+	src/UI_menu.c
 	)
 
 add_definitions (-D DEBUG)

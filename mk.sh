@@ -6,11 +6,19 @@ USAGE="USAGE: mk.sh [COMMAND]\n\tc clean - Clean directory\n\tb build - Build pr
 
 function build() {
     echo "${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
-         ${SRCDIR}/data/the_menu_structure/menu.md.h"
+${SRCDIR}/data/the_menu_structure/menu.md.h"
     ${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
-         ${SRCDIR}/data/the_menu_structure/menu.md.h
-    echo "mkdir ${SRCDIR}/build; cd ${SRCDIR}/build && cmake .. && make"
-    mkdir ${SRCDIR}/build; cd build && cmake .. && make && cd .. ;
+${SRCDIR}/data/the_menu_structure/menu.md.h
+
+    if ! [ -d ${SRCDIR}/build/ ]; then
+        echo "build not found!"
+        echo "mkdir ${SRCDIR}/build;"
+        mkdir ${SRCDIR}/build;
+    fi
+
+    echo "cd ${SRCDIR}/build && cmake .. && make"
+    echo
+    cd ${SRCDIR}/build && cmake .. && make && cd ..
 }
 
 function clean() {

@@ -14,5 +14,5 @@ if (NOT SDL_FOUND)
 endif (NOT SDL_FOUND)
 
 add_subdirectory (src/lib/emul)
-add_subdirectory (src/lib/menu)
+add_subdirectory (src/lib/UI)
 add_subdirectory (src/tests)
