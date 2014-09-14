@@ -3,7 +3,7 @@
 ScreenInfo *MenuScreen;
 
 void UI_init(ScreenInfo *screen, CKF_Font *font){
-	menu_init(screen, font);
+	menu_init(UI_surf_init(screen->width - 80, screen->height - 80), font);
 	MenuScreen = screen;
 }
 
@@ -20,12 +20,9 @@ void UI_enter(){
 }
 
 void UI_draw(){
-	menu_draw();
+	UI_draw_surf(menu_redraw(), 40, 40);
 }
 
 void UI_clear_src(){
-	int i;
-	for(i = 0; i < MenuScreen->len_byte; i++){
-		*(MenuScreen->buffer + i) = 0;
-	}
+	memset(MenuScreen->buffer, 0, MenuScreen->len_byte);
 }

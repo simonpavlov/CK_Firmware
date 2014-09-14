@@ -1,4 +1,5 @@
 #include "../UI_menu.h"
+#include "../UI_tree.h"
 #include <stdio.h>
 
 struct { //Структура содержит в себе текущее состяние меню
@@ -7,8 +8,6 @@ struct { //Структура содержит в себе текущее сос
 	CKF_MenuItem	*first_item;		//Первый пункт попадающий на эктан
 	CKF_MenuItem	*cur_item;			//Текущий пункт
 
-	unsigned int	top_margin;			//Отступ сверху
-
 	unsigned int	n_first_imem;		//Номер первого пункта попадающего на экран
 	unsigned int	n_cur_item;			//Номер текушего пункта
 	unsigned int	max_lines;
@@ -16,25 +15,23 @@ struct { //Структура содержит в себе текущее сос
 	CKF_MenuItem	*last_first_item;	//Последний пункт, который может быть первым
 }MenuState;
 
-ScreenInfo *MenuScreen;
+UI_surface *MenuSurface;
 
-void menu_init(ScreenInfo *screen, CKF_Font *font){
+void menu_init(UI_surface *surf, CKF_Font *font){
 	#ifdef DEBUG
 	printf("In menu_init()\n");
 	#endif
 
-	MenuScreen = screen;
+	MenuSurface = surf;
 
 	MenuState.cur_menu_list	= init_menu_tree();
 	MenuState.font			= font;
 	MenuState.first_item	= MenuState.cur_menu_list->vertex;
 	MenuState.cur_item		= MenuState.cur_menu_list->vertex;
 
-	MenuState.top_margin	= 20; //Отступ для бара
-
 	MenuState.n_first_imem	= 0;
 	MenuState.n_cur_item	= 0;
-	MenuState.max_lines		= (MenuScreen->height - MenuState.top_margin) / MenuState.font->height;
+	MenuState.max_lines		= MenuSurface->height / MenuState.font->height;
 
 	if(MenuState.cur_menu_list->count > MenuState.max_lines){
 		int i;
@@ -48,10 +45,12 @@ void menu_init(ScreenInfo *screen, CKF_Font *font){
 	}
 }
 
-void menu_draw(){
+UI_surface * menu_redraw(){
 	#ifdef DEBUG
-	printf("In menu_draw()\n");
+	printf("In menu_redraw()\n");
 	#endif
+
+	UI_clear_surf(MenuSurface);
 
 	int i, max_i;
 	CKF_MenuItem *i_item;
@@ -60,13 +59,17 @@ void menu_draw(){
 	max_i = MenuState.max_lines;
 	i_item = MenuState.first_item;
 	//TODO: oprimization
-	while(i_item && i <= max_i){
-		if(MenuState.cur_item == i_item) draw_char(MenuState.font, '>', 0, MenuState.top_margin + (i * MenuState.font->height));
-		draw_string(MenuState.font, i_item->str, MenuState.font->width, MenuState.top_margin + (i * MenuState.font->height));
+	while(i_item && i < max_i){
+		if(MenuState.cur_item == i_item) draw_char(MenuSurface, MenuState.font, '>', 0, i * MenuState.font->height);
+		draw_string(MenuSurface, MenuState.font, i_item->str, MenuState.font->width, i * MenuState.font->height);
 
 		i++;
 		i_item = i_item->next;
 	}
+
+	UI_border(MenuSurface);
+
+	return MenuSurface;
 }
 
 void menu_up(){

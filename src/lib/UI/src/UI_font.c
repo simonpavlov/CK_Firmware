@@ -1,7 +1,6 @@
 #include "../UI_font.h"
 #include <stdio.h>
 #include <string.h>
-#include <emul/emulator.h>
 
 typedef struct{
         //unsigned char magic[4];
@@ -15,8 +14,6 @@ typedef struct{
 }psf2;
 
 char psf2_magic[4] = {0x72, 0xb5, 0x4a, 0x86};
-
-extern ScreenInfo *MenuScreen;
 
 size_t bread(void *ptr, size_t size, const void *buffer){
 	int i, j;
@@ -133,17 +130,17 @@ CKF_Font * bfont_init(const char *buffer){
 }
 
 //TODO: проверка на выход за границцы экрана
-void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
+void draw_char(UI_surface *surf, CKF_Font *font, unsigned char ch, int x, int y){
 	CKF_Font local_font;
-	int screen_width_byte, offset_byte;
-	unsigned char *cur_byte_screen, *cur_byte_glyph;
+	int surf_width_byte, offset_byte;
+	unsigned char *cur_byte_surf, *cur_byte_glyph;
 
 	local_font = *font;
 
-	screen_width_byte = MenuScreen->width / 8;
+	surf_width_byte = surf->width / 8;
 	offset_byte = x % 8;
 
-	cur_byte_screen		= MenuScreen->buffer + y * screen_width_byte + x / 8;
+	cur_byte_surf		= surf->buffer + y * surf_width_byte + x / 8;
 	cur_byte_glyph		= local_font.glyphs + ch * local_font.char_size;
 
 	int i_line;
@@ -153,28 +150,28 @@ void draw_char(CKF_Font *font, unsigned char ch, int x, int y){
 		for(i_byte = 0; i_byte < local_font.width_byte; i_byte++){
 			unsigned char output_byte = *(cur_byte_glyph + i_byte);
 
-			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
-			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
+			*(cur_byte_surf + i_byte)		|= output_byte >> offset_byte;
+			*(cur_byte_surf + i_byte + 1)	|= output_byte << (8 - offset_byte);
 		}
 
-		cur_byte_screen += screen_width_byte;
+		cur_byte_surf	+= surf_width_byte;
 		cur_byte_glyph	+= local_font.width_byte;
 	}
 }
 
 //TODO: проверка на выход за границцы экрана
-size_t draw_string(CKF_Font *font, const char *str, int x, int y){
+size_t draw_string(UI_surface *surf, CKF_Font *font, const char *str, int x, int y){
 	int max_ch, len_str, i, max_i, font_width;
 
 	font_width = font->width;
 
-	max_ch = (MenuScreen->width - x) / font_width;
+	max_ch = (surf->width - x) / font_width;
 	len_str = strlen(str);
 	if(max_ch < len_str) max_i = max_ch;
 	else max_i = len_str;
 
 	for(i = 0; i < max_i; i++){
-		draw_char(font, str[i], x + i * font_width, y);
+		draw_char(surf, font, str[i], x + i * font_width, y);
 	}
 
 	return max_i;

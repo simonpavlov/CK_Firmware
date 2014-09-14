@@ -8,6 +8,12 @@ int main(){
 	atexit(emul_quit);
 
 	CKF_Font *font, *test_font;
+	// UI_surface *surf = UI_surf_init(16, 10);
+
+	// int i;
+	// for(i = 0; i < 20; i++){
+	// 	*(surf->buffer + i) = 255;
+	// }
 
 	//test_font = ffont_init("experiment/Pixel-UniCode.psf");
 
@@ -18,6 +24,10 @@ int main(){
 	}
 
 	UI_init(get_screen_info(), font);
+
+	// for(i = 0; i < 5; i++){
+	// 	UI_draw_surf(surf, 21 + 3 * i, 9 + i * surf->height);
+	// }
 
 	printf("\n");
 

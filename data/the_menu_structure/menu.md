@@ -12,3 +12,10 @@
 ** "Item 5.3", NULL
 *** "Item 5.3.1", NULL
 **** "Item 5.3.1.1 (leaf)", NULL
+* "Root item 6 (leaf)", NULL
+* "Root item 7 (leaf)", NULL
+* "Root item 8 (leaf)", NULL
+* "Root item 9 (leaf)", NULL
+* "Root item 10 (leaf)", NULL
+* "Root item 11 (leaf)", NULL
+* "Root item 12 (leaf)", NULL

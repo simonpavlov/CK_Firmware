@@ -2,10 +2,19 @@
 #define EMUL_VIDEO
 
 #include <SDL/SDL.h>
-#include "manager.h"
 
 /*
- * Возвращает указатель на буфер видеопамяти
+ * Структуря хроняшая в себе информацию о экране устройства
+ */
+typedef struct {
+	char *buffer;	//Ссылка на видео буффер
+	int width;		//Ширина дисплея
+	int height;		//Высота дисплея
+	int len_byte;	//Объём видео буфера
+} ScreenInfo;
+
+/*
+ * Возвращает указатель на структуру описывающую экран
  */
 ScreenInfo * get_screen_info();
 

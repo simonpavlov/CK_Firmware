@@ -17,7 +17,6 @@ ${SRCDIR}/data/the_menu_structure/menu.md.h
     fi
 
     echo "cd ${SRCDIR}/build && cmake .. && make"
-    echo
     cd ${SRCDIR}/build && cmake .. && make && cd ..
 }
 
@@ -27,7 +26,7 @@ function clean() {
 }
 
 function run() {
-   build && cd $SRCDIR/data && ../build/src/tests/menu_test &
+   build && cd $SRCDIR/data && valgrind -q ../build/src/tests/menu_test &
 }
 
 function kill_test() {

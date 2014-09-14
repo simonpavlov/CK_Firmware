@@ -1,7 +1,10 @@
 #ifndef CKF_UI
 #define CKF_UI
 
+#include "UI_tree.h"
+#include "UI_font.h"
 #include "UI_menu.h"
+#include "UI_surface.h"
 #include <emul/emulator.h>
 
 /*

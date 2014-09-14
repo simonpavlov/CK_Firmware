@@ -41,6 +41,7 @@ void add_item(CKF_MenuList *list, char *str, void (*call_back)()){
 	list->count++;
 }
 
+//TODO: доделать
 void del_item(CKF_MenuList *list, CKF_MenuItem *item){
 }
 

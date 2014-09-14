@@ -2,18 +2,17 @@
 #define CKF_MENU
 
 #include "UI_font.h"
-#include "UI_tree.h"
-#include <emul/emulator.h>
+#include "UI_surface.h"
 
 /*
 Инициализация меню
 */
-void menu_init(ScreenInfo *screen, CKF_Font *font);
+void menu_init(UI_surface *surf, CKF_Font *font);
 
 /*
-Отрисовка меню
+Перерисовывает меню
 */
-void menu_draw();
+UI_surface * menu_redraw();
 
 /*
 Перемещение курсора на один пункт вверх
