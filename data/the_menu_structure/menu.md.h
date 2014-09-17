@@ -43,4 +43,4 @@ add_item(list, "Root item 8 (leaf)", NULL);
 add_item(list, "Root item 9 (leaf)", NULL);
 add_item(list, "Root item 10 (leaf)", NULL);
 add_item(list, "Root item 11 (leaf)", NULL);
-add_item(list, "Root item 12 (leaf)", NULL);
+add_item(list, "Shut down.", exit);

@@ -18,4 +18,4 @@
 * "Root item 9 (leaf)", NULL
 * "Root item 10 (leaf)", NULL
 * "Root item 11 (leaf)", NULL
-* "Root item 12 (leaf)", NULL
+* "Shut down.", exit

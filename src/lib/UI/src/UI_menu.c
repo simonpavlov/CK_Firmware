@@ -45,12 +45,10 @@ void menu_init(UI_surface *surf, CKF_Font *font){
 	}
 }
 
-UI_surface * menu_redraw(){
+void menu_draw(){
 	#ifdef DEBUG
-	printf("In menu_redraw()\n");
+	printf("In menu_draw()\n");
 	#endif
-
-	UI_clear_surf(MenuSurface);
 
 	int i, max_i;
 	CKF_MenuItem *i_item;
@@ -68,8 +66,6 @@ UI_surface * menu_redraw(){
 	}
 
 	UI_border(MenuSurface);
-
-	return MenuSurface;
 }
 
 void menu_up(){

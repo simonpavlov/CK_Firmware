@@ -12,7 +12,7 @@ void menu_init(UI_surface *surf, CKF_Font *font);
 /*
 Перерисовывает меню
 */
-UI_surface * menu_redraw();
+void menu_draw();
 
 /*
 Перемещение курсора на один пункт вверх
