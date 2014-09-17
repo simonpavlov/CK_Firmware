@@ -22,6 +22,8 @@ InitStatus emul_init(int width, int height){
 	}
     memset(MainScreen.buffer, 0, MainScreen.len_byte);
 
+    network_init();
+
 	return ALL_RIGHT;
 }
 
