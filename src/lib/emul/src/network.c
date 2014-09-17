@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-static int sock;
+static int sock = 0;
 
 void network_init() {
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -29,9 +29,9 @@ void network_init() {
 }
 
 int comm_recv(char *buffer, int length) {
-    return recv(sock, buffer, length, 0);
+    return sock ? recv(sock, buffer, length, 0) : 0;
 }
 
 int comm_send(char *buffer, int length) {
-    return send(sock, buffer, length, 0);
+    return sock ? send(sock, buffer, length, 0) : 0;
 }

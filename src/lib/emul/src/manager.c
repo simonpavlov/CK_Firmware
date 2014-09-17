@@ -22,7 +22,9 @@ InitStatus emul_init(int width, int height){
 	}
     memset(MainScreen.buffer, 0, MainScreen.len_byte);
 
+#ifdef NETWORK_INIT
     network_init();
+#endif
 
 	return ALL_RIGHT;
 }

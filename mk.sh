@@ -2,7 +2,7 @@
 
 SRCDIR=`dirname ${BASH_SOURCE[0]}`
 USAGE="USAGE: mk.sh [COMMAND]\n\tc clean - Clean directory\n\tb build - Build project\
-\n\tr run - Run menu test\n\tk kill - Kill menu test"
+\n\tbn build_network - Build project with network preinit\n\tr run - Run menu test\n\tk kill - Kill menu test"
 
 function build() {
     echo "${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
@@ -38,6 +38,8 @@ if [[ $2 != "" || $1 == "" ]]; then echo -e $USAGE && exit 1; fi
 case $1 in
     "b" | "build")
         build ;;
+    "bn" | "build_network")
+        CFLAGS=-DNETWORK_INIT build ;;
     "c" | "clean")
         clean ;;
     "r" | "run")
