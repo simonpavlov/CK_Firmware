@@ -4,14 +4,14 @@
 #include <Uni3_Terminus20x10_psf.h>
 
 typedef struct {
-    // Unical identifier
-    uint64_t ident;
-    // Battery state in percents
-    uint8_t  batteryState;
-    // Avaliable flash password space in bytes
-    uint32_t freePasswordSpace;
-    // Avaliable flash key space in bytes
-    uint32_t freeKeySpace;
+	// Unical identifier
+	uint64_t ident;
+	// Battery state in percents
+	uint8_t  batteryState;
+	// Avaliable flash password space in bytes
+	uint32_t freePasswordSpace;
+	// Avaliable flash key space in bytes
+	uint32_t freeKeySpace;
 } DeviceInfo;
 
 int main(){
@@ -48,28 +48,31 @@ int main(){
 
 	UI_draw();
 
-    unsigned char comm_buf[5000];
-    DeviceInfo info;
-    info.ident = 123456;
-    if (fork())
-        while (1) {
-            // Коммуникационная часть
-            short readed = comm_recv(comm_buf, 1);
-            if (readed) {
-                fprintf(stderr, "Readed\n");
-                if (*comm_buf == 0xF0) {
-                    fprintf(stderr,"Init command\n");
-                    comm_send(comm_buf, 1);
-                }
-                if (*comm_buf == 0xF1) {
-                    fprintf(stderr, "Device info command\n");
-                    comm_send(comm_buf, 1);
-                    comm_send((char *) &info, sizeof(DeviceInfo));
-                }
-            }
-        }
+	/*
+	unsigned char comm_buf[5000];
+	DeviceInfo info;
+	info.ident = 123456;
+	if (fork())
+		while (1) {
+			// Коммуникационная часть
+			short readed = comm_recv(comm_buf, 1);
+			if (readed) {
+				fprintf(stderr, "Readed\n");
+				if (*comm_buf == 0xF0) {
+					fprintf(stderr,"Init command\n");
+					comm_send(comm_buf, 1);
+				}
+				if (*comm_buf == 0xF1) {
+					fprintf(stderr, "Device info command\n");
+					comm_send(comm_buf, 1);
+					comm_send((char *) &info, sizeof(DeviceInfo));
+				}
+			}
+		}
+	*/
+
 	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
-        // Графическая часть
+		// Графическая часть
 		switch(get_event()){
 			case EVT_EXIT:
 				printf("Goodbye!\n");

@@ -4,6 +4,7 @@ set (MENU_SRC
 	src/UI_tree.c
 	src/UI_menu.c
 	src/UI_surface.c
+	src/UI_tasks.c
 	)
 
 add_definitions (-D DEBUG)
