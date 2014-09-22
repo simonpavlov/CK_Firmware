@@ -7,7 +7,7 @@ add_item(list, "Item 1.3 (leaf)", NULL);
 add_item(list, "back", NULL);
 list->edge->child = list->parent;
 list = list->parent;
-add_item(list, "Root item 2 (leaf)", NULL);
+add_item(list, "test_callback", test_callback);
 add_item(list, "Root item 3 (leaf)", NULL);
 add_item(list, "Root item 4 (leaf)", NULL);
 add_item(list, "Root item 5", NULL);

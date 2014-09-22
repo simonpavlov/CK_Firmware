@@ -7,7 +7,7 @@ void UI_init(ScreenInfo *screen, CKF_Font *font){
 	UI_surface	*menu_surf;
 	UI_task		*menu_task;
 
-	menu_surf = UI_surf_init(screen->width - 80, screen->height - 80);
+	menu_surf = UI_surf_init(screen->width - 20, screen->height - 40);
 
 	UI_task_init();
 	menu_init(menu_surf, font);
@@ -35,7 +35,9 @@ void UI_draw(){
 
 	UI_clear_surf(local_stack_item->surf);
 	local_stack_item->draw();
-	UI_draw_surf(local_stack_item->surf, 40, 40);
+	UI_draw_surf(local_stack_item->surf,
+		(MenuScreen->width - local_stack_item->surf->width) / 2,
+		(MenuScreen->height - local_stack_item->surf->height) / 2);
 }
 
 void UI_clear_src(){
