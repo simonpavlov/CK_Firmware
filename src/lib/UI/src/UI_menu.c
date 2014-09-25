@@ -163,3 +163,7 @@ UI_control_funcs * menu_get_control_funcs(){
 
 	return funcs;
 }
+
+CKF_Font * menu_get_font(){
+	return MenuState.font;
+}

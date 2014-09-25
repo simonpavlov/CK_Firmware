@@ -35,4 +35,9 @@ void menu_enter();
 */
 UI_control_funcs * menu_get_control_funcs();
 
+/*
+	Возвращает ссылку на используемый шрифт
+*/
+CKF_Font * menu_get_font();
+
 #endif

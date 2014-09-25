@@ -3,7 +3,7 @@
 ** "Item 1.2 (leaf)", NULL
 ** "Item 1.3 (leaf)", NULL
 * "test_callback", test_callback
-* "Root item 3 (leaf)", NULL
+* "Hello box!", show_HELLO_BOX
 * "Root item 4 (leaf)", NULL
 * "Root item 5", NULL
 ** "Item 5.1 (leaf)", NULL

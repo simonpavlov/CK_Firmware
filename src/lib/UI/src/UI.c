@@ -4,30 +4,37 @@
 ScreenInfo *MenuScreen;
 
 void UI_init(ScreenInfo *screen, CKF_Font *font){
-	UI_surface	*menu_surf;
-	UI_task		*menu_task;
+	UI_surface			*menu_surf;
+	UI_task				*menu_task;
+	UI_control_funcs	*ctrl_fs;
 
-	menu_surf = UI_surf_init(screen->width - 20, screen->height - 40);
+	menu_surf	= UI_surf_init(screen->width - 80, screen->height - 100);
+	ctrl_fs		= menu_get_control_funcs();
 
 	UI_task_init();
 	menu_init(menu_surf, font);
 
-	menu_task = UI_new_task(menu_surf, menu_get_control_funcs());
+	menu_task = UI_new_task(menu_surf, ctrl_fs);
 	UI_push_task(menu_task);
+
+	free(ctrl_fs);
 
 	MenuScreen = screen;
 }
 
 void UI_up(){
-	UI_get_task()->press_up();
+	if(UI_get_task()->press_up != NULL)
+		UI_get_task()->press_up();
 }
 
 void UI_down(){
-	UI_get_task()->press_down();
+	if(UI_get_task()->press_down != NULL)
+		UI_get_task()->press_down();
 }
 
 void UI_enter(){
-	UI_get_task()->press_enter();
+	if(UI_get_task()->press_enter != NULL)
+		UI_get_task()->press_enter();
 }
 
 void UI_draw(){
