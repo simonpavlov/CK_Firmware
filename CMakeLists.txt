@@ -13,6 +13,10 @@ if (NOT SDL_FOUND)
  return ()
 endif (NOT SDL_FOUND)
 
+
 add_subdirectory (src/lib/emul)
+add_subdirectory (src/lib/storage)
+add_subdirectory (src/lib/app)
+add_subdirectory (src/lib/IO)
 add_subdirectory (src/lib/UI)
 add_subdirectory (src/tests)

@@ -25,6 +25,7 @@ InitStatus emul_init(int width, int height){
 #ifdef NETWORK_INIT
     network_init();
 #endif
+    storage_init();
 
 	return ALL_RIGHT;
 }

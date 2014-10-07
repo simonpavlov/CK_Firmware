@@ -26,6 +26,11 @@ void network_init() {
     sock = accept(serv_sock, (struct sockaddr *) &cli_addr, &clilen);
     if (sock < 0)
         error("ERROR on accept");
+
+    struct timeval tv;
+    tv.tv_sec = 0;  /* 30 Secs Timeout */
+    tv.tv_usec = 500;  // Not init'ing this can cause strange errors
+    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(struct timeval));
 }
 
 int comm_recv(char *buffer, int length) {
