@@ -1,14 +1,17 @@
 #!/bin/bash
 
-SRCDIR=`dirname ${BASH_SOURCE[0]}`
+SRCDIR=`pwd`/`dirname ${BASH_SOURCE[0]}`
 USAGE="USAGE: mk.sh [COMMAND]\n\tc clean - Clean directory\n\tb build - Build project\
 \n\tbn build_network - Build project with network preinit\n\tr run - Run menu test\n\tk kill - Kill menu test"
 
 function build() {
-    echo "${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
+    if [ ${SRCDIR}/data/the_menu_structure/menu.md -nt ${SRCDIR}/data/the_menu_structure/menu.md.h ];
+    then
+        echo "${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
 ${SRCDIR}/data/the_menu_structure/menu.md.h"
-    ${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
+        ${SRCDIR}/utils/menu_gen.py ${SRCDIR}/data/the_menu_structure/menu.md > \
 ${SRCDIR}/data/the_menu_structure/menu.md.h
+    fi
 
     if ! [ -d ${SRCDIR}/build/ ]; then
         echo "build not found!"

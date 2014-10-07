@@ -151,3 +151,19 @@ void menu_enter(){
 		}
 	}
 }
+
+UI_control_funcs * menu_get_control_funcs(){
+	UI_control_funcs *funcs;
+	funcs = malloc(sizeof(UI_control_funcs));
+
+	funcs->draw			= menu_draw;
+	funcs->press_up		= menu_up;
+	funcs->press_down	= menu_down;
+	funcs->press_enter	= menu_enter;
+
+	return funcs;
+}
+
+CKF_Font * menu_get_font(){
+	return MenuState.font;
+}

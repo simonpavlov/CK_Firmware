@@ -36,13 +36,17 @@ void UI_draw_surf(UI_surface * surf, int x, int y){
 	int i_line;
 	for(i_line = 0; i_line < surf->height; i_line++){
 		int i_byte;
+		unsigned char output_byte;
 
 		for(i_byte = 0; i_byte < surf->width / 8; i_byte++){
-			unsigned char output_byte = *(cur_byte_surf + i_byte);
+			output_byte = *(cur_byte_surf + i_byte);
 
 			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
 			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
 		}
+
+		// output_byte = *(cur_byte_surf + i_byte + 1);
+		// *(cur_byte_screen + i_byte) |= output_byte >> offset_byte;
 
 		cur_byte_screen	+= screen_width_byte;
 		cur_byte_surf	+= surf->width / 8;
