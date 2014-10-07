@@ -10,6 +10,7 @@
 */
 struct UI_task{
 	UI_surface *surf;
+	void *data;
 	void (* draw)();
 	void (* press_up)();
 	void (* press_down)();
@@ -35,7 +36,7 @@ void UI_task_init();
 /*
 	Создание новой задачи
 */
-UI_task * UI_new_task(UI_surface *surf, UI_control_funcs *funcs);
+UI_task * UI_new_task(UI_surface *surf, void *data, UI_control_funcs *funcs);
 
 /*
 	Затолкать задачу

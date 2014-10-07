@@ -4,6 +4,6 @@
 /*
 	Отобразить сообщение
 */
-void UI_show_message(const char *str);
+void UI_show_message(char *str);
 
 #endif

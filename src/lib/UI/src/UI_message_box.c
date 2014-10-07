@@ -11,11 +11,10 @@
 
 UI_surface	*MainSurface;
 CKF_Font	*MainFont;
-const char	*MainString;
 
-void message_draw(){
+void message_draw(const char *str){
 	UI_border(MainSurface);
-	draw_string(MainSurface, MainFont, MainString, 1, 0);
+	draw_string(MainSurface, MainFont, str, 1, 0);
 }
 
 void message_exit(){
@@ -34,16 +33,16 @@ UI_control_funcs * message_ctrl_funcs(){
 	return funcs;
 }
 
-void UI_show_message(const char *str){
+void UI_show_message(char *str){
 	UI_task				*task;
 	UI_control_funcs	*funcs;
+	char				*message_string = str;
 
 	funcs = message_ctrl_funcs();
 
 	MainSurface	= UI_surf_init(150, 100);
 	MainFont	= menu_get_font();
-	MainString	= str;
-	task		= UI_new_task(MainSurface, message_ctrl_funcs());
+	task		= UI_new_task(MainSurface, message_string, message_ctrl_funcs());
 
 	free(funcs);
 

@@ -7,12 +7,13 @@ void UI_task_init(){
 	StackTop = NULL;
 }
 
-UI_task * UI_new_task(UI_surface *surf, UI_control_funcs *funcs){
+UI_task * UI_new_task(UI_surface *surf, void *data, UI_control_funcs *funcs){
 	UI_task *task;
 
 	task = malloc(sizeof(UI_task));
 
 	task->surf			= surf;
+	task->data			= data;
 	task->draw			= funcs->draw;
 	task->press_up		= funcs->press_up;
 	task->press_down	= funcs->press_down;
