@@ -4,13 +4,20 @@
 #include "../UI_tasks.h"
 #include "../UI_control_funcs.h"
 #include "../UI_message_box.h"
+#include "../UI_geometry.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 UI_surface *TestSurf;
 
-void test_draw(){
+void test_draw(int *y){
 	UI_border(TestSurf);
+	UI_draw_pix(TestSurf, 1, 1);
+	UI_draw_pix(TestSurf, 2, 2);
+	UI_draw_pix(TestSurf, 3, 3);
+	UI_draw_pix(TestSurf, 4, 4);
+	UI_draw_pix(TestSurf, 5, *y);
+	UI_draw_pargram(TestSurf, 10, *y, 5, 5);
 }
 
 void test_up(void *data){
@@ -47,11 +54,11 @@ void test_callback(){
 	int					*data;
 
 	data = malloc(sizeof(int));
-	*data = 0;
+	*data = 10;
 
 	funcs = get_ctrl_funcs();
 
-	TestSurf = UI_surf_init(10, 10);
+	TestSurf = UI_surf_init(80, 80);
 	task = UI_new_task(TestSurf, data, funcs);
 
 	free(funcs);

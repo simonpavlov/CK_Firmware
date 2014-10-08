@@ -8,7 +8,7 @@ void UI_init(ScreenInfo *screen, CKF_Font *font){
 	UI_task				*menu_task;
 	UI_control_funcs	*ctrl_fs;
 
-	menu_surf	= UI_surf_init(screen->width - 80, screen->height - 100);
+	menu_surf	= UI_surf_init(screen->width - 40, screen->height - 80);
 	ctrl_fs		= menu_get_control_funcs();
 
 	UI_task_init();

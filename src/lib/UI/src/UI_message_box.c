@@ -5,16 +5,25 @@
 #include "../UI_tasks.h"
 #include "../UI_font.h"
 #include "../UI_menu.h"
+#include "../UI_geometry.h"
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 UI_surface	*MainSurface;
 CKF_Font	*MainFont;
 
 void message_draw(const char *str){
+	int x, y;
+
+	x = MainSurface->width / 2 - MainFont->width;
+	y = MainSurface->height - MainFont->height - 13;
+
 	UI_border(MainSurface);
-	draw_string(MainSurface, MainFont, str, 1, 0);
+	draw_string(MainSurface, MainFont, str, MainSurface->width / 2 - strlen(str) * MainFont->width / 2, 3);
+	draw_string(MainSurface, MainFont, "OK", x, y);
+	UI_draw_pargram(MainSurface, x - 2, y, MainFont->width * 2 + 2, MainFont->height - 2);
 }
 
 void message_exit(){
@@ -40,7 +49,7 @@ void UI_show_message(char *str){
 
 	funcs = message_ctrl_funcs();
 
-	MainSurface	= UI_surf_init(150, 100);
+	MainSurface	= UI_surf_init(320, 80);
 	MainFont	= menu_get_font();
 	task		= UI_new_task(MainSurface, message_string, message_ctrl_funcs());
 
