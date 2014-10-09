@@ -24,8 +24,8 @@ ${SRCDIR}/data/the_menu_structure/menu.md.h
 }
 
 function clean() {
-    echo rm -rf $SRCDIR/build
-    rm -rf $SRCDIR/build
+    echo rm -rf $SRCDIR/build $SRCDIR/data/the_menu_structure/menu.md.h
+    rm -rf $SRCDIR/build $SRCDIR/data/the_menu_structure/menu.md.h
 }
 
 function run() {

@@ -1,8 +1,5 @@
-add_executable (menu_test menu_test.c)
-target_link_libraries (menu_test emul UI ${SDL_LIBRARY})
+add_executable (menu_test menu_test.cpp)
+target_link_libraries (menu_test emul ${SDL_LIBRARY})
+
 add_executable (emul_test emul_test.c)
 target_link_libraries (emul_test emul ${SDL_LIBRARY})
-add_executable (comm_test comm_test.c)
-target_link_libraries (comm_test app IO storage emul)
-add_executable (storage_test storage_test.c)
-target_link_libraries (storage_test IO storage emul)
