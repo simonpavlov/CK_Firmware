@@ -1,8 +1,7 @@
 #!/bin/bash
 
 SRCDIR=`pwd`/`dirname ${BASH_SOURCE[0]}`
-USAGE="USAGE: mk.sh [COMMAND]\n\t-c --clean\t- Clean directory\n\t-b --build\t- Build project\
-\n\t-r --run\t- Run menu test\n\t-rv --run-vlg\t- Run wiht valgrind\n\t-k --kill\t- Kill menu test"
+USAGE="USAGE: mk.sh [COMMAND] [TARGET]\n\t-c --clean\t\t- Clean directory\n\t-b --build\t\t- Build project\n\t-r --run TARGET\t\t- Run menu test\n\t-rv --run-vlg TARGET\t- Run wiht valgrind"
 
 function build() {
     if [ ${SRCDIR}/data/the_menu_structure/menu.md -nt ${SRCDIR}/data/the_menu_structure/menu.md.h ];
@@ -29,30 +28,41 @@ function clean() {
 }
 
 function run() {
-   # echo "cd $SRCDIR/data && ../build/src/tests/menu_test & "
-   build && cd $SRCDIR/data && ../build/src/tests/menu_test &
+   # echo "cd $SRCDIR/data && ../build/src/tests/$1 & "
+   build && cd $SRCDIR/data && ../build/src/tests/$1 &
 }
 
 function run_vlg() {
-   # echo "cd $SRCDIR/data && valgrind -q ../build/src/tests/menu_test & "
-   build && cd $SRCDIR/data && valgrind -q ../build/src/tests/menu_test &
+   # echo "cd $SRCDIR/data && valgrind -q ../build/src/tests/$1 & "
+   build && cd $SRCDIR/data && valgrind -q ../build/src/tests/$1 &
 }
 
-function kill_test() {
-   kill -31 `ps | grep menu_test | awk '{print $1}'`
-}
+if [[ $# == 1 ]]; then
 
-if [[ $2 != "" || $1 == "" ]]; then echo -e $USAGE && exit 1; fi
+    case $1 in
+        "-b" | "--build")
+            build;;
+        "-c" | "--clean")
+            clean;;
+        "-r" | "--run")
+            run;;
+        "-rv" | "--run_vlg")
+            run_vlg;;
+        "-k" | "--kill")
+            kill_test;;
+         *)
+        echo -e $USAGE
+    esac
 
-case $1 in
-    "-b" | "--build")
-        build ;;
-    "-c" | "--clean")
-        clean ;;
-    "-r" | "--run")
-        run;;
-    "-k" | "--kill")
-        kill_test;;
-     *)
-	echo -e $USAGE
-esac
+elif [[ $# == 2 ]]; then
+
+    case $1 in
+        "-r" | "--run")
+            run $2;;
+        "-rv" | "--run_vlg")
+            run_vlg $2;;
+         *)
+        echo -e $USAGE
+    esac
+
+fi
