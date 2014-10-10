@@ -65,4 +65,6 @@ elif [[ $# == 2 ]]; then
         echo -e $USAGE
     esac
 
+else
+	echo -e $USAGE
 fi
