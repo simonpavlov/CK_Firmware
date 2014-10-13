@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (CKFirmware)
 
-set (CMAKE_C_FLAGS_DEBUG "-D DEBUG" -g)
+# set (CMAKE_C_FLAGS_DEBUG "-D DEBUG" -g)
 
 include_directories (${CMAKE_SOURCE_DIR}/src/lib)
 include_directories (${CMAKE_SOURCE_DIR}/data/fonts_in_headers)

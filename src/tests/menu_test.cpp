@@ -1,10 +1,13 @@
 #include <emul/emulator.h>
+#include <UI/UI.h>
 
 #include <Uni3_Terminus20x10_psf.h>
 
 int main(){
 	emul_init(320, 240);
 	atexit(emul_quit);
+
+	// Surface surf(80, 20);
 
 	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
 		// Графическая часть
