@@ -11,7 +11,7 @@ int main(){
 	atexit(emul_quit);
 
 	// Surface surf(80, 20);
-	UI main_UI;
+	UI main_UI(*get_screen_info());
 
 	main_UI.push(new test_task(main_UI, 10));
 

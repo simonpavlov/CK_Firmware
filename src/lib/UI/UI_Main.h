@@ -4,6 +4,8 @@
 #include <stack>
 
 #include "UI_Task.h"
+#include "UI_Surface.h"
+#include <emul/emulator.h>
 
 class Task;
 
@@ -21,9 +23,10 @@ class Task;
 	swap	- Swap contents (public member function )
 */
 class UI: public std::stack <Task*> {
+		Surface my_screen;
 	public:
 		//TODO constructor
-		UI();
+		UI(ScreenInfo &scr);
 		~UI();
 
 		// Обработать нажатие вверх

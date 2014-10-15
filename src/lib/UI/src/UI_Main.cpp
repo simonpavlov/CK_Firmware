@@ -1,8 +1,7 @@
 #include "../UI_Main.h"
 #include <iostream>
 
-UI::UI() {
-
+UI::UI(ScreenInfo &scr): my_screen(Surface(scr)) {
 }
 
 UI::~UI() {

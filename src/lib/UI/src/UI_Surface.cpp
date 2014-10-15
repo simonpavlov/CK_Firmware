@@ -1,5 +1,12 @@
 #include "../UI_Surface.h"
 
+Surface::Surface(ScreenInfo &scr){
+	width		= scr.width;
+	height		= scr.height;
+	buf_size	= scr.len_byte;
+	buffer		= (unsigned char *) scr.buffer;
+}
+
 Surface::Surface(unsigned int w, unsigned int h){
 	int size = (w * h + 7) / 8;
 
