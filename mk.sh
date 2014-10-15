@@ -45,7 +45,7 @@ if [[ $# == 1 ]]; then
         "-c" | "--clean")
             clean;;
         "-r" | "--run")
-            run;;
+            run "main_test";;
         "-rv" | "--run_vlg")
             run_vlg;;
         "-k" | "--kill")

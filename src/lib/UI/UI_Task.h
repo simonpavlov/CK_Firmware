@@ -1,17 +1,27 @@
 #ifndef UI_TASK
 #define UI_TASK
 
+#include "UI_Main.h"
+
+class UI;
+
 /*
 	Базовая задача
 */
 class Task {
 	private:
+		UI *my_UI;
 
 	public:
-		virtual void up() {};
-		virtual void down() {};
-		virtual void select() {};
-		virtual void redraw() {};
+		Task(UI &ui);
+		virtual ~Task() {};
+
+		virtual void up() = 0;
+		virtual void down() = 0;
+		virtual void select() = 0;
+		virtual void draw() = 0;
+
+		void suicide();
 };
 
 #endif //UI_TASK

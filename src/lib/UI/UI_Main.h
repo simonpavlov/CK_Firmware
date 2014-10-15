@@ -5,14 +5,41 @@
 
 #include "UI_Task.h"
 
+class Task;
+
 /*
 	Этот класс реализует работу со стеком задач
 */
-class UI {
-	private:
-
+/*
+	Справка по stack
+	empty	- Test whether container is empty (public member function )
+	size	- Return size (public member function )
+	top		- Access next element (public member function )
+	push	- Insert element (public member function )
+	emplace	- Construct and insert element (public member function )
+	pop		- Remove top element (public member function )
+	swap	- Swap contents (public member function )
+*/
+class UI: public std::stack <Task*> {
 	public:
+		//TODO constructor
+		UI();
+		~UI();
 
+		// Обработать нажатие вверх
+		void up();
+
+		// Обработать нажатие вниз
+		void down();
+
+		// Обработать нажатие ввод
+		void select();
+
+		// Отрисовка поьзовательского интерфейса
+		void draw();
+
+		// Очищает видео буфер
+		void clear_scr();
 };
 
 #endif //UI_MAIN
