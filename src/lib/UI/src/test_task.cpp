@@ -26,7 +26,7 @@ void test_task::select(){
 	suicide();
 }
 
-void test_task::draw(){
+Surface & test_task::draw(){
 	std::cout << "IN test_task::draw()" << std::endl;
 	std::cout << X << std::endl;
 }

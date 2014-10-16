@@ -13,7 +13,13 @@ int main(){
 	// Surface surf(80, 20);
 	UI main_UI(*get_screen_info());
 
+	// main_UI.push(new test_task(main_UI, 10));
+	// delete main_UI.top();
+	// main_UI.pop();
+
 	main_UI.push(new test_task(main_UI, 10));
+	main_UI.push(new test_task(main_UI, 20));
+	main_UI.push(new test_task(main_UI, 20));
 
 	while(!main_UI.empty()){ //Зацикливание до тех пор пока не закроем эмулятор
 		// Графическая часть

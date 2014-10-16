@@ -47,7 +47,7 @@ if [[ $# == 1 ]]; then
         "-r" | "--run")
             run "main_test";;
         "-rv" | "--run_vlg")
-            run_vlg;;
+            run_vlg "main_test";;
         "-k" | "--kill")
             kill_test;;
          *)

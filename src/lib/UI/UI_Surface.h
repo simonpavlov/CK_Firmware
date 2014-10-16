@@ -5,6 +5,8 @@
 
 class Surface{
 private:
+	bool			memory_is_my;
+
 	unsigned char	*buffer; // Ссылка на буфер в котором хранится поверхность
 	unsigned int	width, height; // Ширина, высота
 	unsigned int	buf_size; // Размер буфера

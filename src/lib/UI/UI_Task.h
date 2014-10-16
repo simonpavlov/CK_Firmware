@@ -2,6 +2,7 @@
 #define UI_TASK
 
 #include "UI_Main.h"
+#include "UI_Surface.h"
 
 class UI;
 
@@ -10,7 +11,7 @@ class UI;
 */
 class Task {
 	private:
-		UI *my_UI;
+		UI &my_UI;
 
 	public:
 		Task(UI &ui);
@@ -19,7 +20,7 @@ class Task {
 		virtual void up() = 0;
 		virtual void down() = 0;
 		virtual void select() = 0;
-		virtual void draw() = 0;
+		virtual Surface & draw() = 0;
 
 		void suicide();
 };
