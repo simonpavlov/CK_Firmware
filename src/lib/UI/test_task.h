@@ -4,9 +4,11 @@
 #include "UI_Task.h"
 #include "UI_Main.h"
 #include "UI_Surface.h"
+#include "UI_Font.h"
 
 class test_task: public Task{
-		int X;
+		int 	X;
+		Surface	surf;
 	public:
 		test_task(UI &stk, int x = 0);
 		~test_task();

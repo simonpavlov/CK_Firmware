@@ -26,10 +26,11 @@ void UI::select(){
 }
 
 void UI::draw(){
-	top()->draw();
-
+	Surface &surf = top()->draw();
+	my_screen.draw_surf(surf, (my_screen.get_width() - surf.get_width()) / 2, (my_screen.get_height() - surf.get_height()) / 2);
 }
 
 void UI::clear_scr(){
-
+	std::cout << "IN UI::clear_scr()" << std::endl;
+	my_screen.clear();
 }

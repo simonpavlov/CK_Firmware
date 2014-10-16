@@ -8,6 +8,7 @@ void Task::suicide() {
 	// причём только при первом вызове этой функции и
 	// именно в этой функции, на работоспособность не влияет.
 
-	delete my_UI.top();
+	Task *task = my_UI.top();
 	my_UI.pop();
+	delete task;
 }

@@ -1,4 +1,5 @@
 set (MENU_SRC
+	src/Font.cpp
 	src/test_task.cpp
 	src/UI_Task.cpp
 	src/UI_Main.cpp

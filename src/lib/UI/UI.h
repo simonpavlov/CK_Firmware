@@ -5,5 +5,6 @@
 #include "UI_Surface.h"
 #include "UI_Task.h"
 #include "UI_Main.h"
+#include "UI_Font.h"
 
 #endif //UI_LIBRARY

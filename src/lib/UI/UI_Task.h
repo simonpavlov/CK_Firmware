@@ -17,10 +17,10 @@ class Task {
 		Task(UI &ui);
 		virtual ~Task() {};
 
-		virtual void up() = 0;
-		virtual void down() = 0;
-		virtual void select() = 0;
-		virtual Surface & draw() = 0;
+		virtual void	up() = 0;
+		virtual void	down() = 0;
+		virtual void 	select() = 0;
+		virtual Surface	& draw() = 0;
 
 		void suicide();
 };
