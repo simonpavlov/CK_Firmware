@@ -48,7 +48,13 @@ class Surface{
 			Отрисовка на данной поверхности поверхности surf
 			по координатам x, y
 		*/
-		void draw(Surface &surf, unsigned int x = 0, unsigned int y = 0);
+		void draw(Surface &surf, unsigned int x, unsigned int y);
+
+		/*
+			Отрисовка на данной поверхности поверхности surf
+			по середине
+		*/
+		void draw(Surface &surf);
 
 		/*
 			Отрисовать пиксели по заданным координатам

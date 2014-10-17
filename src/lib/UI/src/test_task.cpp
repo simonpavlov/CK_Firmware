@@ -1,8 +1,9 @@
 #include "../test_task.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 
-test_task::test_task(UI &stk, int x, int y): Task(stk), font(stk.get_default_font()), surf(320, 240){
+test_task::test_task(UI &stk, int x, int y): Task(stk), font(stk.get_default_font()), surf(192, 80){
 	std::cout << "IN test_task::test_task()" << std::endl;
 	// my_stack = &stk;
 	X = x;
@@ -34,12 +35,17 @@ Surface & test_task::draw(){
 	std::cout << "IN test_task::draw()" << std::endl;
 	std::cout << Y << std::endl;
 
-	std::string str("Hello!");
-	Surface message_surf = font.gen_surf(str);
-	message_surf.draw_border();
-	surf.draw(message_surf, X, Y);
+	std::string str_message("IT IS A LAST TASK");
 
-	surf.draw(7, 2, 3, 6);
+	std::stringstream sstr_data;
+	sstr_data << Y;
+	std::string str_data = sstr_data.str();
+
+	Surface message_surf	= font.gen_surf(str_message, surf.get_width());
+	Surface data_surf		= font.gen_surf(str_data);
+
+	surf.draw(message_surf);
+	surf.draw(data_surf, 2, 2);
 
 	surf.draw_border();
 

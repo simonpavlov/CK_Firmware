@@ -1,8 +1,11 @@
 #include "../UI_Surface.h"
 
 #include <iostream>
+#include <cassert>
 
 Surface::Surface(ScreenInfo &scr){
+	assert(scr.width % 8 == 0);
+
 	width		= scr.width;
 	height		= scr.height;
 	buf_size	= scr.len_byte;
@@ -19,6 +22,8 @@ Surface::Surface(ScreenInfo &scr){
 // }
 
 Surface::Surface(unsigned int w, unsigned int h){
+	assert(w % 8 == 0);
+
 	int size = (w * h + 7) / 8;
 
 	buffer		= new unsigned char [size];
@@ -32,6 +37,8 @@ Surface::Surface(unsigned int w, unsigned int h){
 }
 
 Surface::~Surface(){
+	// std::cout << "IN Surface::~Surface()" << std::endl;
+
 	if(memory_is_my){
 		delete [] buffer;
 	}
@@ -79,6 +86,14 @@ void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
 	if(cur_byte_screen != buffer + buf_size - 1){
 		*(cur_byte_screen + 1) |= *cur_byte_surf << (8 - offset_byte);
 	}
+}
+
+void Surface::draw(Surface &surf){
+	int x, y;
+	x = (width	- surf.width)	/ 2;
+	y = (height	- surf.height)	/ 2;
+
+	draw(surf, x, y);
 }
 
 void Surface::draw(unsigned int x, unsigned int y){

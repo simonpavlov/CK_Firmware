@@ -17,8 +17,8 @@ int main(){
 	// main_UI.pop();
 
 	main_UI.push(new test_task(main_UI, 10, 10));
-	main_UI.push(new test_task(main_UI, 20, 20));
-	main_UI.push(new test_task(main_UI, 30, 30));
+	// main_UI.push(new test_task(main_UI, 20, 20));
+	// main_UI.push(new test_task(main_UI, 30, 30));
 
 	// Test for surface
 	// Surface surf_a(17, 20), surf_b(10, 20);

@@ -132,11 +132,12 @@ Surface & Font::gen_surf(std::string &str, unsigned int max_width, unsigned int 
 			surf_width_byte	= (width * str_size + 7) / 8;
 			surf_width		= surf_width_byte * 8;
 		}
+	#define DEBUG_UI_FONT
 
 	#ifdef DEBUG_UI_FONT
 	std::cout << "IN Font::gen_surf(std::string &str, unsigned int max_width, unsigned int max_size):" << std::endl
 		<< "	surf_width: " << surf_width << std::endl
-		<< "	str_size * width: " << str_size * width << std::endl
+		<< "	str_size: " << str_size << std::endl
 		<< "	width: " << width << std::endl;
 	#endif
 	

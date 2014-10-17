@@ -27,7 +27,7 @@ void UI::select(){
 
 void UI::draw(){
 	Surface &surf = top()->draw();
-	my_screen.draw(surf, (my_screen.get_width() - surf.get_width()) / 2, (my_screen.get_height() - surf.get_height()) / 2);
+	my_screen.draw(surf);
 }
 
 void UI::clear_scr(){
