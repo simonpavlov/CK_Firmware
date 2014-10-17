@@ -10,8 +10,7 @@ int main(){
 	emul_init(320, 240);
 	atexit(emul_quit);
 
-	// Surface surf(80, 20);
-	UI main_UI(*get_screen_info());
+	UI main_UI(*get_screen_info(), *(new Font(Uni3_Terminus20x10_psf)));
 
 	// main_UI.push(new test_task(main_UI, 10));
 	// delete main_UI.top();
@@ -21,9 +20,8 @@ int main(){
 	main_UI.push(new test_task(main_UI, 20, 20));
 	main_UI.push(new test_task(main_UI, 30, 30));
 
-	Surface surf_a(16, 20), surf_b(10, 20);
-
 	// Test for surface
+	// Surface surf_a(17, 20), surf_b(10, 20);
 	// for(int i = 0; i <= surf_a.get_height() - surf_b.get_height(); i++){
 	// 	for(int j = 0; j <= surf_a.get_width() - surf_b.get_width(); j++){
 	// 		surf_a.draw(surf_b, j, i);

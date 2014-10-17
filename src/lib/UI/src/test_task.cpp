@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-test_task::test_task(UI &stk, int x, int y): Task(stk), surf(320, 240){
+test_task::test_task(UI &stk, int x, int y): Task(stk), font(stk.get_default_font()), surf(320, 240){
 	std::cout << "IN test_task::test_task()" << std::endl;
 	// my_stack = &stk;
 	X = x;
@@ -34,12 +34,8 @@ Surface & test_task::draw(){
 	std::cout << "IN test_task::draw()" << std::endl;
 	std::cout << Y << std::endl;
 
-	#include <Uni3_Terminus20x10_psf.h>
-	Font font1(Uni3_Terminus20x10_psf);
-	// std::cout << "font: " << font1.get_width() << "x" << font1.get_height() << std::endl;
-
 	std::string str("Hello!");
-	Surface message_surf = font1.gen_surf(str, 10);
+	Surface message_surf = font.gen_surf(str);
 	message_surf.draw_border();
 	surf.draw(message_surf, X, Y);
 

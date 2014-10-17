@@ -5,6 +5,7 @@
 
 #include "UI_Task.h"
 #include "UI_Surface.h"
+#include "UI_Font.h"
 #include <emul/emulator.h>
 
 class Task;
@@ -23,11 +24,17 @@ class Task;
 	swap	- Swap contents (public member function )
 */
 class UI: public std::stack <Task*> {
-		Surface my_screen;
+	private:
+		Surface &my_screen;
+		Font &my_font;
+
 	public:
 		//TODO constructor
-		UI(ScreenInfo &scr);
+		UI(ScreenInfo &scr, Font &font);
 		~UI();
+
+		// Возвращает шрифт "по умолчанию"
+		Font &get_default_font() {return my_font;};
 
 		// Обработать нажатие вверх
 		void up();

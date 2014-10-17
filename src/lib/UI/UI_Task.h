@@ -10,7 +10,7 @@ class UI;
 	Базовая задача
 */
 class Task {
-	private:
+	protected:
 		UI &my_UI;
 
 	public:

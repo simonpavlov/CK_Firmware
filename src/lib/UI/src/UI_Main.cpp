@@ -1,7 +1,7 @@
 #include "../UI_Main.h"
 #include <iostream>
 
-UI::UI(ScreenInfo &scr): my_screen(Surface(scr)) {}
+UI::UI(ScreenInfo &scr, Font &font): my_screen(* new Surface(scr)), my_font(font) {}
 
 UI::~UI() {
 	std::cout << "IN UI::~UI()" << std::endl;
