@@ -7,10 +7,10 @@
 #include "UI_Font.h"
 
 class test_task: public Task{
-		int 	X;
+		int 	X, Y;
 		Surface	surf;
 	public:
-		test_task(UI &stk, int x = 0);
+		test_task(UI &stk, int x = 0, int y = 0);
 		~test_task();
 
 		void 	up();

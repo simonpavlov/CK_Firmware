@@ -1,10 +1,12 @@
 #include "../test_task.h"
 #include <iostream>
+#include <string>
 
-test_task::test_task(UI &stk, int x): Task(stk), surf(160, 120){
+test_task::test_task(UI &stk, int x, int y): Task(stk), surf(320, 240){
 	std::cout << "IN test_task::test_task()" << std::endl;
 	// my_stack = &stk;
 	X = x;
+	Y = y;
 }
 
 test_task::~test_task(){
@@ -13,12 +15,12 @@ test_task::~test_task(){
 
 void test_task::up(){
 	std::cout << "IN test_task::up()" << std::endl;
-	X--;
+	Y--;
 }
 
 void test_task::down(){
 	std::cout << "IN test_task::down()" << std::endl;
-	X++;
+	Y++;
 }
 
 void test_task::select(){
@@ -30,19 +32,18 @@ Surface & test_task::draw(){
 	surf.clear();
 
 	std::cout << "IN test_task::draw()" << std::endl;
-	std::cout << X << std::endl;
+	std::cout << Y << std::endl;
 
 	#include <Uni3_Terminus20x10_psf.h>
-	Font font1((const unsigned char *) Uni3_Terminus20x10_psf);
-	char ch_a = 'a';
-	surf.draw_surf(font1.gen_char_surf(ch_a), 10, X);
+	Font font1(Uni3_Terminus20x10_psf);
+	// std::cout << "font: " << font1.get_width() << "x" << font1.get_height() << std::endl;
 
-	surf.draw_pix(2, 2);
-	surf.draw_pix(3, 3);
-	surf.draw_pix(4, 4);
-	surf.draw_pix(5, 5);
+	std::string str("Hello!");
+	Surface message_surf = font1.gen_surf(str, 10);
+	message_surf.draw_border();
+	surf.draw(message_surf, X, Y);
 
-	surf.draw_pargram(7, 2, 3, 6);
+	surf.draw(7, 2, 3, 6);
 
 	surf.draw_border();
 

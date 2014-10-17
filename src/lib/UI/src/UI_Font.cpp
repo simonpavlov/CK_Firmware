@@ -91,37 +91,66 @@ void Font::stdout(){
 	}
 }
 
-Surface & Font::gen_char_surf(char &ch){
+Surface & Font::gen_surf(char ch){
 	//TODO: удалить лишнее
 
-	Surface &res_surf = * new Surface(width, height);
+	Surface &res_surf = * new Surface(width_byte * 8, height);
 
-	int surf_width_byte, offset_byte;
 	unsigned char *cur_byte_surf, *cur_byte_glyph;
 
-	surf_width_byte = res_surf.get_width() / 8;
-
 	cur_byte_surf		= res_surf.get_buffer();
-	cur_byte_glyph		= glyphs + ch * char_size;
+	cur_byte_glyph		= glyphs + (unsigned char)(ch) * char_size;
 
 	int i_line;
 	for(i_line = 0; i_line < height; i_line++){
 		int i_byte;
 
 		for(i_byte = 0; i_byte < width_byte; i_byte++){
-			unsigned char output_byte = *(cur_byte_glyph + i_byte);
-
-			*(cur_byte_surf + i_byte)		|= output_byte;
+			*(cur_byte_surf + i_byte) |= *(cur_byte_glyph + i_byte);
 		}
 
-		cur_byte_surf	+= surf_width_byte;
+		cur_byte_surf	+= width_byte;
 		cur_byte_glyph	+= width_byte;
 	}
 
 	return res_surf;
 }
 
-Surface & Font::gen_string_surf(std::string &str){
-	// Surface &res_surf = * new Surface(, );
-	// return res_surf;
+Surface & Font::gen_surf(std::string &str, unsigned int max_width, unsigned int max_size){
+	int	str_size		= str.size(),
+		surf_width_byte	= (width * str_size + 7) / 8,
+		surf_width		= surf_width_byte * 8;
+
+		if(max_width && max_width < surf_width){
+			str_size		= max_width / width;
+			surf_width_byte	= (width * str_size + 7) / 8;
+			surf_width		= surf_width_byte * 8;
+		}
+
+		if(max_size && max_size < str_size){
+			str_size		= max_size;
+			surf_width_byte	= (width * str_size + 7) / 8;
+			surf_width		= surf_width_byte * 8;
+		}
+
+	#ifdef DEBUG
+	std::cout << "IN Font::gen_surf(std::string &str, unsigned int max_width, unsigned int max_size):" << std::endl
+		<< "	surf_width: " << surf_width << std::endl
+		<< "	str_size * width: " << str_size * width << std::endl
+		<< "	width: " << width << std::endl;
+	#endif
+	
+	Surface &res_surf = * new Surface(surf_width, height);
+
+	#ifdef DEBUG_UI_FONT
+	std::cout
+		<< "	res_surf.get_width(): " << res_surf.get_width() << std::endl
+		<< "	res_surf.get_height(): " << res_surf.get_height() << std::endl;
+	#endif
+
+	for(int i = 0; i < str_size; i++){
+		res_surf.draw(gen_surf(str[i]), width * i, 0);
+	}
+
+	return res_surf;
 }

@@ -17,10 +17,18 @@ int main(){
 	// delete main_UI.top();
 	// main_UI.pop();
 
-	main_UI.push(new test_task(main_UI, 10));
-	main_UI.push(new test_task(main_UI, 20));
-	main_UI.push(new test_task(main_UI, 20));
+	main_UI.push(new test_task(main_UI, 10, 10));
+	main_UI.push(new test_task(main_UI, 20, 20));
+	main_UI.push(new test_task(main_UI, 30, 30));
 
+	Surface surf_a(16, 20), surf_b(10, 20);
+
+	// Test for surface
+	// for(int i = 0; i <= surf_a.get_height() - surf_b.get_height(); i++){
+	// 	for(int j = 0; j <= surf_a.get_width() - surf_b.get_width(); j++){
+	// 		surf_a.draw(surf_b, j, i);
+	// 	}
+	// }
 
 	main_UI.draw();
 

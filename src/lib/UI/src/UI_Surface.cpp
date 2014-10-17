@@ -11,6 +11,13 @@ Surface::Surface(ScreenInfo &scr){
 	memory_is_my = false;
 }
 
+// Surface(Surface &surf){
+// 	width		= surf.width;
+// 	height		= surf.height;
+// 	buf_size	= surf.buf_size;
+
+// }
+
 Surface::Surface(unsigned int w, unsigned int h){
 	int size = (w * h + 7) / 8;
 
@@ -34,9 +41,9 @@ void Surface::clear(){
 	for(int i = 0; i < buf_size; buffer[i++] = 0);
 }
 
-void Surface::draw_surf(Surface &surf, unsigned int x, unsigned int y){
-	int screen_width_byte, offset_byte;
-	unsigned char *cur_byte_screen, *cur_byte_surf;
+void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
+	unsigned char *cur_byte_screen, *cur_byte_surf, offset_byte;
+	int screen_width_byte;
 
 	screen_width_byte = width / 8;
 	offset_byte = x % 8;
@@ -44,45 +51,53 @@ void Surface::draw_surf(Surface &surf, unsigned int x, unsigned int y){
 	cur_byte_screen		= buffer + y * screen_width_byte + x / 8;
 	cur_byte_surf		= surf.buffer;
 
-	int i_line;
-	for(i_line = 0; i_line < surf.height; i_line++){
-		int i_byte;
-		unsigned char output_byte;
+	for(int i_line = 0; i_line < surf.height - 1; i_line++){
+		for(int i_byte = 0; i_byte < surf.width / 8; i_byte++){
+			unsigned char output_byte = *(cur_byte_surf + i_byte);
 
-		for(i_byte = 0; i_byte < surf.width / 8; i_byte++){
-			output_byte = *(cur_byte_surf + i_byte);
-
-			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
-			// FIXME: проблема в следующей строке мы поподаем в бит за пределами нашей поверхности,
-			// когда нижние правыйе уголы поверхностей совпадют
-			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
+				*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
+			if(offset_byte)
+				*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
 		}
 
 		cur_byte_screen	+= screen_width_byte;
 		cur_byte_surf	+= surf.width / 8;
 	}
 
-	// output_byte = *(cur_byte_surf + i_byte + 1);
-	// *(cur_byte_screen + i_byte) |= output_byte >> offset_byte;
+	for(int i_byte = 0; i_byte < surf.width / 8 - 1; i_byte++){
+		unsigned char output_byte = *(cur_byte_surf + i_byte);
+
+			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
+		if(offset_byte)
+			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
+	}
+	cur_byte_screen	+= surf.width / 8 - 1;
+	cur_byte_surf	+= surf.width / 8 - 1;
+
+	*cur_byte_screen |= *cur_byte_surf >> offset_byte;
+
+	if(cur_byte_screen != buffer + buf_size - 1){
+		*(cur_byte_screen + 1) |= *cur_byte_surf << (8 - offset_byte);
+	}
 }
 
-void Surface::draw_pix(unsigned int x, unsigned int y){
+void Surface::draw(unsigned int x, unsigned int y){
 	unsigned char *ned_byte = (buffer + y * width / 8) + x / 8;
 	*ned_byte |= 1 << (7 - x % 8);
 }
 
 
-void Surface::draw_pargram(unsigned int x, unsigned int y, unsigned int w, unsigned int h){
+void Surface::draw(unsigned int x, unsigned int y, unsigned int w, unsigned int h){
 	int i;
 
 	for(i = x; i <= x + w; i++){
-		draw_pix(i, y);
-		draw_pix(i, y + h);
+		draw(i, y);
+		draw(i, y + h);
 	}
 
 	for(i = y + 1; i < y + h; i++){
-		draw_pix(x, i);
-		draw_pix(x + w, i);
+		draw(x, i);
+		draw(x + w, i);
 	}
 }
 

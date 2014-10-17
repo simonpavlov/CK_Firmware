@@ -14,11 +14,16 @@ class Font{
 		unsigned char *glyphs;		//ссылка на начало карт символов
 
 	public:
-
 		/*
 			Считывает шрифт psf v2 из буфера buffer и инициализируется им.
 		*/
 		Font(const unsigned char *buffer);
+
+		/*
+			Следующие функции возвращают соответствующие значения
+		*/
+		int get_width()		{return width;}
+		int get_height()	{return height;}
 
 		/*
 			Функция для отладки, выводит шрифт в stdout
@@ -28,12 +33,14 @@ class Font{
 		/*
 			Генерирует поверхность из символа
 		*/
-		Surface & gen_char_surf(char &ch);
+		Surface & gen_surf(char ch);
 
 		/*
 			Генерирует поверхность из строки
+			max_count - максимальное количество отрисовываемых символов
+			max_width - максимальная ширина результирующей поверхности
 		*/
-		Surface & gen_string_surf(std::string &str);
+		Surface & gen_surf(std::string &str, unsigned int max_width = 0, unsigned int max_size = 0);
 };
 
 

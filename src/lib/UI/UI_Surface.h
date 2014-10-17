@@ -15,9 +15,14 @@ class Surface{
 
 	public:
 		/*
-			Инициализирует и связывает поверхность с ScreenInfo
+			Инициализирует и связывает поверхность с scr
 		*/
 		Surface(ScreenInfo &scr);
+
+		/*
+			Инициализирует и связывает поверхность с surf
+		*/
+		// Surface(Surface &surf);
 
 		/*
 			Создаём поверхность размером w на h
@@ -43,18 +48,18 @@ class Surface{
 			Отрисовка на данной поверхности поверхности surf
 			по координатам x, y
 		*/
-		void draw_surf(Surface &surf, unsigned int x, unsigned int y);
+		void draw(Surface &surf, unsigned int x = 0, unsigned int y = 0);
 
 		/*
 			Отрисовать пиксели по заданным координатам
 		*/
-		void draw_pix(unsigned int x, unsigned int y);
+		void draw(unsigned int x, unsigned int y);
 
 		/*
 			Отрисовка паралелограмма по координатам x, y,
 			шириной w, высотой h
 		*/
-		void draw_pargram(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
+		void draw(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
 
 		/*
 			 Нарисовать границы поверхности
