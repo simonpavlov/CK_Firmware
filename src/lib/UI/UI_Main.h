@@ -50,6 +50,10 @@ class UI: public std::stack <Task*> {
 
 		// Очищает видео буфер
 		void clear_scr();
+
+		//Следующие функции возвращают соответствующие значения
+		unsigned int get_width(){return my_screen.get_width();}
+		unsigned int get_height(){return my_screen.get_height();}
 };
 
 #endif //UI_MAIN

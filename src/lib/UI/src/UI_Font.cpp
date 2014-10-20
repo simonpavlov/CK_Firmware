@@ -44,7 +44,7 @@ Font::Font(const unsigned char *buffer){
 	bread(&font_psf2.height,		4, buffer + 24);
 	bread(&font_psf2.width,			4, buffer + 28);
 
-	#ifdef DEBUG
+	#ifdef DEBUG_UI_FONT
 	printf("version:		%u\n", font_psf2.version);
 	printf("header_size:	%u\n", font_psf2.header_size);
 	printf("flags:			%u\n", font_psf2.flags);

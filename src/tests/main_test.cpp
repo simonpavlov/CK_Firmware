@@ -17,6 +17,8 @@ int main(){
 	// main_UI.pop();
 
 	main_UI.push(new test_task(main_UI, 10, 10));
+	main_UI.push(new MessageBox(main_UI, "MESSAGE!"));
+	main_UI.push(new MessageBox(main_UI, "123456789101112131415161718192021"));
 	// main_UI.push(new test_task(main_UI, 20, 20));
 	// main_UI.push(new test_task(main_UI, 30, 30));
 
