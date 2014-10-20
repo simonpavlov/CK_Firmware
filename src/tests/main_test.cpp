@@ -1,10 +1,14 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include <emul/emulator.h>
 #include <UI/UI.h>
 #include <UI/test_task.h>
 
 #include <Uni3_Terminus20x10_psf.h>
+
+using namespace std;
 
 int main(){
 	emul_init(320, 240);
@@ -16,9 +20,25 @@ int main(){
 	// delete main_UI.top();
 	// main_UI.pop();
 
+	vector<string> str_mass;
+	str_mass.push_back(string("first"));
+	str_mass.push_back(string("second"));
+	str_mass.push_back(string("1"));
+	str_mass.push_back(string("12"));
+	str_mass.push_back(string("123"));
+	str_mass.push_back(string("1234"));
+	str_mass.push_back(string("12345"));
+	str_mass.push_back(string("123456"));
+	str_mass.push_back(string("1234567"));
+	str_mass.push_back(string("12345678"));
+	str_mass.push_back(string("1234567912345679123456791234567912345679"));
+	str_mass.push_back(string("last"));
+
+
 	main_UI.push(new test_task(main_UI, 10, 10));
 	main_UI.push(new MessageBox(main_UI, "MESSAGE!"));
 	main_UI.push(new MessageBox(main_UI, "123456789101112131415161718192021"));
+	main_UI.push(new SelectBox(main_UI, str_mass, NULL));
 	// main_UI.push(new test_task(main_UI, 20, 20));
 	// main_UI.push(new test_task(main_UI, 30, 30));
 
@@ -36,7 +56,7 @@ int main(){
 		// Графическая часть
 		switch(get_event()){
 			case EVT_EXIT:
-				std::cout << "Goodbye!" << std::endl;
+				cout << "Goodbye!" << endl;
 				return 0;
 				break;
 

@@ -7,5 +7,6 @@
 #include "UI_Main.h"
 #include "UI_Font.h"
 #include "UI_MessageBox.h"
+#include "UI_SelectBox.h"
 
 #endif //UI_LIBRARY
