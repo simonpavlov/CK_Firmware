@@ -14,17 +14,16 @@
 class SelectBox: public Task{
 	private:
 		Surface *surf;
-		Font &font;
 
-		std::vector<std::string> &menu_items;
-		void (*call_back)(std::string &str);
+		std::vector<std::string> menu_items;
+		void (*callback)(int res);
 		unsigned int max_width, max_height;
 
 		int first_item, cur_item, last_item, max_str, interval, up_set, right_set;
 
 	public:
-		// str_mass - пункты меню, call_back_f - обработчик
-		SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*call_back_f)(std::string &str));
+		// str_mass - пункты меню, callback_f - обработчик
+		SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*callback_f)(int res));
 		~SelectBox();
 
 		void 	up();

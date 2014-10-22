@@ -4,13 +4,13 @@
 
 MessageBox::MessageBox(UI &stk, std::string str):
 	Task(stk),
-	message(str),
-	font(stk.get_default_font()),
-	max_width(stk.get_width()),
-	max_height(stk.get_height())
+	message(str)
 {
-	// surf = new Surface(16, 10);
-	// surf->draw_border();
+	int	max_width = my_UI.get_width(),
+		max_height = my_UI.get_height();
+
+	Font font = my_UI.get_default_font();
+
 	std::string ok = "OK";
 
 	Surface &message_surf = font.gen_surf(str, max_width);

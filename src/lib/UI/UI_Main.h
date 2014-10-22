@@ -26,7 +26,7 @@ class Task;
 class UI: public std::stack <Task*> {
 	private:
 		Surface &my_screen;
-		Font &my_font;
+		Font my_font;
 
 	public:
 		//TODO constructor

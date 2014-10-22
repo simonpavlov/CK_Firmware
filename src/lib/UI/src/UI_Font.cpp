@@ -60,7 +60,7 @@ Font::Font(const unsigned char *buffer){
 	width		= font_psf2.width;
 	width_byte	= (font_psf2.width + 7) / 8;
 
-	glyphs = (unsigned char *) buffer + font_psf2.header_size;
+	glyphs = buffer + font_psf2.header_size;
 }
 
 void Font::stdout(){
@@ -96,7 +96,8 @@ Surface & Font::gen_surf(char ch){
 
 	Surface &res_surf = * new Surface(width_byte * 8, height);
 
-	unsigned char *cur_byte_surf, *cur_byte_glyph;
+	const unsigned char *cur_byte_glyph;
+	unsigned char *cur_byte_surf;
 
 	cur_byte_surf		= res_surf.get_buffer();
 	cur_byte_glyph		= glyphs + (unsigned char)(ch) * char_size;
@@ -116,7 +117,7 @@ Surface & Font::gen_surf(char ch){
 	return res_surf;
 }
 
-Surface & Font::gen_surf(std::string &str, unsigned int max_width, unsigned int max_size){
+Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int max_size){
 	int	str_size		= str.size(),
 		surf_width_byte	= (width * str_size + 7) / 8,
 		surf_width		= surf_width_byte * 8;

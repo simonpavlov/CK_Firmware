@@ -1,14 +1,11 @@
 #include "../UI_SelectBox.h"
 
-#define DEBUG_UI_SELECTBOX
-
 #include <iostream>
 
-SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*call_back_f)(std::string &str)):
+SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*callback_f)(int res)):
 	Task(stk),
-	font(stk.get_default_font()),
 	menu_items(str_mass),
-	call_back(call_back_f),
+	callback(callback_f),
 	max_width(stk.get_width()),
 	max_height(stk.get_height()),
 	first_item(0),
@@ -18,6 +15,7 @@ SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*call_ba
 	right_set(0)
 {
 	//TODO: переделать инициализацию
+	Font font = my_UI.get_default_font();
 
 	max_str = (max_height - up_set) / (font.get_height() + interval);
 
@@ -73,7 +71,7 @@ void SelectBox::down(){
 }
 
 void SelectBox::select(){
-	suicide();
+	callback(cur_item);
 }
 
 Surface & SelectBox::draw(){
@@ -82,6 +80,8 @@ Surface & SelectBox::draw(){
 	std::cout << "cur_item: " << cur_item << std::endl;
 	std::cout << "last_item: " << last_item << std::endl;
 	#endif
+
+	Font font = my_UI.get_default_font();
 
 	surf->clear();
 

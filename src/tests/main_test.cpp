@@ -10,37 +10,50 @@
 
 using namespace std;
 
+void callback_int(int x){
+	cout << "IN CALL_BACK X: " << x << endl;
+}
+
+void callback_bool(bool x){
+	if(x) cout << "True" << endl;
+	else cout << "False" << endl;
+}
+
 int main(){
 	emul_init(320, 240);
 	atexit(emul_quit);
 
-	UI main_UI(*get_screen_info(), *(new Font(Uni3_Terminus20x10_psf)));
-
-	// main_UI.push(new test_task(main_UI, 10));
-	// delete main_UI.top();
-	// main_UI.pop();
+	Font f(Uni3_Terminus20x10_psf);
+	UI main_UI(*get_screen_info(), f);
 
 	vector<string> str_mass;
-	str_mass.push_back(string("first"));
-	str_mass.push_back(string("second"));
-	str_mass.push_back(string("1"));
-	str_mass.push_back(string("12"));
-	str_mass.push_back(string("123"));
-	str_mass.push_back(string("1234"));
-	str_mass.push_back(string("12345"));
-	str_mass.push_back(string("123456"));
-	str_mass.push_back(string("1234567"));
-	str_mass.push_back(string("12345678"));
-	str_mass.push_back(string("1234567912345679123456791234567912345679"));
-	str_mass.push_back(string("last"));
 
+	str_mass.push_back(string(" 1 The wondrous moment of our meeting..."));
+	str_mass.push_back(string(" 2 I well remember you appear"));
+	str_mass.push_back(string(" 3 Before me like a vision fleeting,"));
+	str_mass.push_back(string(" 4 A beauty's angel pure and clear."));
+	str_mass.push_back(string(" 5 In hopeless ennui surrounding"));
+	str_mass.push_back(string(" 6 The worldly bustle, to my ear"));
+	str_mass.push_back(string(" 7 For long your tender voice kept sounding,"));
+	str_mass.push_back(string(" 8 For long in dreams came features dear."));
+	str_mass.push_back(string(" 9 Time passed. Unruly storms confounded"));
+	str_mass.push_back(string("10 Old dreams, and I from year to year"));
+	str_mass.push_back(string("11 Forgot how tender you had sounded,"));
+	str_mass.push_back(string("12 Your heavenly features once so dear."));
+	str_mass.push_back(string("13 My backwoods days dragged slow and quiet -"));
+	str_mass.push_back(string("14 Dull fence around, dark vault above -"));
+	str_mass.push_back(string("15 Devoid of God and uninspired,"));
+	str_mass.push_back(string("16 Devoid of tears, of fire, of love."));
+	str_mass.push_back(string("17 Sleep from my soul began retreating,"));
+	str_mass.push_back(string("18 And here you once again appear"));
+	str_mass.push_back(string("19 Before me like a vision fleeting,"));
+	str_mass.push_back(string("20 A beauty's angel pure and clear."));
 
-	main_UI.push(new test_task(main_UI, 10, 10));
-	main_UI.push(new MessageBox(main_UI, "MESSAGE!"));
-	main_UI.push(new MessageBox(main_UI, "123456789101112131415161718192021"));
-	main_UI.push(new SelectBox(main_UI, str_mass, NULL));
-	// main_UI.push(new test_task(main_UI, 20, 20));
-	// main_UI.push(new test_task(main_UI, 30, 30));
+	// new test_task(main_UI, 10, 10);
+	// new SelectBox(main_UI, str_mass, callback_int);
+	// new MessageBox(main_UI, "MESSAGE!");
+	// new MessageBox(main_UI, "123456789101112131415161718192021");
+	new QuestionBox(main_UI, "???", callback_bool);
 
 	// Test for surface
 	// Surface surf_a(17, 20), surf_b(10, 20);
