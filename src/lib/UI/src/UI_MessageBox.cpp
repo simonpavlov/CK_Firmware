@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-MessageBox::MessageBox(UI &stk, std::string str):
-	Task(stk),
+MessageBox::MessageBox(UI &stk, std::string str, Callback *cb):
+	Task(stk, cb),
 	message(str)
 {
 	int	max_width = my_UI.get_width(),
@@ -44,6 +44,15 @@ MessageBox::MessageBox(UI &stk, std::string str):
 
 MessageBox::~MessageBox(){
 	delete surf;
+}
+
+void MessageBox::select(){
+	if(callback){
+		callback->exec(0);
+	}
+	else{
+		suicide();
+	}
 }
 
 Surface & MessageBox::draw(){

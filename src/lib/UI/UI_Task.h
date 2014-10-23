@@ -3,6 +3,7 @@
 
 #include "UI_Main.h"
 #include "UI_Surface.h"
+#include "UI_Callback.h"
 
 class UI;
 
@@ -12,9 +13,10 @@ class UI;
 class Task {
 	protected:
 		UI &my_UI;
+		Callback *callback;
 
 	public:
-		Task(UI &ui);
+		Task(UI &ui, Callback *cb);
 		virtual ~Task() {};
 
 		virtual void	up() = 0;

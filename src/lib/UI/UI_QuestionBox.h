@@ -13,14 +13,13 @@
 
 class QuestionBox: public Task{
 	private:
-		void (*callback)(bool res);
 		Surface *surf, *yes_surf, *no_surf, *quest_surf;
 
 		int cur_item;
 
 	public:
-		// str - Вопрос, call_back_f - callback функция
-		QuestionBox(UI &stk, std::string str, void (*callback_f)(bool res));
+		// str - Вопрос, cb - обработчик
+		QuestionBox(UI &stk, std::string str, Callback *cb);
 		~QuestionBox();
 
 		void 	up();

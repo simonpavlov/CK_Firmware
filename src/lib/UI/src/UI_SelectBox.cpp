@@ -2,10 +2,9 @@
 
 #include <iostream>
 
-SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*callback_f)(int res)):
-	Task(stk),
+SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, Callback *cb):
+	Task(stk, cb),
 	menu_items(str_mass),
-	callback(callback_f),
 	max_width(stk.get_width()),
 	max_height(stk.get_height()),
 	first_item(0),
@@ -71,7 +70,7 @@ void SelectBox::down(){
 }
 
 void SelectBox::select(){
-	callback(cur_item);
+	callback->exec(cur_item);
 }
 
 Surface & SelectBox::draw(){
@@ -87,6 +86,12 @@ Surface & SelectBox::draw(){
 
 	Surface *str_surf;
 
+	int y = (cur_item - first_item) * (font.get_height() + interval) + up_set;
+
+	// FIXME:
+	Surface ch_surf = font.gen_surf('>');
+	surf->draw(ch_surf, right_set, y);
+
 	for(int i = 0; i < max_str; i++){
 		str_surf = &font.gen_surf(	menu_items[i + first_item],
 									max_width - right_set - font.get_width());
@@ -96,12 +101,6 @@ Surface & SelectBox::draw(){
 
 		delete str_surf;
 	}
-
-	int y = (cur_item - first_item) * (font.get_height() + interval) + up_set;
-
-	Surface &ch_surf = font.gen_surf('>');
-	surf->draw(ch_surf, right_set, y);
-	delete &ch_surf;
 
 	surf->draw_border();
 

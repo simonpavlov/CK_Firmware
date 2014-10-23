@@ -1,8 +1,7 @@
 #include "../UI_QuestionBox.h"
 
-QuestionBox::QuestionBox(UI &stk, std::string str, void (*callback_f)(bool res)):
-	Task(stk),
-	callback(callback_f),
+QuestionBox::QuestionBox(UI &stk, std::string str, Callback *cb):
+	Task(stk, cb),
 	cur_item(0)
 {
 	Font font = my_UI.get_default_font();
@@ -15,7 +14,7 @@ QuestionBox::QuestionBox(UI &stk, std::string str, void (*callback_f)(bool res))
 	yes_surf	= &font.gen_surf(std::string("Yes"));
 	no_surf		= &font.gen_surf(std::string("No"));
 
-	wht = std::max(std::min(my_UI.get_width(), quest_surf->get_width()), no_surf->get_width() + yes_surf->get_width() + 24);
+	wht = std::max(std::min(my_UI.get_width(), quest_surf->get_width() + 16), no_surf->get_width() + yes_surf->get_width() + 24);
 	hht = 2 * font.get_height() + 12;
 
 	surf = new Surface(wht, hht);
@@ -38,7 +37,7 @@ void QuestionBox::down(){
 
 void QuestionBox::select(){
 	int res = cur_item;
-	callback(res);
+	callback->exec(res);
 }
 
 Surface	& QuestionBox::draw(){

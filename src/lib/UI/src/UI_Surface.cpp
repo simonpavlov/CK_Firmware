@@ -3,23 +3,21 @@
 #include <iostream>
 #include <cassert>
 
-Surface::Surface(ScreenInfo &scr){
-	assert(scr.width % 8 == 0);
-
-	width		= scr.width;
-	height		= scr.height;
-	buf_size	= scr.len_byte;
-	buffer		= (unsigned char *) scr.buffer;
-
-	memory_is_my = false;
-}
-
 // Surface(Surface &surf){
 // 	width		= surf.width;
 // 	height		= surf.height;
 // 	buf_size	= surf.buf_size;
 
 // }
+
+Surface::Surface(){
+	buffer		= NULL;
+	width		= 0;
+	height		= 0;
+	buf_size	= 0;
+
+	surf_is_my	= false;
+}
 
 Surface::Surface(unsigned int w, unsigned int h){
 	assert(w % 8 == 0);
@@ -33,13 +31,13 @@ Surface::Surface(unsigned int w, unsigned int h){
 
 	for(int i = 0; i < size; buffer[i++] = 0);
 
-	memory_is_my = true;
+	surf_is_my = true;
 }
 
 Surface::~Surface(){
 	// std::cout << "IN Surface::~Surface()" << std::endl;
 
-	if(memory_is_my){
+	if(surf_is_my){
 		delete [] buffer;
 	}
 }
@@ -62,9 +60,9 @@ void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
 		for(int i_byte = 0; i_byte < surf.width / 8; i_byte++){
 			unsigned char output_byte = *(cur_byte_surf + i_byte);
 
-				*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
+				*(cur_byte_screen + i_byte)		= *(cur_byte_screen + i_byte) & (0xFF << (8 - offset_byte)) | (output_byte >> offset_byte);
 			if(offset_byte)
-				*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
+				*(cur_byte_screen + i_byte + 1)	= *(cur_byte_screen + i_byte + 1) & (0xFF >> offset_byte) | (output_byte << (8 - offset_byte));
 		}
 
 		cur_byte_screen	+= screen_width_byte;
@@ -74,9 +72,9 @@ void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
 	for(int i_byte = 0; i_byte < surf.width / 8 - 1; i_byte++){
 		unsigned char output_byte = *(cur_byte_surf + i_byte);
 
-			*(cur_byte_screen + i_byte)		|= output_byte >> offset_byte;
+			*(cur_byte_screen + i_byte)		= *(cur_byte_screen + i_byte) & (0xFF << (8 - offset_byte)) | (output_byte >> offset_byte);
 		if(offset_byte)
-			*(cur_byte_screen + i_byte + 1)	|= output_byte << (8 - offset_byte);
+			*(cur_byte_screen + i_byte + 1)	= *(cur_byte_screen + i_byte + 1) & (0xFF >> offset_byte) | (output_byte << (8 - offset_byte));
 	}
 	cur_byte_screen	+= surf.width / 8 - 1;
 	cur_byte_surf	+= surf.width / 8 - 1;
@@ -84,7 +82,7 @@ void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
 	*cur_byte_screen |= *cur_byte_surf >> offset_byte;
 
 	if(cur_byte_screen != buffer + buf_size - 1){
-		*(cur_byte_screen + 1) |= *cur_byte_surf << (8 - offset_byte);
+		*(cur_byte_screen + 1) = *(cur_byte_screen + 1) & (0xFF >> offset_byte) | (*cur_byte_surf << (8 - offset_byte));
 	}
 }
 

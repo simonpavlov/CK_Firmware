@@ -9,8 +9,9 @@ class test_task: public Task{
 		int 	X, Y;
 		Surface	surf;
 		Font	&font;
+
 	public:
-		test_task(UI &stk, int x = 0, int y = 0);
+		test_task(UI &stk, int x = 0, int y = 0, Callback *cb = NULL);
 		~test_task();
 
 		void 	up();

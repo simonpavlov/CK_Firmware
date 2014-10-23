@@ -1,28 +1,21 @@
 #ifndef UI_SURFACE
 #define UI_SURFACE
 
-#include <emul/emulator.h>
-
 #include <string>
 
 class Surface{
-	private:
-		bool			memory_is_my;
-
+	protected:
 		unsigned char	*buffer; // Ссылка на буфер в котором хранится поверхность
 		unsigned int	width, height; // Ширина, высота
 		unsigned int	buf_size; // Размер буфера
+		bool			surf_is_my;
+
+		/*
+			Создаёт пусту поверхность
+		*/
+		Surface();
 
 	public:
-		/*
-			Инициализирует и связывает поверхность с scr
-		*/
-		Surface(ScreenInfo &scr);
-
-		/*
-			Инициализирует и связывает поверхность с surf
-		*/
-		// Surface(Surface &surf);
 
 		/*
 			Создаём поверхность размером w на h

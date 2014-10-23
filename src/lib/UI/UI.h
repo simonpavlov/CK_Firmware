@@ -9,5 +9,6 @@
 #include "UI_MessageBox.h"
 #include "UI_SelectBox.h"
 #include "UI_QuestionBox.h"
+#include "UI_Callback.h"
 
 #endif //UI_LIBRARY

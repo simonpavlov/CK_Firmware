@@ -23,18 +23,16 @@ class Task;
 	pop		- Remove top element (public member function )
 	swap	- Swap contents (public member function )
 */
-class UI: public std::stack <Task*> {
-	private:
-		Surface &my_screen;
-		Font my_font;
-
+class UI: public std::stack <Task*>, public Surface{
 	public:
+		enum state {unchanged, busy, changed};
+
 		//TODO constructor
 		UI(ScreenInfo &scr, Font &font);
 		~UI();
 
 		// Возвращает шрифт "по умолчанию"
-		Font &get_default_font() {return my_font;};
+		Font &get_default_font() {return default_font;};
 
 		// Обработать нажатие вверх
 		void up();
@@ -49,11 +47,14 @@ class UI: public std::stack <Task*> {
 		void draw();
 
 		// Очищает видео буфер
-		void clear_scr();
+		// void clear_scr();
 
-		//Следующие функции возвращают соответствующие значения
-		unsigned int get_width(){return my_screen.get_width();}
-		unsigned int get_height(){return my_screen.get_height();}
+		// Возвращает текущее состояние апаратного сурфейса
+		state take_state(){return my_state; my_state = unchanged;}
+
+	private:
+		Font default_font;
+		state my_state;
 };
 
 #endif //UI_MAIN

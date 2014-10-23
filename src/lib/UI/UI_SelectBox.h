@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "UI_Task.h"
-#include "UI_Main.h"
 #include "UI_Font.h"
 
 /*
@@ -16,14 +15,13 @@ class SelectBox: public Task{
 		Surface *surf;
 
 		std::vector<std::string> menu_items;
-		void (*callback)(int res);
 		unsigned int max_width, max_height;
 
 		int first_item, cur_item, last_item, max_str, interval, up_set, right_set;
 
 	public:
 		// str_mass - пункты меню, callback_f - обработчик
-		SelectBox(UI &stk, std::vector<std::string> &str_mass, void (*callback_f)(int res));
+		SelectBox(UI &stk, std::vector<std::string> &str_mass, Callback *cb);
 		~SelectBox();
 
 		void 	up();

@@ -16,12 +16,12 @@ class MessageBox: public Task{
 
 	public:
 		// Единственный параметр - отображаемая информация
-		MessageBox(UI &stk, std::string str);
+		MessageBox(UI &stk, std::string str, Callback *cb = NULL);
 		~MessageBox();
 
 		void 	up(){};
 		void	down(){};
-		void	select(){suicide();};
+		void	select();
 		Surface	& draw();
 };
 

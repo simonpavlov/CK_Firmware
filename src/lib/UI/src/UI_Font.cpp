@@ -114,23 +114,30 @@ Surface & Font::gen_surf(char ch){
 		cur_byte_glyph	+= width_byte;
 	}
 
+	#ifdef DEBUG_UI_FONT
+	res_surf.draw_border();
+	#endif
+
 	return res_surf;
 }
 
 Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int max_size){
+	// FIXME: вот этот алгоритм считает не правильный размер поверхности для текста,
+	// плохо обрабатывается максимальная длинна
 	int	str_size		= str.size(),
-		surf_width_byte	= (width * str_size + 7) / 8,
+		tail			= width_byte * 8 - width,
+		surf_width_byte	= (width * str_size + tail + 7) / 8,
 		surf_width		= surf_width_byte * 8;
 
 		if(max_width && max_width < surf_width){
 			str_size		= max_width / width;
-			surf_width_byte	= (width * str_size + 7) / 8;
+			surf_width_byte	= (width * str_size + tail + 7) / 8;
 			surf_width		= surf_width_byte * 8;
 		}
 
 		if(max_size && max_size < str_size){
 			str_size		= max_size;
-			surf_width_byte	= (width * str_size + 7) / 8;
+			surf_width_byte	= (width * str_size + tail + 7) / 8;
 			surf_width		= surf_width_byte * 8;
 		}
 
@@ -140,7 +147,7 @@ Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int m
 		<< "	str_size: " << str_size << std::endl
 		<< "	width: " << width << std::endl;
 	#endif
-	
+
 	Surface &res_surf = * new Surface(surf_width, height);
 
 	#ifdef DEBUG_UI_FONT

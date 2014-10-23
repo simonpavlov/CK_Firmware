@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-test_task::test_task(UI &stk, int x, int y): Task(stk), font(stk.get_default_font()), surf(192, 80){
+test_task::test_task(UI &stk, int x, int y, Callback *cb): Task(stk, cb), font(stk.get_default_font()), surf(192, 80){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::test_task()" << std::endl;
 	#endif
@@ -23,7 +23,7 @@ void test_task::up(){
 	std::cout << "IN test_task::up()" << std::endl;
 	#endif
 
-	Y--;
+	Y -= 1;
 }
 
 void test_task::down(){
@@ -31,7 +31,7 @@ void test_task::down(){
 	std::cout << "IN test_task::down()" << std::endl;
 	#endif
 
-	Y++;
+	Y += 1;
 }
 
 void test_task::select(){
@@ -39,7 +39,12 @@ void test_task::select(){
 	std::cout << "IN test_task::select()" << std::endl;
 	#endif
 
-	suicide();
+	if(callback){
+		callback->exec(X);
+	}
+	else{
+		suicide();
+	}
 }
 
 Surface & test_task::draw(){
@@ -50,10 +55,10 @@ Surface & test_task::draw(){
 
 	surf.clear();
 
-	std::string str_message("IT IS A LAST TASK");
+	std::string str_message("IT IS A DEBUG TASK");
 
 	std::stringstream sstr_data;
-	sstr_data << Y;
+	sstr_data << Y * 100;
 	std::string str_data = sstr_data.str();
 
 	Surface message_surf	= font.gen_surf(str_message, surf.get_width());
@@ -63,6 +68,11 @@ Surface & test_task::draw(){
 	surf.draw(data_surf, 2, 2);
 
 	surf.draw_border();
+
+	Surface new_surf(16, 20);
+	new_surf.draw_border();
+
+	surf.draw(new_surf, Y, 23);
 
 	return surf;
 }

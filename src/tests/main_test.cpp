@@ -10,14 +10,29 @@
 
 using namespace std;
 
-void callback_int(int x){
-	cout << "IN CALL_BACK X: " << x << endl;
-}
+class test_callback: public Callback{
+		int counter;
+		UI *ui;
 
-void callback_bool(bool x){
-	if(x) cout << "True" << endl;
-	else cout << "False" << endl;
-}
+	public:
+		void exec(int x){
+			counter++;
+
+			cout	<< "X: " << x << endl;
+
+			if(counter >= 1){
+				delete ui->top();
+				ui->pop();
+
+				counter = 0;
+			}
+		}
+
+		test_callback(UI *u){
+			ui = u;
+			counter = 0;
+		}
+};
 
 int main(){
 	emul_init(320, 240);
@@ -27,6 +42,8 @@ int main(){
 	UI main_UI(*get_screen_info(), f);
 
 	vector<string> str_mass;
+
+	test_callback cb1(&main_UI);
 
 	str_mass.push_back(string(" 1 The wondrous moment of our meeting..."));
 	str_mass.push_back(string(" 2 I well remember you appear"));
@@ -49,11 +66,10 @@ int main(){
 	str_mass.push_back(string("19 Before me like a vision fleeting,"));
 	str_mass.push_back(string("20 A beauty's angel pure and clear."));
 
-	// new test_task(main_UI, 10, 10);
-	// new SelectBox(main_UI, str_mass, callback_int);
-	// new MessageBox(main_UI, "MESSAGE!");
-	// new MessageBox(main_UI, "123456789101112131415161718192021");
-	new QuestionBox(main_UI, "???", callback_bool);
+	// new test_task(main_UI, 10, 10, &cb1);
+	// new MessageBox(main_UI, "This is MessageBox", &cb1);
+	// new QuestionBox(main_UI, "This is QuestionBox?", &cb1);
+	new SelectBox(main_UI, str_mass, &cb1);
 
 	// Test for surface
 	// Surface surf_a(17, 20), surf_b(10, 20);
@@ -75,19 +91,19 @@ int main(){
 
 			case EVT_PRESS_UP:
 				main_UI.up();
-				main_UI.clear_scr();
+				main_UI.clear();
 				main_UI.draw();
 				break;
 
 			case EVT_PRESS_DOWN:
 				main_UI.down();
-				main_UI.clear_scr();
+				main_UI.clear();
 				main_UI.draw();
 				break;
 
 			case EVT_PRESS_ENTER:
 				main_UI.select();
-				main_UI.clear_scr();
+				main_UI.clear();
 				if(!main_UI.empty()) main_UI.draw();
 				break;
 		}
