@@ -29,15 +29,21 @@ QuestionBox::~QuestionBox(){
 
 bool QuestionBox::up(){
 	cur_item = (cur_item + 1) % 2;
+
+	return true;
 }
 
 bool QuestionBox::down(){
 	cur_item = (cur_item + 1) % 2;
+
+	return true;
 }
 
 bool QuestionBox::select(){
 	int res = cur_item;
 	callback->exec(res);
+
+	return false;
 }
 
 Surface	& QuestionBox::draw(){

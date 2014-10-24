@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-#define DEBUG_UI_MAIN
-
 UI::UI(ScreenInfo &scr, Font &font): default_font(font){
 	assert(scr.width % 8 == 0);
 
@@ -30,22 +28,26 @@ UI::~UI(){
 }
 
 void UI::push(Task *task){
+	std::stack<Task*>::push(task);
+
 	#ifdef DEBUG_UI_MAIN
 	std::cout << "NEED REFRESH" << std::endl;
 	#endif
 
 	need_refresh = true;
-	std::stack<Task*>::push(task);
 }
 
 
 void UI::pop(){
-	#ifdef DEBUG_UI_MAIN
-	std::cout << "NEED REFRESH" << std::endl;
-	#endif
-
-	need_refresh = true;
 	std::stack<Task*>::pop();
+
+	if(!empty()){
+		#ifdef DEBUG_UI_MAIN
+		std::cout << "NEED REFRESH" << std::endl;
+		#endif
+
+		need_refresh = true;
+	}
 }
 
 void UI::up(){
@@ -59,7 +61,6 @@ void UI::down(){
 
 void UI::select(){
 	if(top()->select()) need_refresh = true;
-
 }
 
 void UI::draw(){

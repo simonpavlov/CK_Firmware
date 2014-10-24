@@ -50,7 +50,7 @@ bool test_task::select(){
 		suicide();
 	}
 
-	return true;
+	return false;
 }
 
 Surface & test_task::draw(){
