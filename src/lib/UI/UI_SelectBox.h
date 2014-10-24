@@ -24,9 +24,9 @@ class SelectBox: public Task{
 		SelectBox(UI &stk, std::vector<std::string> &str_mass, Callback *cb);
 		~SelectBox();
 
-		void 	up();
-		void	down();
-		void	select();
+		bool 	up();
+		bool	down();
+		bool	select();
 		Surface	& draw();
 };
 

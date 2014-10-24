@@ -27,15 +27,15 @@ QuestionBox::~QuestionBox(){
 	delete surf;
 }
 
-void QuestionBox::up(){
+bool QuestionBox::up(){
 	cur_item = (cur_item + 1) % 2;
 }
 
-void QuestionBox::down(){
+bool QuestionBox::down(){
 	cur_item = (cur_item + 1) % 2;
 }
 
-void QuestionBox::select(){
+bool QuestionBox::select(){
 	int res = cur_item;
 	callback->exec(res);
 }

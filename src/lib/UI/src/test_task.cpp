@@ -18,23 +18,27 @@ test_task::~test_task(){
 	#endif
 }
 
-void test_task::up(){
+bool test_task::up(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::up()" << std::endl;
 	#endif
 
 	Y -= 1;
+
+	return true;
 }
 
-void test_task::down(){
+bool test_task::down(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::down()" << std::endl;
 	#endif
 
 	Y += 1;
+
+	return true;
 }
 
-void test_task::select(){
+bool test_task::select(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::select()" << std::endl;
 	#endif
@@ -45,6 +49,8 @@ void test_task::select(){
 	else{
 		suicide();
 	}
+
+	return true;
 }
 
 Surface & test_task::draw(){

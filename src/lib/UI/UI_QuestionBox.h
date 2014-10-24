@@ -22,9 +22,9 @@ class QuestionBox: public Task{
 		QuestionBox(UI &stk, std::string str, Callback *cb);
 		~QuestionBox();
 
-		void 	up();
-		void	down();
-		void	select();
+		bool 	up();
+		bool	down();
+		bool	select();
 		Surface	& draw();
 };
 

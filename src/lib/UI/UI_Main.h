@@ -31,6 +31,12 @@ class UI: public std::stack <Task*>, public Surface{
 		UI(ScreenInfo &scr, Font &font);
 		~UI();
 
+		// Обёртка для stack::push()
+		void push(Task *task);
+
+		// Обёртка для stack::pop()
+		void pop();
+
 		// Возвращает шрифт "по умолчанию"
 		Font &get_default_font() {return default_font;};
 
@@ -55,6 +61,7 @@ class UI: public std::stack <Task*>, public Surface{
 	private:
 		Font default_font;
 		state my_state;
+		bool need_refresh;
 };
 
 #endif //UI_MAIN

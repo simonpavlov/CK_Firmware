@@ -46,13 +46,15 @@ MessageBox::~MessageBox(){
 	delete surf;
 }
 
-void MessageBox::select(){
+bool MessageBox::select(){
 	if(callback){
 		callback->exec(0);
 	}
 	else{
 		suicide();
 	}
+
+	return false;
 }
 
 Surface & MessageBox::draw(){

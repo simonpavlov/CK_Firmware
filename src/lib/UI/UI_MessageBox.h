@@ -19,9 +19,9 @@ class MessageBox: public Task{
 		MessageBox(UI &stk, std::string str, Callback *cb = NULL);
 		~MessageBox();
 
-		void 	up(){};
-		void	down(){};
-		void	select();
+		bool 	up(){return false;};
+		bool	down(){return false;};
+		bool	select();
 		Surface	& draw();
 };
 

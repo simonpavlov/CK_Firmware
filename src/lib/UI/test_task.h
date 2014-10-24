@@ -14,9 +14,9 @@ class test_task: public Task{
 		test_task(UI &stk, int x = 0, int y = 0, Callback *cb = NULL);
 		~test_task();
 
-		void 	up();
-		void	down();
-		void	select();
+		bool 	up();
+		bool	down();
+		bool	select();
 		Surface	& draw();
 };
 

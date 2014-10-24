@@ -41,7 +41,9 @@ SelectBox::~SelectBox(){
 	delete surf;
 }
 
-void SelectBox::up(){
+bool SelectBox::up(){
+	if(menu_items.size() <= 1) return false;
+
 	cur_item--;
 
 	if(cur_item == first_item && first_item != 0){
@@ -54,9 +56,13 @@ void SelectBox::up(){
 		first_item = menu_items.size() - max_str;
 		last_item = first_item + max_str;
 	}
+
+	return true;
 }
 
-void SelectBox::down(){
+bool SelectBox::down(){
+	if(menu_items.size() <= 1) return false;
+
 	cur_item++;
 	if(cur_item == last_item && last_item != menu_items.size() - 1){
 		first_item++;
@@ -67,10 +73,14 @@ void SelectBox::down(){
 		first_item = 0;
 		last_item = first_item + max_str - 1;
 	}
+
+	return true;
 }
 
-void SelectBox::select(){
+bool SelectBox::select(){
 	callback->exec(cur_item);
+
+	return false;
 }
 
 Surface & SelectBox::draw(){
@@ -87,8 +97,6 @@ Surface & SelectBox::draw(){
 	Surface *str_surf;
 
 	int y = (cur_item - first_item) * (font.get_height() + interval) + up_set;
-
-	// FIXME:
 	Surface ch_surf = font.gen_surf('>');
 	surf->draw(ch_surf, right_set, y);
 

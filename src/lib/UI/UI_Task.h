@@ -19,9 +19,9 @@ class Task {
 		Task(UI &ui, Callback *cb);
 		virtual ~Task() {};
 
-		virtual void	up() = 0;
-		virtual void	down() = 0;
-		virtual void 	select() = 0;
+		virtual bool	up() = 0;
+		virtual bool	down() = 0;
+		virtual bool 	select() = 0;
 		virtual Surface	& draw() = 0;
 
 		void suicide();

@@ -130,7 +130,7 @@ Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int m
 		surf_width		= surf_width_byte * 8;
 
 		if(max_width && max_width < surf_width){
-			str_size		= max_width / width;
+			str_size		= (max_width - tail) / width;
 			surf_width_byte	= (width * str_size + tail + 7) / 8;
 			surf_width		= surf_width_byte * 8;
 		}
