@@ -23,6 +23,7 @@ class Task;
 	pop		- Remove top element (public member function )
 	swap	- Swap contents (public member function )
 */
+//TODO: логично будет сделать этот класс static
 class UI: public std::stack <Task*>, public Surface{
 	public:
 		enum state {unchanged, busy, changed};

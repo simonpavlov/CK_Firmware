@@ -35,7 +35,8 @@ class test_callback: public Callback{
 };
 
 int main(){
-	emul_init(320, 240);
+	set_screen_res(320, 240);
+	emul_init(VIDEO_INIT);
 	atexit(emul_quit);
 
 	Font f(Uni3_Terminus20x10_psf);

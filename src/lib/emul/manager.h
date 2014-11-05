@@ -4,20 +4,25 @@
 #include <SDL/SDL.h>
 #include "video.h"
 
+static const char VIDEO_INIT		= 0x01;
+static const char STORAGE_INIT		= 0x02;
+static const char NETWORK_INIT		= 0x04;
+
 /*
  * Статус инициализации 
  */
 typedef enum {
     ALL_RIGHT = 0,	//Всё в порядке
-    SDL_ERROR,		//Ошибка в SDL
-    NO_MEMORY_ERROR	//Ошибка выделения памяти
+    VIDEO_ERROR,	//Ошибка
+    STORAGE_ERROR,	//Ошибка
+    NETWORK_ERROR	//Ошибка
 } InitStatus;
 
 /*
  * Инициализация эмулятора, параметры - ширина и высота эктана
  * returns: случае неудачи вернёт *_ERROR
  */
-InitStatus emul_init(int width, int height); 
+InitStatus emul_init(unsigned char mask); 
 
 /*
  * Завершение работы эмулятора

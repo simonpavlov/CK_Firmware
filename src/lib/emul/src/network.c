@@ -6,7 +6,7 @@
 
 static int sock = 0;
 
-void network_init() {
+char network_init() {
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (serv_sock < 0)
         error("Unable to open socket");
@@ -31,6 +31,8 @@ void network_init() {
     tv.tv_sec = 0;  /* 30 Secs Timeout */
     tv.tv_usec = 500;  // Not init'ing this can cause strange errors
     setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(struct timeval));
+
+    return 0;
 }
 
 int comm_recv(char *buffer, int length) {

@@ -4,12 +4,14 @@
 
 FILE *storage;
 
-void storage_init() {
+char storage_init() {
     storage = fopen("storage.dat", "w+");
     if (storage == NULL) {
         perror("Unable to open storage file");
         exit(EXIT_FAILURE);
     }
+
+    return 0;
 }
 
 char storage_read_byte(uint32_t addr) {

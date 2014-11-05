@@ -1,7 +1,36 @@
 #include "../video.h"
 
-extern SDL_Surface *Screen;
-extern ScreenInfo MainScreen;
+SDL_Surface *Screen	= NULL;
+ScreenInfo MainScreen;
+
+unsigned int width_init;
+unsigned int height_init;
+
+void set_screen_res(unsigned int wth, unsigned int hht){
+	width_init = wth;
+	height_init = hht;
+}
+
+char video_init(){
+	MainScreen.width = width_init;
+	MainScreen.height = height_init;
+
+	if(SDL_Init(SDL_INIT_VIDEO) != 0){
+		return -1;
+	}
+
+	if((Screen = SDL_SetVideoMode(MainScreen.width, MainScreen.height, 32, SDL_SWSURFACE)) == NULL){
+		return -1;
+	}
+
+	MainScreen.len_byte = (MainScreen.width * MainScreen.height + 7) / 8;
+	if((MainScreen.buffer = malloc(MainScreen.len_byte)) == NULL){
+		return -1;
+	}
+	memset(MainScreen.buffer, 0, MainScreen.len_byte);
+
+	return 0;
+}
 
 ScreenInfo * get_screen_info(){
 	return &MainScreen;
@@ -21,9 +50,9 @@ void refresh_video_buffer(){
 
 	for(y = 0; y < MainScreen.height; y++){
 
-#ifdef DEBUG
+			#ifdef DEBUG
 			printf("%3d: ", y);
-#endif
+			#endif
 
 		for(x = 0; x < MainScreen.width; x++){
 			pix_numb = y * MainScreen.width + x;
@@ -34,15 +63,21 @@ void refresh_video_buffer(){
 
 			*buf = color;
 
-#ifdef DEBUG
+				#ifdef DEBUG
 				printf("%c", ((*(MainScreen.buffer + pix_numb / 8) >> (7 - pix_numb % 8)) & 1)? '#': '_');
-#endif
+				#endif
 		}
 
-#ifdef DEBUG
+			#ifdef DEBUG
 			printf("\n");
-#endif
+			#endif
 	}
 
 	SDL_Flip(Screen);
+}
+
+void video_quit(){
+	SDL_FreeSurface(Screen);
+	SDL_Quit();
+	free(MainScreen.buffer);
 }

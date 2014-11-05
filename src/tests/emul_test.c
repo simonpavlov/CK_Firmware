@@ -7,11 +7,14 @@
 #define DISPH 24
 
 int main(int argc, char **argv){
-	if(emul_init(DISPW, DISPH)){ //Инициализация эмулятора
+	set_screen_res(DISPW, DISPH);
+
+	if(emul_init(VIDEO_INIT) != ALL_RIGHT){ //Инициализация эмулятора
 		return 1;
 	}
 	atexit(emul_quit); //Добавление уничтожения эмулятора на авто выполнение,
 					   //при завершении программы
+	printf("***\n");
 
 	char *buf = get_screen_info()->buffer;
 
