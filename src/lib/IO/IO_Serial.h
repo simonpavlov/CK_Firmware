@@ -20,11 +20,11 @@
  */
 class Serial{
 	public:
-		static void			handler_send();
 		static void			handler_recv();
-		static Message *	get_message() {return queue_recv.front();}
-		static void			put_message(Message *msg) {queue_send.push(msg);}
-		static bool			avail_send_msg() {return queue_recv.empty();}
+		static void			handler_send();
+		static Message *	get_message(); // {return queue_recv.front();}
+		static void			put_message(Message *msg) {queue_recv.push(msg);}
+		static bool			avail_msg_send() {return !queue_recv.empty();}
 	private:
 		static std::queue<Message *> queue_send;
 		static std::queue<Message *> queue_recv;
