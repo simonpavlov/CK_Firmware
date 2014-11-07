@@ -60,11 +60,12 @@ class Message{
 		uint16_t		get_size()	const {return size;}
 		uint16_t		get_crc16()	const {return crc16;}
 		const uint8_t *	get_data()	const {return data;}
+		bool			check()		const;
 
 		// virtual char*	serialize() const = 0;
 		// virtual bool	deserialize(char * data, size_t size) = 0;
 
-	protected:
+	private:
 		const uint8_t	type;
 		const uint16_t	size;
 		const uint16_t	crc16;

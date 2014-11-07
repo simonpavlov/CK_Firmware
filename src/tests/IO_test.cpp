@@ -4,25 +4,32 @@
 #include <SDL/SDL.h>
 
 #include <iostream>
-#include <errno.h>
 
 using namespace std;
 
 int main(){
+	set_screen_res(640, 480);
 	emul_init(NETWORK_INIT);
 
 	while(1){
 		Serial::handler_recv();
+		Serial::handler_send();
 		SDL_Delay(500);
 
-		if(Serial::avail_msg_send()){
+		bool flag = Serial::avail_msg_recv();
+
+		if(flag){
+
 			Message *msg = Serial::get_message();
 			cout << "New message {" << endl;
 			cout << "\ttype: " << hex << (int) msg->get_type() << endl;
 			cout << "\tsize: " << dec << msg->get_size() << endl;
+			cout << "\tcrc16: " << hex << msg->get_crc16() << endl;
 			cout << "\tdata: ";
-			for(int i = 0; i < msg->get_size(); cout << hex << (int)*(msg->get_data() + i++));
+			for(int i = 0; i < msg->get_size(); cout << " " << hex << (int)*(msg->get_data() + i++));
 			cout << endl << "}" << endl;
+
+			Serial::put_message(msg);
 		}
 	}
 

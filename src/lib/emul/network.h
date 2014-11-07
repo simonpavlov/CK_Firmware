@@ -21,6 +21,6 @@ int comm_recv(uint8_t *buffer, int length);
 /*
  * Отправка данных клиенту.
  */
-int comm_send(uint8_t *buffer, int length);
+int comm_send(const uint8_t *buffer, int length);
 
 #endif

@@ -39,6 +39,6 @@ int comm_recv(uint8_t *buffer, int length) {
     return sock ? recv(sock, buffer, length, 0) : 0;
 }
 
-int comm_send(uint8_t *buffer, int length) {
+int comm_send(const uint8_t *buffer, int length) {
     return sock ? send(sock, buffer, length, 0) : 0;
 }
