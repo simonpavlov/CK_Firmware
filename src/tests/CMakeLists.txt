@@ -6,3 +6,6 @@ target_link_libraries (emul_test emul ${SDL_LIBRARY})
 
 add_executable (IO_test IO_test.cpp)
 target_link_libraries (IO_test emul IO ${SDL_LIBRARY})
+
+add_executable (CK_string_test CK_string_test.cpp)
+target_link_libraries (CK_string_test IO)
