@@ -16,11 +16,11 @@ char network_init();
 /*
  * Чтение данных от клиента.
  */
-int comm_recv(uint8_t *buffer, int length);
+uint32_t comm_recv(uint8_t *buffer, uint32_t length);
 
 /*
  * Отправка данных клиенту.
  */
-int comm_send(const uint8_t *buffer, int length);
+uint32_t comm_send(const uint8_t *buffer, uint32_t length);
 
 #endif

@@ -35,10 +35,10 @@ char network_init() {
     return 0;
 }
 
-int comm_recv(uint8_t *buffer, int length) {
+uint32_t comm_recv(uint8_t *buffer, uint32_t length) {
     return sock ? recv(sock, buffer, length, 0) : 0;
 }
 
-int comm_send(const uint8_t *buffer, int length) {
+uint32_t comm_send(const uint8_t *buffer, uint32_t length) {
     return sock ? send(sock, buffer, length, 0) : 0;
 }

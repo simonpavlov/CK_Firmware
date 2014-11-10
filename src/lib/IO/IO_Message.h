@@ -40,16 +40,33 @@ static const uint8_t DeviceInfo    = 0xF1;
 
 // Generic Message
 class Message{
+	private:
+		static const uint16_t crc16_table[16];
+
+		const uint8_t	type;
+		const uint32_t	size;
+		const uint16_t	crc16;
+		const uint8_t	*data;
+
+		uint16_t check_sum() const;
+
 	public:
 		/*
 		 * Message constructor.
 		 * @param type Is a message type.
 		 */
-		Message(uint8_t type_init, uint16_t size_init, uint16_t crc16_init, uint8_t *data_init):
+		Message(uint8_t type_init, uint32_t size_init, uint8_t *data_init, uint16_t crc16_init):
 			type(type_init),
 			size(size_init),
-			crc16(crc16_init),
-			data(data_init)
+			data(data_init),
+			crc16(crc16_init)
+		{}
+
+		Message(uint8_t type_init, uint32_t size_init, uint8_t *data_init):
+			type(type_init),
+			size(size_init),
+			data(data_init),
+			crc16(check_sum())
 		{}
 
 		/*
@@ -57,19 +74,10 @@ class Message{
 		 * return type code of message.
 		 */
 		uint8_t			get_type()	const {return type;}
-		uint16_t		get_size()	const {return size;}
+		uint32_t		get_size()	const {return size;}
 		uint16_t		get_crc16()	const {return crc16;}
 		const uint8_t *	get_data()	const {return data;}
 		bool			check()		const;
-
-		// virtual char*	serialize() const = 0;
-		// virtual bool	deserialize(char * data, size_t size) = 0;
-
-	private:
-		const uint8_t	type;
-		const uint16_t	size;
-		const uint16_t	crc16;
-		const uint8_t	*data;
 };
 
 #endif //IO_MESSAGE

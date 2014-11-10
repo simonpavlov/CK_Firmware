@@ -37,11 +37,11 @@ void Serial::handler_recv(){
 		std::cout << "\ttype: " << m_type << std::endl;
 		#endif
 
-		uint16_t	size;
+		uint32_t	size;
 		uint16_t	crc16;
 		uint8_t		*data;
 
-		if(comm_recv((uint8_t *)&size, sizeof(uint16_t)) != sizeof(uint16_t)){
+		if(comm_recv((uint8_t *)&size, sizeof(uint32_t)) != sizeof(uint32_t)){
 			std::cerr << "Cant recv message size!" << std::endl;
 			return;
 		}
@@ -56,12 +56,12 @@ void Serial::handler_recv(){
 			return;
 		}
 
-		crc16 = 0;
-		//TODO: CRC16
-		// if(comm_recv(&crc16, sizeof(uint16_t)) != sizeof(uint16_t))
-		// 	return;
+		// crc16 = 0;
+		// TODO: CRC16
+		if(comm_recv((uint8_t *)&crc16, sizeof(uint16_t)) != sizeof(uint16_t))
+			return;
 
-		Message *msg = new Message(m_type, size, crc16, data);
+		Message *msg = new Message(m_type, size, data, crc16);
 
 		if(msg->check()){
 			#ifdef DEBUG_IO_SERIAL
@@ -90,15 +90,15 @@ void Serial::handler_send(){
 
 	uint8_t	m_type		= msg->get_type();
 	uint16_t size		= msg->get_size();
-	uint16_t crc16		= msg->get_crc16();
 	const uint8_t *data	= msg->get_data();
+	uint16_t crc16		= msg->get_crc16();
 
 	if(comm_send(&m_type, sizeof(uint8_t)) != sizeof(uint8_t)){
 		std::cerr << "Cant send message type!" << std::endl;
 		return;
 	}
 
-	if(comm_send((uint8_t *)&size, sizeof(uint16_t)) != sizeof(uint16_t)){
+	if(comm_send((uint8_t *)&size, sizeof(uint32_t)) != sizeof(uint32_t)){
 		std::cerr << "Cant send message size!" << std::endl;
 		return;
 	}
@@ -108,10 +108,10 @@ void Serial::handler_send(){
 		return;
 	}
 
-	// if(comm_send(&crc16, sizeof(uint16_t))){
-	// 	std::cerr << "Cant send crc16!" << std::endl;
-	// 	return;
-	// }
+	if(comm_send((uint8_t *)&crc16, sizeof(uint16_t))){
+		std::cerr << "Cant send crc16!" << std::endl;
+		return;
+	}
 }
 
 Message * Serial::get_message(){
