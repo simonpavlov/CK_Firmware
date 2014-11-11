@@ -2,7 +2,8 @@
 #define IO_MESSAGE
 
 #include <stdint.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 
 /*
 Message structure:
@@ -78,6 +79,8 @@ class Message{
 		uint16_t		get_crc16()	const {return crc16;}
 		const uint8_t *	get_data()	const {return data;}
 		bool			check()		const;
+
+		friend std::ostream & operator<<(std::ostream &stream, const Message &msg);
 };
 
 #endif //IO_MESSAGE

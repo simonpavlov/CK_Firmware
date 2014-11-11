@@ -4,7 +4,7 @@
 #include <cassert>
 #include <stdint.h>
 
-#define DEBUG_IO_SERIAL
+// #define DEBUG_IO_SERIAL
 #include <iostream>
 
 std::queue<Message *> Serial::queue_send;

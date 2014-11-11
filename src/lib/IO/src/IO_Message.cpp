@@ -28,3 +28,15 @@ uint16_t Message::check_sum() const {
 bool Message::check() const {
 	return check_sum() == crc16;
 }
+
+std::ostream & operator<<(std::ostream &stream, const Message &msg){
+	stream << "{ ";
+	stream << "type: 0x" << std::hex << (int) msg.type;
+	stream << ", size: " << std::dec << msg.size;
+	stream << ", crc16: 0x" << std::hex << msg.crc16;
+	stream << ", data:";
+	for(int i = 0; i < msg.size; stream << " 0x" << std::hex << (int)*(msg.data + i++));
+	stream << " }";
+
+	return stream;
+}

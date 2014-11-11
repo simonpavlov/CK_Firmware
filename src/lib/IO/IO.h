@@ -1,8 +1,9 @@
 #ifndef IO_LIBRARY
 #define IO_LIBRARY
 
+#include "CK_String.h"
 #include "IO_Serial.h"
 #include "IO_Message.h"
-#include "CK_string.h"
+#include "IO_PasswordPair.h"
 
 #endif
