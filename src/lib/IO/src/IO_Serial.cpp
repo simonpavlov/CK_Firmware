@@ -88,30 +88,33 @@ void Serial::handler_send(){
 	Message *msg = queue_send.front();
 	queue_send.pop();
 
+	//TODO: Сделать передачу одним coom_send
 	uint8_t	m_type		= msg->get_type();
-	uint16_t size		= msg->get_size();
-	const uint8_t *data	= msg->get_data();
+	uint32_t size		= msg->get_size();
 	uint16_t crc16		= msg->get_crc16();
 
-	if(comm_send(&m_type, sizeof(uint8_t)) != sizeof(uint8_t)){
-		std::cerr << "Cant send message type!" << std::endl;
+	uint32_t data_len = (size + 1)?
+		sizeof(uint8_t) + sizeof(uint32_t) + msg->get_size() + sizeof(uint16_t):
+		sizeof(uint8_t) + sizeof(uint32_t) + sizeof(uint16_t);
+
+	uint8_t *data	= new uint8_t[data_len];
+	uint8_t *buf_w = data;
+
+	*buf_w++ = m_type;
+	*((uint32_t *)buf_w) = size;
+	buf_w += sizeof(size);
+
+	uint8_t *buf_r = (uint8_t *)msg->get_data();
+	for(uint32_t i = 0, i_max = (size + 1)? size: 0; i < i_max; i++) *buf_w++ = *buf_r++;
+
+	*((uint16_t *)buf_w) = crc16;
+	buf_w += sizeof(crc16);
+
+	if(comm_send(data, data_len) != data_len){
+		std::cerr << "Cant send message!" << std::endl;
 		return;
 	}
 
-	if(comm_send((uint8_t *)&size, sizeof(uint32_t)) != sizeof(uint32_t)){
-		std::cerr << "Cant send message size!" << std::endl;
-		return;
-	}
-
-	if(comm_send(data, size) != (data, size)){
-		std::cerr << "Cant send message data!" << std::endl;
-		return;
-	}
-
-	if(comm_send((uint8_t *)&crc16, sizeof(uint16_t))){
-		std::cerr << "Cant send crc16!" << std::endl;
-		return;
-	}
 }
 
 Message * Serial::get_message(){

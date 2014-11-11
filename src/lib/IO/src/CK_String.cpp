@@ -21,17 +21,24 @@ CK_String::CK_String(const uint8_t *buf_init){
 }
 
 uint8_t * CK_String::serialize(){
-	if(!(buf_len + 1)) return 0;
+	uint8_t *res_buf;
 
-	uint8_t *res_buf = new uint8_t[sizeof(str_size) + buf_len];
+	if(!(buf_len + 1)){
+		res_buf = new uint8_t[sizeof(str_size)];
+		*((uint32_t *)res_buf) = ~0L;
+	}
+	else{
+		res_buf = new uint8_t[sizeof(str_size) + buf_len];
 
-	uint8_t *buf_r	= (uint8_t *)&buf_len;
-	uint8_t *buf_w	= res_buf;
+		uint8_t *buf_r;
+		uint8_t *buf_w = res_buf;
 
-	for(uint32_t i = 0; i < sizeof(buf_len); i++) *buf_w++ = *buf_r++;
+		*((uint32_t *)buf_w) = buf_len;
+		buf_w += sizeof(buf_len);
 
-	buf_r = (uint8_t *)data;
-	for(uint32_t i = 0; i < buf_len; i++) *buf_w++ = *buf_r++;
+		buf_r = (uint8_t *)data;
+		for(uint32_t i = 0; i < buf_len; i++) *buf_w++ = *buf_r++;
+	}
 
 	return res_buf;
 }

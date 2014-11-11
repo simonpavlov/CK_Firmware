@@ -11,7 +11,7 @@ int main(){
 	while(1){
 		Serial::handler_recv();
 		Serial::handler_send();
-		SDL_Delay(500);
+		SDL_Delay(100);
 
 		if(Serial::avail_msg_recv()){
 
@@ -26,7 +26,10 @@ int main(){
 
 			delete msg;
 
-			msg = new Message(MessageType::PasswordPut, 0, NULL);
+			msg = new Message(MessageType::PasswordPut, ~0, NULL);
+			cout << "msg: " << *msg << endl;
+
+			Serial::put_message(msg);
 		}
 	}
 
