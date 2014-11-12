@@ -1,4 +1,5 @@
 set (IO_SRC
+	src/IO_DeviceInfo.cpp
 	src/IO_PasswordPair.cpp
 	src/CK_String.cpp
 	src/IO_Serial.cpp

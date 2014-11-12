@@ -17,12 +17,20 @@ uint16_t Message::check_sum() const {
 	uint8_t		c;
 	uint8_t		*p = (uint8_t *)data;
 
+	#ifdef DEBUG_IO_MESSAGE
+		std::cout << "pointer data: " << (int *) data << std::endl;
+		for(int i = 0; i < len; std::cout << (int) data[i++] << " ");
+		std::cout << std::endl;
+	#endif //DEBUG_IO_MESSAGE
+
 	while(len--){
 		c = *p++;
 		crc = ((crc >> 4) & 0x0fff) ^ crc16_table[((crc ^ c) & 15)];
 		c >>= 4;
 		crc = ((crc >> 4) & 0x0fff) ^ crc16_table[((crc ^ c) & 15)];
 	}
+
+	std::cout << "OK!" << std::endl;
 
 	return ~crc & 0xffff;
 }

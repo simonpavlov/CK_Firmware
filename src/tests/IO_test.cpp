@@ -21,17 +21,29 @@ int main(){
 
 			if(msg->get_type() == MessageType::PasswordPut){
 				PasswordPair pp(msg);
+				delete msg;
 	
+				cout << "PasswordPair" << endl;
 				cout << "login: " << pp.login << endl
 					<< "password: " << pp.password << endl;
 	
-				delete msg;
-	
 				msg = new Message(MessageType::PasswordPut, ~0, NULL);
-				cout << "msg: " << *msg << endl << endl;
+				cout << "msg: " << *msg << endl;
 
 				Serial::put_message(msg);
 			}
+			else if(msg->get_type() == MessageType::DeviceInfo){
+				delete msg;
+
+				cout << "DeviceInfo" << endl;
+
+				DeviceInfo::refresh();
+				msg = DeviceInfo::serialize();
+				cout << "msg: " << *msg << endl;
+
+				Serial::put_message(msg);
+			}
+
 		}
 	}
 

@@ -5,5 +5,6 @@
 #include "IO_Serial.h"
 #include "IO_Message.h"
 #include "IO_PasswordPair.h"
+#include "IO_DeviceInfo.h"
 
 #endif

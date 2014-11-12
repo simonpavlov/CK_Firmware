@@ -46,7 +46,7 @@ class Message{
 
 		const uint8_t	type;
 		const uint32_t	size;
-		const uint16_t	crc16;
+		uint16_t		crc16;
 		const uint8_t	*data;
 
 		uint16_t check_sum() const;
@@ -66,9 +66,8 @@ class Message{
 		Message(uint8_t type_init, uint32_t size_init, uint8_t *data_init):
 			type(type_init),
 			size(size_init),
-			data(data_init),
-			crc16(check_sum())
-		{}
+			data(data_init)
+		{crc16 = check_sum();}
 
 		/*
 		 * Message type getter.
