@@ -9,6 +9,7 @@ uint32_t	DeviceInfo::freeSpace;
 #endif //DEBUG_IO_DEVICEINFO
 
 void DeviceInfo::refresh(){
+	//TODO: нормальный опрос состояний девайса
 	ident = 0xFFFFFFFFFFFFFFFF;
 	batteryState = 100;
 	freeSpace = 0;
@@ -19,7 +20,9 @@ Message * DeviceInfo::serialize(){
 	uint8_t *data = new uint8_t[data_len];
 	uint8_t *buf_w = data;
 
-	std::cout << "data_len: " << data_len << std::endl;
+	#ifdef DEBUG_IO_DEVICEINFO
+		std::cout << "data_len: " << data_len << std::endl;
+	#endif //DEBUG_IO_DEVICEINFO
 
 	*((uint64_t *)buf_w) = ident;
 	buf_w += sizeof(uint64_t);

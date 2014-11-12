@@ -10,6 +10,8 @@ class PasswordPair{
 		CK_String password;
 
 		PasswordPair(Message *msg);
+		PasswordPair(const CK_String &login_init, const CK_String &passwd_init);
+
 		Message * to_message();
 };
 

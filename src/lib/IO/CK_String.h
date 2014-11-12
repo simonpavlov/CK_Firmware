@@ -11,12 +11,18 @@ class CK_String{
 		uint16_t *data;		// !!! строка 16-ти битная
 
 	public:
-		CK_String(){str_size = ~0L; data = 0;}
+		CK_String();
 		CK_String(const uint8_t *buf_init);
+		CK_String(const CK_String &str);
+
+		~CK_String();
+
+
 		uint8_t *	serialize();
 		uint32_t	size(){return str_size;}
 		uint32_t	buf_size(){return (buf_len + 1)? buf_len: 0;}
 		uint16_t &	operator[](uint32_t n){return *(data + n);}
+		CK_String & operator=(const CK_String &str);
 
 		friend std::ostream & operator<<(std::ostream &stream, const CK_String &str);
 };

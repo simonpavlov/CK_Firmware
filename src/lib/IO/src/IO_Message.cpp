@@ -30,7 +30,9 @@ uint16_t Message::check_sum() const {
 		crc = ((crc >> 4) & 0x0fff) ^ crc16_table[((crc ^ c) & 15)];
 	}
 
-	std::cout << "OK!" << std::endl;
+	#ifdef DEBUG_IO_MESSAGE
+		std::cout << "OK!" << std::endl;
+	#endif //DEBUG_IO_MESSAGE
 
 	return ~crc & 0xffff;
 }
@@ -44,7 +46,7 @@ std::ostream & operator<<(std::ostream &stream, const Message &msg){
 	stream << "type: 0x" << std::hex << (int) msg.type;
 	stream << ", size: " << std::dec << msg.size;
 	stream << ", crc16: 0x" << std::hex << msg.crc16;
-	if(msg.size + 1){
+	if(msg.size + 1 && msg.size){
 		stream << ", data:";
 		for(uint32_t i = 0; i < msg.size; stream << " 0x" << std::hex << (int)*(msg.data + i++));
 	}

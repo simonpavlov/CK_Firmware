@@ -9,6 +9,8 @@ int main(){
 	emul_init(NETWORK_INIT);
 
 	while(1){
+		// cout << "***" << endl;
+
 		Serial::handler_recv();
 		Serial::handler_send();
 		SDL_Delay(100);
@@ -16,34 +18,58 @@ int main(){
 		if(Serial::avail_msg_recv()){
 
 			Message *msg = Serial::get_message();
-
 			cout << "Message: " << *msg << endl;
 
-			if(msg->get_type() == MessageType::PasswordPut){
-				PasswordPair pp(msg);
-				delete msg;
-	
-				cout << "PasswordPair" << endl;
-				cout << "login: " << pp.login << endl
-					<< "password: " << pp.password << endl;
-	
-				msg = new Message(MessageType::PasswordPut, ~0, NULL);
-				cout << "msg: " << *msg << endl;
+			switch(msg->get_type()){
+				case MessageType::PasswordPut:{
+					cout << "PasswordPair" << endl;
 
-				Serial::put_message(msg);
+					PasswordPair pp(msg);
+					delete msg;
+		
+					cout << "login: " << pp.login << endl
+						<< "password: " << pp.password << endl;
+		
+					msg = new Message(MessageType::PasswordPut, ~0, NULL);
+					cout << "msg: " << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
+				case MessageType::DeviceInfo:{
+					cout << "DeviceInfo" << endl;
+
+					delete msg;
+
+					DeviceInfo::refresh();
+					msg = DeviceInfo::serialize();
+					cout << "msg: " << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
+				case MessageType::PasswordGet:{
+					cout << "PasswordGet" << endl;
+
+					CK_String login(msg->get_data());
+					delete msg;
+
+					cout << "login: " << login << endl;
+
+					uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
+								buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
+
+					PasswordPair pp(CK_String((uint8_t *) buf_login), CK_String((uint8_t *) buf_passwd));
+					msg = pp.to_message();
+					cout << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
 			}
-			else if(msg->get_type() == MessageType::DeviceInfo){
-				delete msg;
-
-				cout << "DeviceInfo" << endl;
-
-				DeviceInfo::refresh();
-				msg = DeviceInfo::serialize();
-				cout << "msg: " << *msg << endl;
-
-				Serial::put_message(msg);
-			}
-
 		}
 	}
 
