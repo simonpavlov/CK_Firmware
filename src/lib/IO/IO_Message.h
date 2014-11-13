@@ -46,8 +46,8 @@ class Message{
 
 		const uint8_t	type;
 		const uint32_t	size;
-		uint16_t		crc16;
 		const uint8_t	*data;
+		uint16_t		crc16;
 
 		uint16_t check_sum() const;
 

@@ -42,8 +42,10 @@ int main(){
 
 					delete msg;
 
-					DeviceInfo::refresh();
-					msg = DeviceInfo::serialize();
+					DeviceInfo di;
+					di.refresh();
+					msg = di.serialize();
+
 					cout << "msg: " << *msg << endl;
 
 					Serial::put_message(msg);
@@ -66,6 +68,16 @@ int main(){
 					cout << *msg << endl;
 
 					Serial::put_message(msg);
+
+					break;
+				}
+				case MessageType::TextEncrypt:{
+					cout << "TextEncrypt" << endl;
+
+					break;
+				}
+				case MessageType::TextDecrypt:{
+					cout << "TextDecrypt" << endl;
 
 					break;
 				}

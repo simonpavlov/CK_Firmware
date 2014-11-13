@@ -1,12 +1,16 @@
 #include "../IO_DeviceInfo.h"
 
-uint64_t	DeviceInfo::ident;
-uint8_t		DeviceInfo::batteryState;
-uint32_t	DeviceInfo::freeSpace;
-
 #ifdef DEBUG_IO_DEVICEINFO
 #include <iostream>
 #endif //DEBUG_IO_DEVICEINFO
+
+DeviceInfo::DeviceInfo():
+	ident(0),
+	batteryState(0),
+	freeSpace(0)
+{
+	// this->refresh();
+}
 
 void DeviceInfo::refresh(){
 	//TODO: нормальный опрос состояний девайса
