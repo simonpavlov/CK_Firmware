@@ -15,3 +15,6 @@ target_link_libraries (IO_PasswordPair_test IO emul ${SDL_LIBRARY})
 
 add_executable (IO_test IO_test.cpp)
 target_link_libraries (IO_test IO emul ${SDL_LIBRARY})
+
+add_executable (CK_Array_test CK_Array_test.cpp)
+target_link_libraries (CK_Array_test IO emul ${SDL_LIBRARY})
