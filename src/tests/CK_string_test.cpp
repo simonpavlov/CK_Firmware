@@ -8,9 +8,9 @@ int main(){
 
 	uint16_t buf[] = {10, 0, 'a', 'b', 'c', 'd', 'e'};
 
-	CK_String *str_a = new CK_String((uint8_t *)buf);
-	CK_String str_b = *str_a;
-	CK_String str_c = str_b;
+	String *str_a = new String((uint8_t *)buf);
+	String str_b = *str_a;
+	String str_c = str_b;
 	str_c = *str_a;
 
 	cout << "str_a: " << *str_a << endl

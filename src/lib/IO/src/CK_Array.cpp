@@ -2,7 +2,7 @@
 // #include <cstdlib>
 #include <cstring>
 
-#define DEBUG_CK_ARRAY
+// #define DEBUG_CK_ARRAY
 
 Array::Array():
 	m_size(0),

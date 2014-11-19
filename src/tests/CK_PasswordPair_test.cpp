@@ -9,9 +9,9 @@ int main(){
 	Message *msg = new Message(MessageType::PasswordPut, 34, (uint8_t *)buf);
 	cout << "1: +" << endl;
 
-	CK_String str;
+	String str;
 
-	str = CK_String((uint8_t *)buf);
+	str = String((uint8_t *)buf);
 
 	cout << "Message: " << *msg << endl;
 	cout << "2: +" << endl;

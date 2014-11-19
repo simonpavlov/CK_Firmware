@@ -1,4 +1,4 @@
-#include "../IO_PasswordPair.h"
+#include "../CK_PasswordPair.h"
 
 #include <iostream>
 #include <cstring>
@@ -12,11 +12,11 @@ PasswordPair::PasswordPair(Message *msg){
 
 	uint8_t *data = (uint8_t *) msg->get_data();
 
-	login		= CK_String(data);
-	password	= CK_String(data + sizeof(uint32_t) + login.buf_size());
+	login		= String(data);
+	password	= String(data + sizeof(uint32_t) + login.buf_size());
 }
 
-PasswordPair::PasswordPair(const CK_String &login_init, const CK_String &passwd_init){
+PasswordPair::PasswordPair(const String &login_init, const String &passwd_init){
 	login = login_init;
 	password = passwd_init;
 }
@@ -34,4 +34,14 @@ Message * PasswordPair::to_message(){
 	for(int i = 0, i_max = sizeof(uint32_t) + password.buf_size(); i < i_max; i++) *buf_w++ = *buf_password++;
 
 	return new Message(MessageType::PasswordGet, buf_len, buf);
+}
+
+oByteStream & operator<<(oByteStream &stream, const PasswordPair &pass_pr){
+	// TODO: нужна оптимизация, следующие две строки нужно переделать так, что бы
+	// stream.write() вызывался один раз, сейчвс вызывается два раза
+
+	stream << pass_pr.login;
+	stream << pass_pr.password;
+
+	return stream;
 }

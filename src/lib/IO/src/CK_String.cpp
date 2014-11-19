@@ -4,20 +4,20 @@
 
 // #define DEBUG_CK_STRING
 
-CK_String::CK_String():
+String::String():
 	str_size(0),
 	buf_len(0),
 	data(0)
 {
 	#ifdef DEBUG_CK_STRING
-	std::cout << "IN CK_String::CK_String()" << std::endl;
+	std::cout << "IN String::String()" << std::endl;
 	#endif //DEBUG_CK_STRING
 }
 
 
-CK_String::CK_String(const uint8_t *buf_init){
+String::String(const uint8_t *buf_init){
 	#ifdef DEBUG_CK_STRING
-	std::cout << "IN CK_String::CK_String(const uint8_t *buf_init)" << std::endl;
+	std::cout << "IN String::String(const uint8_t *buf_init)" << std::endl;
 	#endif //DEBUG_CK_STRING
 
 	uint8_t *buf_r	= (uint8_t *)buf_init;
@@ -39,27 +39,27 @@ CK_String::CK_String(const uint8_t *buf_init){
 	}
 }
 
-CK_String::CK_String(const CK_String &str):
+String::String(const String &str):
 	str_size(str.str_size),
 	buf_len(str.buf_len)
 {
 	#ifdef DEBUG_CK_STRING
-	std::cout << "IN CK_String::CK_String(const CK_String &str)" << std::endl;
+	std::cout << "IN String::String(const String &str)" << std::endl;
 	#endif //DEBUG_CK_STRING
 
 	data = new uint16_t[str_size];
 	memcpy(data, str.data, buf_len);
 }
 
-CK_String::~CK_String(){
+String::~String(){
 	#ifdef DEBUG_CK_STRING
-	std::cout << "IN CK_String::~CK_String()" << std::endl;
+	std::cout << "IN String::~String()" << std::endl;
 	#endif //DEBUG_CK_STRING
 
 	delete [] data;
 }
 
-uint8_t * CK_String::serialize(){
+uint8_t * String::serialize(){
 	uint8_t *res_buf;
 
 	if(!(buf_len + 1)){
@@ -82,9 +82,9 @@ uint8_t * CK_String::serialize(){
 	return res_buf;
 }
 
-CK_String & CK_String::operator=(const CK_String &str){
+String & String::operator=(const String &str){
 	#ifdef DEBUG_CK_STRING
-	std::cout << "IN CK_String & operator=(const CK_String &str)" << std::endl;
+	std::cout << "IN String & operator=(const String &str)" << std::endl;
 	#endif
 
 	if(this == &str){
@@ -102,7 +102,34 @@ CK_String & CK_String::operator=(const CK_String &str){
 	return *this;
 }
 
-std::ostream & operator<<(std::ostream &stream, const CK_String &str){
+oByteStream & operator<<(oByteStream &stream, const String &str){
+	uint32_t	buf_len;
+	uint8_t		*buf;
+
+	if(str.str_size){
+		buf_len	= sizeof(uint32_t) + str.buf_len;
+		buf		= new uint8_t[buf_len];
+
+		uint8_t *buf_w = buf;
+
+		memcpy(buf_w, (uint8_t *)&str.buf_len, sizeof(uint32_t));
+		buf_w += sizeof(uint32_t);
+
+		memcpy(buf_w, (uint8_t *)str.data, str.buf_len);
+	}
+	else{
+		buf_len	= sizeof(uint32_t);
+		buf		= new uint8_t[buf_len];
+
+		*((uint32_t *)buf) = ~0L;
+	}
+
+	stream.write(buf, buf_len);
+
+	return stream;
+}
+
+std::ostream & operator<<(std::ostream &stream, const String &str){
 	for(uint32_t i = 0; i < str.str_size; i++){
 		if(*(str.data + i) >> 8) stream << "0x" << std::hex << *(str.data + i);
 		else stream << char(*(str.data + i));

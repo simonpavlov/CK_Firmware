@@ -55,7 +55,7 @@ int main(){
 				case MessageType::PasswordGet:{
 					cout << "PasswordGet" << endl;
 
-					CK_String login(msg->get_data());
+					String login(msg->get_data());
 					delete msg;
 
 					cout << "login: " << login << endl;
@@ -63,7 +63,7 @@ int main(){
 					uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
 								buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
 
-					PasswordPair pp(CK_String((uint8_t *) buf_login), CK_String((uint8_t *) buf_passwd));
+					PasswordPair pp(String((uint8_t *) buf_login), String((uint8_t *) buf_passwd));
 					msg = pp.to_message();
 					cout << *msg << endl;
 

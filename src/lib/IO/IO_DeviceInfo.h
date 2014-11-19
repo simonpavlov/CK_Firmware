@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "IO_Message.h"
+#include "IO_ByteStream.h"
 
 class DeviceInfo {
 	private:
@@ -18,6 +19,8 @@ class DeviceInfo {
 
 		void refresh();
 		Message * serialize();
+
+		friend oByteStream & operator<<(oByteStream &stream, const DeviceInfo &dev_inf);
 };
 
 #endif //IO_DEVICEINFO

@@ -1,9 +1,10 @@
 set (IO_SRC
+	src/IO_ByteStream.cpp
 	src/CK_Array.cpp
 	src/IO_EncryptString.cpp
 	src/IO_DecryptString.cpp
 	src/IO_DeviceInfo.cpp
-	src/IO_PasswordPair.cpp
+	src/CK_PasswordPair.cpp
 	src/CK_String.cpp
 	src/IO_Serial.cpp
 	src/IO_Message.cpp
