@@ -19,6 +19,7 @@ void DeviceInfo::refresh(){
 	freeSpace = 0;
 }
 
+/*
 Message * DeviceInfo::serialize(){
 	uint32_t data_len = sizeof(uint64_t) + sizeof(uint8_t) + sizeof(uint32_t);
 	uint8_t *data = new uint8_t[data_len];
@@ -46,6 +47,7 @@ Message * DeviceInfo::serialize(){
 	return new Message(MessageType::DeviceInfo, data_len, data);
 	//TODO: BUG? data not freed
 }
+*/
 
 OByteStream & operator<<(OByteStream &stream, const DeviceInfo &dev_inf){
 	uint32_t buf_len = sizeof(uint64_t) + sizeof(uint8_t) + sizeof(uint32_t);

@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "CK_Array.h"
+
 /*
 Message structure:
 +------+---------------------+
@@ -45,8 +47,9 @@ class Message{
 		static const uint16_t crc16_table[16];
 
 		const uint8_t	type;
-		const uint32_t	size;
-		const uint8_t	*data;
+		// const uint32_t	size;
+		// const uint8_t	*data;
+		Array			*m_arr;
 		uint16_t		crc16;
 
 		uint16_t check_sum() const;
@@ -56,17 +59,15 @@ class Message{
 		 * Message constructor.
 		 * @param type Is a message type.
 		 */
-		Message(uint8_t type_init, uint32_t size_init, uint8_t *data_init, uint16_t crc16_init):
+		Message(uint8_t type_init, Array *arr, uint16_t crc16_init):
 			type(type_init),
-			size(size_init),
-			data(data_init),
+			m_arr(arr),
 			crc16(crc16_init)
 		{}
 
-		Message(uint8_t type_init, uint32_t size_init, uint8_t *data_init):
+		Message(uint8_t type_init, Array *arr):
 			type(type_init),
-			size(size_init),
-			data(data_init)
+			m_arr(arr)
 		{crc16 = check_sum();}
 
 		/*
@@ -74,9 +75,10 @@ class Message{
 		 * return type code of message.
 		 */
 		uint8_t			get_type()	const {return type;}
-		uint32_t		get_size()	const {return size;}
+		// uint32_t		get_size()	const {return size;}
+		Array *			get_arr() {return m_arr;}
 		uint16_t		get_crc16()	const {return crc16;}
-		const uint8_t *	get_data()	const {return data;}
+		// const uint8_t *	get_data()	const {return data;}
 		bool			check()		const;
 
 		friend std::ostream & operator<<(std::ostream &stream, const Message &msg);

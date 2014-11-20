@@ -5,6 +5,7 @@
 
 // #define DEBUG_IO_PASSWORDPAIR
 
+/*
 PasswordPair::PasswordPair(Message *msg){
 	#ifdef DEBUG_IO_PASSWORDPAIR
 	std::cout << "IN PasswordPair::PasswordPair()" << std::endl;
@@ -15,12 +16,14 @@ PasswordPair::PasswordPair(Message *msg){
 	login		= String(data);
 	password	= String(data + sizeof(uint32_t) + login.buf_size());
 }
+*/
 
 PasswordPair::PasswordPair(const String &login_init, const String &passwd_init){
 	login = login_init;
 	password = passwd_init;
 }
 
+/*
 Message * PasswordPair::to_message(){
 	uint32_t buf_len		= sizeof(uint32_t) + login.buf_size() + sizeof(uint32_t) + password.buf_size();
 
@@ -35,6 +38,7 @@ Message * PasswordPair::to_message(){
 
 	return new Message(MessageType::PasswordGet, buf_len, buf);
 }
+*/
 
 OByteStream & operator<<(OByteStream &stream, const PasswordPair &pass_pr){
 	// TODO: нужна оптимизация, следующие две строки нужно переделать так, что бы

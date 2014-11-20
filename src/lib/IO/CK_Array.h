@@ -34,8 +34,8 @@ class Array{
 		bool		app_end(const uint8_t *buf, uint32_t size);
 		bool		app_end(const Array &arr);
 
-		uint32_t	size(){return m_size;}
-		uint8_t *	data(){return m_data;}
+		uint32_t	size() const {return m_size;}
+		uint8_t *	data() {return m_data;}
 
 		~Array();
 

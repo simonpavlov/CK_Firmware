@@ -10,12 +10,12 @@ const uint16_t Message::crc16_table[16] = {
 
 uint16_t Message::check_sum() const {
 
-	if(!(size + 1)) return 0xffff;
+	if(!(m_arr->size() + 1)) return 0xffff;
 
-	uint32_t	len = size;
+	uint32_t	len = m_arr->size();
 	uint16_t	crc = 0xffff;
 	uint8_t		c;
-	uint8_t		*p = (uint8_t *)data;
+	uint8_t		*p = (uint8_t *)m_arr->data();
 
 	#ifdef DEBUG_IO_MESSAGE
 		std::cout << "pointer data: " << (int *) data << std::endl;
@@ -44,12 +44,8 @@ bool Message::check() const {
 std::ostream & operator<<(std::ostream &stream, const Message &msg){
 	stream << "{ ";
 	stream << "type: 0x" << std::hex << (int) msg.type;
-	stream << ", size: " << std::dec << msg.size;
+	stream << ", array: " << std::dec << msg.m_arr;
 	stream << ", crc16: 0x" << std::hex << msg.crc16;
-	if(msg.size + 1 && msg.size){
-		stream << ", data:";
-		for(uint32_t i = 0; i < msg.size; stream << " 0x" << std::hex << (int)*(msg.data + i++));
-	}
 	stream << " }";
 
 	return stream;

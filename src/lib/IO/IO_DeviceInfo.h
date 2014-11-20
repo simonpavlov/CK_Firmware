@@ -18,7 +18,7 @@ class DeviceInfo {
 		DeviceInfo();
 
 		void refresh();
-		Message * serialize();
+		// Message * serialize();
 
 		friend OByteStream & operator<<(OByteStream &stream, const DeviceInfo &dev_inf);
 };

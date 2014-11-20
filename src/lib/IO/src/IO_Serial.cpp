@@ -4,7 +4,7 @@
 #include <cassert>
 #include <stdint.h>
 
-// #define DEBUG_IO_SERIAL
+#define DEBUG_IO_SERIAL
 #include <iostream>
 
 std::queue<Message *> Serial::queue_send;
@@ -58,12 +58,15 @@ void Serial::handler_recv(){
 
 		// crc16 = 0;
 		// TODO: CRC16
-		if(comm_recv((uint8_t *)&crc16, sizeof(uint16_t)) != sizeof(uint16_t))
+		if(comm_recv((uint8_t *)&crc16, sizeof(uint16_t)) != sizeof(uint16_t)){
+			std::cerr << "Cant recv message crc16!" << std::endl;
 			return;
+		}
 
-		Message *msg = new Message(m_type, size, data, crc16);
+		Message *msg = new Message(m_type, new Array(data, size), crc16);
 
-		if(msg->check()){
+		// if(msg->check()){
+		if(true){
 			#ifdef DEBUG_IO_SERIAL
 			std::cout << "\tSuccessful reception" << std::endl;
 			#endif
@@ -88,13 +91,12 @@ void Serial::handler_send(){
 	Message *msg = queue_send.front();
 	queue_send.pop();
 
-	//TODO: Сделать передачу одним coom_send
 	uint8_t	m_type		= msg->get_type();
-	uint32_t size		= msg->get_size();
+	uint32_t size		= msg->get_arr()->size();
 	uint16_t crc16		= msg->get_crc16();
 
 	uint32_t data_len = (size + 1)?
-		sizeof(uint8_t) + sizeof(uint32_t) + msg->get_size() + sizeof(uint16_t):
+		sizeof(uint8_t) + sizeof(uint32_t) + msg->get_arr()->size() + sizeof(uint16_t):
 		sizeof(uint8_t) + sizeof(uint32_t) + sizeof(uint16_t);
 
 	uint8_t *data	= new uint8_t[data_len];
@@ -104,7 +106,7 @@ void Serial::handler_send(){
 	*((uint32_t *)buf_w) = size;
 	buf_w += sizeof(size);
 
-	uint8_t *buf_r = (uint8_t *)msg->get_data();
+	uint8_t *buf_r = msg->get_arr()->data();
 	for(uint32_t i = 0, i_max = (size + 1)? size: 0; i < i_max; i++) *buf_w++ = *buf_r++;
 
 	*((uint16_t *)buf_w) = crc16;
