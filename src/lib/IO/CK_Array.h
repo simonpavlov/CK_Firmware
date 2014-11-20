@@ -22,6 +22,12 @@ class Array{
 		Array &		operator=(const Array &arr);
 
 		/*
+			Переписывает из текушего массива в buf size бит и удаляет их из массива вернёт
+			true если всё хорошо, иначе flase
+		*/
+		bool	take_front(uint8_t *buf, uint32_t size);
+
+		/*
 			Приписывает size бит от buf к текущему массиву, вернёт true если всё ок, иначе
 			false
 		*/

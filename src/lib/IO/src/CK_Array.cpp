@@ -53,13 +53,39 @@ Array &	Array::operator=(const Array &arr){
 	std::cout << "IN Array::operator=(const Array &arr)" << std::endl;
 	#endif // DEBUG_CK_ARRAY
 
-	m_size = arr.m_size;
+	if(this != &arr){
+		m_size = arr.m_size;
 
-	m_data = new uint8_t[m_size];
-	memcpy(m_data, arr.m_data, m_size);
+		delete [] m_data;
+
+		m_data = new uint8_t[m_size];
+		memcpy(m_data, arr.m_data, m_size);
+	}
 
 	return *this;
 }
+
+bool Array::take_front(uint8_t *buf, uint32_t size){
+	//TODO: проверки
+
+	memcpy(buf, m_data, size);
+
+	uint32_t data_len;
+	uint8_t *new_data;
+
+	data_len	= m_size - size;
+	new_data	= new uint8_t[data_len];
+
+	memcpy(new_data, m_data + size, data_len);
+
+	delete [] m_data;
+
+	m_size = data_len;
+	m_data = new_data;
+
+	return true;
+}
+
 
 bool Array::app_end(const uint8_t *buf, uint32_t size){
 	#ifdef DEBUG_CK_ARRAY
@@ -71,6 +97,8 @@ bool Array::app_end(const uint8_t *buf, uint32_t size){
 
 	memcpy(new_data, m_data, m_size);
 	memcpy(new_data + m_size, buf, size);
+
+	delete [] m_data;
 
 	m_size = m_size + size;
 	m_data = new_data;
@@ -95,9 +123,10 @@ std::ostream & operator<<(std::ostream &stream, const Array &arr){
 	if(arr.m_size && arr.m_size + 1){
 		stream << ", data:";
 		for(int i = 0; i < arr.m_size; i++) stream << std::hex << " 0x" << (int)*(arr.m_data + i);
-		stream << " }";
-		stream << std::dec;
 	}
+	stream << " }";
+
+	stream << std::dec;
 
 	return stream;
 }

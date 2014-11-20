@@ -47,7 +47,7 @@ Message * DeviceInfo::serialize(){
 	//TODO: BUG? data not freed
 }
 
-oByteStream & operator<<(oByteStream &stream, const DeviceInfo &dev_inf){
+OByteStream & operator<<(OByteStream &stream, const DeviceInfo &dev_inf){
 	uint32_t buf_len = sizeof(uint64_t) + sizeof(uint8_t) + sizeof(uint32_t);
 	uint8_t *buf = new uint8_t[buf_len];
 	uint8_t *buf_w = buf;

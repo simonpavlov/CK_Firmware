@@ -36,12 +36,22 @@ Message * PasswordPair::to_message(){
 	return new Message(MessageType::PasswordGet, buf_len, buf);
 }
 
-oByteStream & operator<<(oByteStream &stream, const PasswordPair &pass_pr){
+OByteStream & operator<<(OByteStream &stream, const PasswordPair &pass_pr){
 	// TODO: нужна оптимизация, следующие две строки нужно переделать так, что бы
-	// stream.write() вызывался один раз, сейчвс вызывается два раза
+	// stream.write() вызывался один раз, сейчас вызывается два раза
 
 	stream << pass_pr.login;
 	stream << pass_pr.password;
+
+	return stream;
+}
+
+IByteStream & operator>>(IByteStream &stream, PasswordPair &pass_pr){
+	// TODO: нужна оптимизация, следующие две строки нужно переделать так, что бы
+	// stream.read() вызывался один раз, сейчас вызывается четыре раза
+
+	stream >> pass_pr.login;
+	stream >> pass_pr.password;
 
 	return stream;
 }

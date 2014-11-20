@@ -34,7 +34,7 @@ function run() {
 
 function run_vlg() {
    # echo "cd $SRCDIR/data && valgrind -q ../build/src/tests/$1 & "
-   build && cd $SRCDIR/data && valgrind -q ../build/src/tests/$1 &
+   build && cd $SRCDIR/data && valgrind --tool=memcheck --leak-check=full -q ../build/src/tests/$1 &
 }
 
 if [[ $# == 1 ]]; then

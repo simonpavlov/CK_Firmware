@@ -20,68 +20,68 @@ int main(){
 			Message *msg = Serial::get_message();
 			cout << "Message: " << *msg << endl;
 
-			switch(msg->get_type()){
-				case MessageType::PasswordPut:{
-					cout << "PasswordPair" << endl;
+			// switch(msg->get_type()){
+			// 	case MessageType::PasswordPut:{
+			// 		cout << "PasswordPair" << endl;
 
-					PasswordPair pp(msg);
-					delete msg;
+			// 		PasswordPair pp(msg);
+			// 		delete msg;
 		
-					cout << "login: " << pp.login << endl
-						<< "password: " << pp.password << endl;
+			// 		cout << "login: " << pp.login << endl
+			// 			<< "password: " << pp.password << endl;
 		
-					msg = new Message(MessageType::PasswordPut, ~0, NULL);
-					cout << "msg: " << *msg << endl;
+			// 		msg = new Message(MessageType::PasswordPut, ~0, NULL);
+			// 		cout << "msg: " << *msg << endl;
 
-					Serial::put_message(msg);
+			// 		Serial::put_message(msg);
 
-					break;
-				}
-				case MessageType::DeviceInfo:{
-					cout << "DeviceInfo" << endl;
+			// 		break;
+			// 	}
+			// 	case MessageType::DeviceInfo:{
+			// 		cout << "DeviceInfo" << endl;
 
-					delete msg;
+			// 		delete msg;
 
-					DeviceInfo di;
-					di.refresh();
-					msg = di.serialize();
+			// 		DeviceInfo di;
+			// 		di.refresh();
+			// 		msg = di.serialize();
 
-					cout << "msg: " << *msg << endl;
+			// 		cout << "msg: " << *msg << endl;
 
-					Serial::put_message(msg);
+			// 		Serial::put_message(msg);
 
-					break;
-				}
-				case MessageType::PasswordGet:{
-					cout << "PasswordGet" << endl;
+			// 		break;
+			// 	}
+			// 	case MessageType::PasswordGet:{
+			// 		cout << "PasswordGet" << endl;
 
-					String login(msg->get_data());
-					delete msg;
+			// 		String login(msg->get_data());
+			// 		delete msg;
 
-					cout << "login: " << login << endl;
+			// 		cout << "login: " << login << endl;
 
-					uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
-								buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
+			// 		uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
+			// 					buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
 
-					PasswordPair pp(String((uint8_t *) buf_login), String((uint8_t *) buf_passwd));
-					msg = pp.to_message();
-					cout << *msg << endl;
+			// 		PasswordPair pp(String((uint8_t *) buf_login), String((uint8_t *) buf_passwd));
+			// 		msg = pp.to_message();
+			// 		cout << *msg << endl;
 
-					Serial::put_message(msg);
+			// 		Serial::put_message(msg);
 
-					break;
-				}
-				case MessageType::TextEncrypt:{
-					cout << "TextEncrypt" << endl;
+			// 		break;
+			// 	}
+			// 	case MessageType::TextEncrypt:{
+			// 		cout << "TextEncrypt" << endl;
 
-					break;
-				}
-				case MessageType::TextDecrypt:{
-					cout << "TextDecrypt" << endl;
+			// 		break;
+			// 	}
+			// 	case MessageType::TextDecrypt:{
+			// 		cout << "TextDecrypt" << endl;
 
-					break;
-				}
-			}
+			// 		break;
+			// 	}
+			// }
 		}
 	}
 

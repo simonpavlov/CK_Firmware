@@ -7,25 +7,24 @@
 /*
 	Этто класс-обёртка он реализует поток чтения из буфера
 */
-class iByteStream{
+class IByteStream{
 	private:
 		Array	*m_arr;
-		uint8_t	*cur_byte;
 
 	public:
-		iByteStream(Array *arr): m_arr(arr), cur_byte(arr->data()) {}
+		IByteStream(Array *arr): m_arr(arr) {}
 		bool read(uint8_t *buf, uint32_t size);
 };
 
 /*
 	Этто класс-обёртка он реализует поток ввода в буфер
 */
-class oByteStream{
+class OByteStream{
 	private:
 		Array	*m_arr;
 
 	public:
-		oByteStream(Array *arr): m_arr(arr) {}
+		OByteStream(Array *arr): m_arr(arr) {}
 		bool write(const uint8_t *buf, uint32_t size);
 };
 

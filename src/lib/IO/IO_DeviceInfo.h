@@ -20,7 +20,7 @@ class DeviceInfo {
 		void refresh();
 		Message * serialize();
 
-		friend oByteStream & operator<<(oByteStream &stream, const DeviceInfo &dev_inf);
+		friend OByteStream & operator<<(OByteStream &stream, const DeviceInfo &dev_inf);
 };
 
 #endif //IO_DEVICEINFO
