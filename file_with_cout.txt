@@ -1,0 +1,16 @@
+    В этих файлах используется стандартный поток вывода
+который надо заменить на логер
+
+Список файлов:
+CK_Array.cpp
+CK_PasswordPair.cpp
+CK_String.cpp
+IO_DeviceInfo.cpp
+IO_Message.cpp
+IO_Serial.cpp
+test_task.cpp
+UI_Font.cpp
+UI_Main.cpp
+UI_MessageBox.cpp
+UI_SelectBox.cpp
+UI_Surface.cpp
