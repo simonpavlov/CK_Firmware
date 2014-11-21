@@ -18,3 +18,6 @@ target_link_libraries (CK_Array_test IO emul ${SDL_LIBRARY})
 
 add_executable (IO_ByteStream_test IO_ByteStream_test.cpp)
 target_link_libraries (IO_ByteStream_test IO emul ${SDL_LIBRARY})
+
+add_executable (CK_Loger_test CK_Loger_test.cpp)
+target_link_libraries (CK_Loger_test IO emul ${SDL_LIBRARY})
