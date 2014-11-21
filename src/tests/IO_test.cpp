@@ -20,68 +20,127 @@ int main(){
 			Message *msg = Serial::get_message();
 			cout << "Message: " << *msg << endl;
 
-			// switch(msg->get_type()){
-			// 	case MessageType::PasswordPut:{
-			// 		cout << "PasswordPair" << endl;
+			switch(msg->get_type()){
+				case MessageType::DeviceInfo:{
+					cout << "DeviceInfo" << endl;
 
-			// 		PasswordPair pp(msg);
-			// 		delete msg;
+					delete msg;
+
+					DeviceInfo di;
+
+					Array *o_arr = new Array();
+					OByteStream output(o_arr);
+
+					di.refresh();
+					output << di;
+
+					msg = new Message(MessageType::DeviceInfo, o_arr);
+
+					cout << "msg: " << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
+				case MessageType::PasswordPut:{
+					cout << "PasswordPut" << endl;
+
+					PasswordPair pp;
+					Array *o_arr = new Array();
+
+					IByteStream input(msg->get_arr());
+					OByteStream output(o_arr);
+
+					input >> pp;
+					output << String();
+
+					delete msg;
 		
-			// 		cout << "login: " << pp.login << endl
-			// 			<< "password: " << pp.password << endl;
+					cout << "login: " << pp.login << endl
+						<< "password: " << pp.password << endl;
 		
-			// 		msg = new Message(MessageType::PasswordPut, ~0, NULL);
-			// 		cout << "msg: " << *msg << endl;
+					msg = new Message(MessageType::PasswordPut, o_arr);
+					cout << "msg: " << *msg << endl;
 
-			// 		Serial::put_message(msg);
+					Serial::put_message(msg);
 
-			// 		break;
-			// 	}
-			// 	case MessageType::DeviceInfo:{
-			// 		cout << "DeviceInfo" << endl;
+					break;
+				}
+				case MessageType::PasswordGet:{
+					cout << "PasswordGet" << endl;
 
-			// 		delete msg;
+					String login;
+					PasswordPair pp(String("login"), String("password"));
 
-			// 		DeviceInfo di;
-			// 		di.refresh();
-			// 		msg = di.serialize();
+					Array *o_arr = new Array();
+					IByteStream input(msg->get_arr());
+					OByteStream output(o_arr);
 
-			// 		cout << "msg: " << *msg << endl;
+					input >> login;
+					output << pp;
 
-			// 		Serial::put_message(msg);
+					delete msg;
 
-			// 		break;
-			// 	}
-			// 	case MessageType::PasswordGet:{
-			// 		cout << "PasswordGet" << endl;
+					cout << "login: " << login << endl;
 
-			// 		String login(msg->get_data());
-			// 		delete msg;
+					msg = new Message(MessageType::PasswordGet, o_arr);
+					cout << "msg: " << *msg << endl;
 
-			// 		cout << "login: " << login << endl;
+					Serial::put_message(msg);
 
-			// 		uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
-			// 					buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
+					break;
+				}
+				case MessageType::TextEncrypt:{
+					cout << "TextEncrypt" << endl;
 
-			// 		PasswordPair pp(String((uint8_t *) buf_login), String((uint8_t *) buf_passwd));
-			// 		msg = pp.to_message();
-			// 		cout << *msg << endl;
+					String str;
 
-			// 		Serial::put_message(msg);
+					Array *o_arr = new Array();
+					IByteStream input(msg->get_arr());
+					OByteStream output(o_arr);
 
-			// 		break;
-			// 	}
-			// 	case MessageType::TextEncrypt:{
-			// 		cout << "TextEncrypt" << endl;
+					input >> str;
+					cout << str << endl;;
+					//Do something with str
+					output << str;
 
-			// 		break;
-			// 	}
-			// 	case MessageType::TextDecrypt:{
-			// 		cout << "TextDecrypt" << endl;
+					delete msg;
 
-			// 		break;
-			// 	}
-			// }
+					msg = new Message(MessageType::TextEncrypt, o_arr);
+					cout << "msg: " << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
+				case MessageType::TextDecrypt:{
+					cout << "TextDecrypt" << endl;
+
+					String str;
+
+					Array *o_arr = new Array();
+					IByteStream input(msg->get_arr());
+					OByteStream output(o_arr);
+
+					input >> str;
+					cout << str << endl;
+					//Do something with str
+					output << str;
+
+					delete msg;
+
+					msg = new Message(MessageType::TextDecrypt, o_arr);
+					cout << "msg: " << *msg << endl;
+
+					Serial::put_message(msg);
+
+					break;
+				}
+				default:{
+					cout << "Unknown Type!" << endl;
+					break;
+				}
+			}
 		}
 	}
 

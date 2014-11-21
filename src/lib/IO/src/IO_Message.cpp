@@ -1,6 +1,10 @@
 #include "../IO_Message.h"
 #include <iostream>
 
+Message::~Message(){
+	delete m_arr;
+}
+
 const uint16_t Message::crc16_table[16] = {
 	0x0000, 0x1081, 0x2102, 0x3183,
 	0x4204, 0x5285, 0x6306, 0x7387,
@@ -44,7 +48,7 @@ bool Message::check() const {
 std::ostream & operator<<(std::ostream &stream, const Message &msg){
 	stream << "{ ";
 	stream << "type: 0x" << std::hex << (int) msg.type;
-	stream << ", array: " << std::dec << msg.m_arr;
+	stream << ", array: " << std::dec << *msg.m_arr;
 	stream << ", crc16: 0x" << std::hex << msg.crc16;
 	stream << " }";
 

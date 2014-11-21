@@ -70,6 +70,8 @@ class Message{
 			m_arr(arr)
 		{crc16 = check_sum();}
 
+		~Message();
+
 		/*
 		 * Message type getter.
 		 * return type code of message.

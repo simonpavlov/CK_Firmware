@@ -7,22 +7,22 @@
 
 class String{
 	private:
-		uint32_t m_size;	// Длинна строки
-		uint32_t buf_len;	// Длинна буфера
-		uint16_t *data;		// !!! строка 16-ти битная
+		uint32_t m_size;		// Длинна строки
+		uint32_t m_data_len;	// Длинна буфера
+		uint16_t *m_data;		// !!! строка 16-ти битная
 
 	public:
 		String();
-		String(const uint8_t *buf_init);
+		String(const char *c_str);
 		String(const String &str);
 
 		~String();
 
 
-		uint8_t *	serialize();
+		// uint8_t *	serialize();
 		uint32_t	size(){return m_size;}
-		uint32_t	buf_size(){return buf_len;}
-		uint16_t &	operator[](uint32_t n){return *(data + n);}
+		uint32_t	buf_size(){return m_data_len;}
+		uint16_t &	operator[](uint32_t n){return *(m_data + n);}
 		String & operator=(const String &str);
 
 		friend OByteStream & operator<<(OByteStream &stream, const String &str);

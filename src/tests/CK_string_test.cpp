@@ -6,9 +6,7 @@ using namespace std;
 
 int main(){
 
-	uint16_t buf[] = {10, 0, 'a', 'b', 'c', 'd', 'e'};
-
-	String *str_a = new String((uint8_t *)buf);
+	String *str_a = new String("abcde");
 	String str_b = *str_a;
 	String str_c = str_b;
 	str_c = *str_a;

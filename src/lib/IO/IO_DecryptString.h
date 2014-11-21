@@ -1,6 +1,0 @@
-#ifndef IO_DECRYPTSTRING
-#define IO_DECRYPTSTRING
-
-
-
-#endif //IO_DECRYPTSTRING

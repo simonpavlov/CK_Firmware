@@ -25,9 +25,7 @@ int main(){
 
 			Message *msg = Serial::get_message();
 
-			cout << "New message {" << endl;
-			cout << *msg << endl;
-			cout << "}" << endl;
+			cout << "New message: " << *msg << endl;
 
 			// cout << "\ttype: " << hex << (int) msg->get_type() << endl;
 			// cout << "\tsize: " << dec << msg->get_arr()->size() << endl;

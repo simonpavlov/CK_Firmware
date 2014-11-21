@@ -15,11 +15,8 @@ int main(){
 	OByteStream out(&oarr);
 	IByteStream input(&oarr);
 
-	uint16_t	buf_login[] = {10, 0, 'l', 'o', 'g', 'i', 'n'},
-				buf_passwd[] = {16, 0, 'p', 'a', 's', 's', 'w', 'o', 'r', 'd'};
-
-	String	str_l((uint8_t *)buf_login),
-			str_p((uint8_t *)buf_passwd);
+	String	str_l("login"),
+			str_p("password");
 
 	PasswordPair pp(str_l, str_p), pp_free;
 
