@@ -18,7 +18,7 @@ class test_callback: public Callback{
 		void exec(int x){
 			counter++;
 
-			cout	<< "X: " << x << endl;
+			cout << "X: " << x << endl;
 
 			if(counter >= 1){
 				delete ui->top();
