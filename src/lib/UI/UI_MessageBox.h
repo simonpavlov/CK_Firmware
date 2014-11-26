@@ -10,19 +10,27 @@
 	Класс реализующий задачу отображения информации
 */
 class MessageBox: public Task{
-	private:
-		std::string message;
-		Surface *surf;
-
 	public:
+		class Callback{
+			public:
+				virtual void exec() = 0;
+		};
+
 		// Единственный параметр - отображаемая информация
-		MessageBox(UI &stk, std::string str, Callback *cb = NULL);
+		MessageBox(UI &init_ui, std::string str, Callback *cb = NULL);
 		~MessageBox();
 
-		bool 	up(){return false;};
-		bool	down(){return false;};
+		bool 	up(){return false;}
+		bool	down(){return false;}
 		bool	select();
+		bool	back(){return false;}
 		Surface	& draw();
+
+	private:
+		Callback *m_callback;
+
+		std::string message;
+		Surface *surf;
 };
 
 #endif //UI_MESSAGEBOX

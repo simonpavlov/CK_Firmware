@@ -38,6 +38,11 @@ class Surface{
 		void clear();
 
 		/*
+			Очистить часть экрана
+		*/
+		void clear(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
+
+		/*
 			Отрисовка на данной поверхности поверхности surf
 			по координатам x, y
 		*/
@@ -50,7 +55,7 @@ class Surface{
 		void draw(Surface &surf);
 
 		/*
-			Отрисовать пиксели по заданным координатам
+			Отрисовать пиксель по заданным координатам
 		*/
 		void draw(unsigned int x, unsigned int y);
 

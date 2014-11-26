@@ -43,6 +43,9 @@ enum Event get_event(){
 			else if(evt.key.keysym.sym == SDLK_q){
 				return EVT_EXIT;
 			}
+			else if(evt.key.keysym.sym == SDLK_BACKSPACE){
+				return EVT_PRESS_BACK;
+			}
 
 			break;
 

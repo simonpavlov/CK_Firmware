@@ -8,7 +8,8 @@ enum Event {
 	EVT_EXIT,			//Событие выхода
 	EVT_PRESS_DOWN,		//Нажата кнопка вниз
 	EVT_PRESS_UP,		//Нажата кнопка вверх
-	EVT_PRESS_ENTER		//Нажат enter
+	EVT_PRESS_ENTER,	//Нажат enter
+	EVT_PRESS_BACK
 };
 
 enum Event get_event(); //Функция возвращает событие.

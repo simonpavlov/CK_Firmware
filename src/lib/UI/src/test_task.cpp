@@ -3,7 +3,14 @@
 #include <string>
 #include <sstream>
 
-test_task::test_task(UI &stk, int x, int y, Callback *cb): Task(stk, cb), font(stk.get_default_font()), surf(192, 80){
+#define DEBUG_TEST_TASK
+
+test_task::test_task(UI &stk, int x, int y, Callback *cb):
+	Task(stk),
+	font(stk.get_default_font()),
+	m_callback(cb),
+	surf(192, 80)
+{
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::test_task()" << std::endl;
 	#endif
@@ -43,12 +50,20 @@ bool test_task::select(){
 	std::cout << "IN test_task::select()" << std::endl;
 	#endif
 
-	if(callback){
-		callback->exec(X);
+	if(m_callback){
+		m_callback->exec(X);
 	}
 	else{
 		suicide();
 	}
+
+	return false;
+}
+
+bool test_task::back(){
+	#ifdef DEBUG_TEST_TASK
+	std::cout << "IN test_task::back()" << std::endl;
+	#endif
 
 	return false;
 }
@@ -79,6 +94,14 @@ Surface & test_task::draw(){
 	new_surf.draw_border();
 
 	surf.draw(new_surf, Y, 23);
+	surf.clear(Y + 16, 23, 16, 20);
+
+	// for(int i = 0; i < surf.get_height(); i++){
+	// 	for(int j = 0; j < surf.get_width(); j++){
+	// 		surf.draw(j, i);
+	// 	}
+	// }
+
 
 	return surf;
 }

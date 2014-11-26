@@ -1,9 +1,10 @@
 // #include "../UI_Main.h"
 #include "../UI_Task.h"
 
-Task::Task(UI &ui, Callback *cb): my_UI(ui) {
+Task::Task(UI &ui):
+	my_UI(ui)
+{
 	my_UI.push(this);
-	callback = cb;
 }
 
 void Task::suicide() {

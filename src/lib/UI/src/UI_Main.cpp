@@ -22,9 +22,7 @@ UI::~UI(){
 	std::cout << "IN UI::~UI()" << std::endl;
 	#endif
 
-	for(Task *task; !empty(); pop()){
-		delete top();
-	}
+	for(Task *task; !empty(); pop());
 }
 
 void UI::push(Task *task){
@@ -39,12 +37,14 @@ void UI::push(Task *task){
 
 
 void UI::pop(){
+	delete this->top();
 	std::stack<Task*>::pop();
 
 	if(!empty()){
 		#ifdef DEBUG_UI_MAIN
 		std::cout << "NEED REFRESH" << std::endl;
 		#endif
+
 
 		need_refresh = true;
 	}
@@ -61,6 +61,10 @@ void UI::down(){
 
 void UI::select(){
 	if(top()->select()) need_refresh = true;
+}
+
+void UI::back(){
+	if(top()->back()) need_refresh = true;
 }
 
 void UI::draw(){

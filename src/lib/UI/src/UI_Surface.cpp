@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cassert>
 
+// #define DEBUG_UI_SURFACE
+
 // Surface(Surface &surf){
 // 	width		= surf.width;
 // 	height		= surf.height;
@@ -11,6 +13,10 @@
 // }
 
 Surface::Surface(){
+	#ifdef DEBUG_UI_SURFACE
+	std::cout << "IN Surface::Surface()" << std::endl;
+	#endif // DEBUG_UI_SURFACE
+
 	buffer		= NULL;
 	width		= 0;
 	height		= 0;
@@ -20,6 +26,10 @@ Surface::Surface(){
 }
 
 Surface::Surface(unsigned int w, unsigned int h){
+	#ifdef DEBUG_UI_SURFACE
+	std::cout << "IN Surface::Surface(unsigned int w, unsigned int h)" << std::endl;
+	#endif // DEBUG_UI_SURFACE
+
 	assert(w % 8 == 0);
 
 	int size = (w * h + 7) / 8;
@@ -35,7 +45,9 @@ Surface::Surface(unsigned int w, unsigned int h){
 }
 
 Surface::~Surface(){
-	// std::cout << "IN Surface::~Surface()" << std::endl;
+	#ifdef DEBUG_UI_SURFACE
+	std::cout << "IN Surface::~Surface()" << std::endl;
+	#endif // DEBUG_UI_SURFACE
 
 	if(surf_is_my){
 		delete [] buffer;
@@ -44,6 +56,15 @@ Surface::~Surface(){
 
 void Surface::clear(){
 	for(int i = 0; i < buf_size; buffer[i++] = 0);
+}
+
+void Surface::clear(unsigned int x, unsigned int y, unsigned int w, unsigned int h){
+	// TODO: оптимизировать этот кусок
+	// сделать очистку без создания новой поверхности
+
+	Surface dark_surf(w, h);
+
+	this->draw(dark_surf, x, y);
 }
 
 void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
@@ -79,10 +100,11 @@ void Surface::draw(Surface &surf, unsigned int x, unsigned int y){
 	cur_byte_screen	+= surf.width / 8 - 1;
 	cur_byte_surf	+= surf.width / 8 - 1;
 
-	*cur_byte_screen |= *cur_byte_surf >> offset_byte;
+	*cur_byte_screen = *cur_byte_screen & (0xFF << (8 - offset_byte)) | (*cur_byte_surf >> offset_byte);
 
 	if(cur_byte_screen != buffer + buf_size - 1){
 		*(cur_byte_screen + 1) = *(cur_byte_screen + 1) & (0xFF >> offset_byte) | (*cur_byte_surf << (8 - offset_byte));
+		// *cur_byte_screen = *cur_byte_screen & (0xFF >> offset_byte) | (*cur_byte_surf << (8 - offset_byte));
 	}
 }
 

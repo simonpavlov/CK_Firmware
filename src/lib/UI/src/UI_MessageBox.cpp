@@ -2,8 +2,9 @@
 
 #include <iostream>
 
-MessageBox::MessageBox(UI &stk, std::string str, Callback *cb):
-	Task(stk, cb),
+MessageBox::MessageBox(UI &init_ui, std::string str, Callback *cb):
+	Task(init_ui),
+	m_callback(cb),
 	message(str)
 {
 	int	max_width = my_UI.get_width(),
@@ -47,8 +48,8 @@ MessageBox::~MessageBox(){
 }
 
 bool MessageBox::select(){
-	if(callback){
-		callback->exec(0);
+	if(m_callback){
+		m_callback->exec();
 	}
 	else{
 		suicide();

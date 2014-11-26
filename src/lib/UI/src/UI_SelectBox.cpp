@@ -2,11 +2,12 @@
 
 #include <iostream>
 
-SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, Callback *cb):
-	Task(stk, cb),
+SelectBox::SelectBox(UI &init_ui, std::vector<std::string> &str_mass, Callback *cb):
+	Task(init_ui),
 	menu_items(str_mass),
-	max_width(stk.get_width()),
-	max_height(stk.get_height()),
+	max_width(init_ui.get_width()),
+	max_height(init_ui.get_height()),
+	m_callback(cb),
 	first_item(0),
 	cur_item(0),
 	interval(0),
@@ -14,7 +15,7 @@ SelectBox::SelectBox(UI &stk, std::vector<std::string> &str_mass, Callback *cb):
 	right_set(0)
 {
 	//TODO: переделать инициализацию
-	Font font = my_UI.get_default_font();
+	Font &font = my_UI.get_default_font();
 
 	max_str = (max_height - up_set) / (font.get_height() + interval);
 
@@ -78,7 +79,7 @@ bool SelectBox::down(){
 }
 
 bool SelectBox::select(){
-	callback->exec(cur_item);
+	m_callback->exec(cur_item);
 
 	return false;
 }

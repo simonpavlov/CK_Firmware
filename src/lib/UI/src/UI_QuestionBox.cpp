@@ -1,7 +1,8 @@
 #include "../UI_QuestionBox.h"
 
-QuestionBox::QuestionBox(UI &stk, std::string str, Callback *cb):
-	Task(stk, cb),
+QuestionBox::QuestionBox(UI &init_ui, std::string str, Callback *cb):
+	Task(init_ui),
+	m_callback(cb),
 	cur_item(0)
 {
 	Font font = my_UI.get_default_font();
@@ -40,8 +41,8 @@ bool QuestionBox::down(){
 }
 
 bool QuestionBox::select(){
-	int res = cur_item;
-	callback->exec(res);
+	bool res = cur_item;
+	m_callback->exec(res);
 
 	return false;
 }

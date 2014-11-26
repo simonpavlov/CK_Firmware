@@ -50,6 +50,9 @@ class UI: public std::stack <Task*>, public Surface{
 		// Обработать нажатие ввод
 		void select();
 
+		// Обработать нажатие назад
+		void back();
+
 		// Отрисовка поьзовательского интерфейса
 		void draw();
 
