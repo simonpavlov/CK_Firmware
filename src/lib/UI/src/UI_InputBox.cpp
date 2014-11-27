@@ -34,7 +34,7 @@ bool InputBox::up(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX	
 
-	return true;
+	return res_str.size() != InputLenght;
 }
 
 bool InputBox::down(){
@@ -48,7 +48,7 @@ bool InputBox::down(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX		
 
-	return true;
+	return res_str.size() != InputLenght;
 }
 
 bool InputBox::select(){
@@ -58,9 +58,12 @@ bool InputBox::select(){
 
 	if(res_str.size() < InputLenght)
 		res_str.push_back(InputCharsRange[cur_char]);
-	else
+	else{
+		#ifdef DEBUG_UI_INPUT_BOX
+		std::cout << "m_callback->exec(res_str)" << std::endl;
+		#endif // DEBUG_UI_INPUT_BOX		
 		m_callback->exec(res_str);
-
+	}
 
 	return true;
 }
@@ -69,6 +72,10 @@ bool InputBox::back(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::back()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
+
+	if(res_str.size() > 0){
+		res_str.erase(res_str.size() - 1);
+	}
 
 	return true;
 }
@@ -81,10 +88,19 @@ Surface & InputBox::draw(){
 
 	Font font = my_UI.get_default_font();
 
-	Surface &surf_res_str = font.gen_surf(res_str);
-	surf.draw(surf_res_str, 3, font.get_height());
+	std::string show_str = res_str;
+	if(res_str.size() < InputLenght){
+		show_str.push_back(InputCharsRange[cur_char]);
+		show_str.push_back('<');
+		for(int i = res_str.size(); i < InputLenght - 2; i++) show_str.push_back('.');
+	}
 
+	Surface &surf_show_str	= font.gen_surf(show_str);
+
+	surf.draw(surf_show_str, 3, font.get_height());
 	surf.draw_border();
+
+	delete &surf_show_str;
 
 	return surf;
 }
