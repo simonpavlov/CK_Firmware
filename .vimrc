@@ -1,1 +1,1 @@
-let &path.="./src/lib/UI,./src/lib/IO,./src/lib/Storage,./src/lib/emul,"
+let &path.="src/lib,data/fonts_in_headers,data/the_menu_structure"

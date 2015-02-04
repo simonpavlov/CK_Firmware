@@ -2,3 +2,5 @@ build
 data/storage.img
 data/eeprom.dat
 data/the_menu_structure/menu.md.h
+.ycm_extra_conf.pyc
+.*.swp
