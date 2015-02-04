@@ -1,5 +1,6 @@
 #include "../storage.h"
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 FILE *eeprom;
@@ -37,14 +38,21 @@ char storage_init(){
 	storage = fopen("storage.img", "r+b");
 	if(storage == NULL){
 		storage = fopen("storage.img", "w+b");
-		int i, j;
-		for(i = 0; i < STORAGE_SECOTR_COUNT; i++){
-			fwrite("", 1, STORAGE_SECOTR_SIZE, storage); // Записываем один сектор
+		if(storage == NULL){
+			perror("Unable to open & create storage file");
+			exit(EXIT_FAILURE);
 		}
-	}
-	if(storage == NULL){
-		perror("Unable to open storage file");
-		exit(EXIT_FAILURE);
+
+		uint8_t *buffer;
+		buffer = (uint8_t *) malloc(STORAGE_SECOTR_SIZE);
+		memset(buffer, 0, STORAGE_SECOTR_SIZE);
+
+		int i;
+		for(i = 0; i < STORAGE_SECOTR_COUNT; i++){
+			fwrite(buffer, STORAGE_SECOTR_SIZE, 1, storage); // Записываем один сектор
+		}
+
+		free(buffer);
 	}
 
 	return 0;

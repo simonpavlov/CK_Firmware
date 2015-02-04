@@ -70,7 +70,7 @@ DRESULT disk_read (
 {
 	#ifdef DEBUG_DISKIO
 	printf("disk_read\n");	
-    printf("pdrv: %d\nsector: %d\ncount: %d\n", pdrv, sector, count);
+    printf("pdrv: %d\nsector: %ld\ncount: %d\n", pdrv, sector, count);
 	#endif //DEBUG_DISKIO
 
 	if(pdrv != FLASH) return RES_ERROR;
@@ -95,7 +95,7 @@ DRESULT disk_write (
 {
 	#ifdef DEBUG_DISKIO
 	printf("disk_write\n");
-	printf("pdrv: %d\nsector: %d\ncount: %d\n", pdrv, sector, count);
+	printf("pdrv: %d\nsector: %ld\ncount: %d\n", pdrv, sector, count);
 	#endif //DEBUG_DISKIO
 
 	if(pdrv != FLASH) return RES_ERROR;

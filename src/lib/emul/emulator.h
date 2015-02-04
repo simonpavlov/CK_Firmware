@@ -9,6 +9,7 @@ extern "C" {
 #include "video.h"   // Работа с видео
 #include "events.h"  // Обработка событий
 #include "network.h" // Коммуникационный стек
+#include "storage.h" // Хранилище
 
 #ifdef __cplusplus
 }

@@ -9,7 +9,7 @@ int main(){
 
 	FATFS fs;			/* Рабочая область (file system object) для логических дисков */
 	FIL fsrc, fdst;		/* файловые объекты */
-	BYTE buffer[4096];	/* буфер для копирования данных фала */
+	BYTE buffer[4096] = "Hello World!!!";	/* буфер для копирования данных фала */
 	FRESULT res;		/* общий код возврата функций FatFs */
 	UINT br, bw;		/* счетчик чтения/записи файла */
 
@@ -41,12 +41,17 @@ int main(){
 	if (res) cout << "2Hello.txt not created: " << res << endl;
 	else cout << "OK" << endl;
 
+	/*
+	f_write(&fdst, buffer, 15, &bw);
+	cout << "bw: " << bw << endl;
+	*/
+
 	/* Копирование данных из файла-источника в файл-копию */
 	for (;;) {
-		res = f_read(&fsrc, buffer, sizeof(buffer), &br);	/* Чтение куска из файла src */
-		if (res || br == 0) break; /* ошибка или eof (конец данных файла) */
-		res = f_write(&fdst, buffer, br, &bw);				/* Запись куска в файл dst */
-		if (res || bw < br) break; /* ошибка, если диск переполнен */
+		res = f_read(&fsrc, buffer, sizeof(buffer), &br);	// Чтение куска из файла src
+		if (res || br == 0) break;							// ошибка или eof (конец данных файла)
+		res = f_write(&fdst, buffer, br, &bw);				// Запись куска в файл dst
+		if (res || bw < br) break;							// ошибка, если диск переполнен
 	}
 
 	/* Закрытие открытых файлов */
