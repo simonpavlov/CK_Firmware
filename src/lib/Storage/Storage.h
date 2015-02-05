@@ -7,6 +7,8 @@
 class Storage{
 	public:
 		Storage();
+		~Storage();
+
 		// Password managing
 		bool save(PasswordPair &password);
 		bool load(PasswordPair &password);

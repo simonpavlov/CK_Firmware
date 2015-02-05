@@ -5,6 +5,10 @@ Storage::Storage(){
 
 }
 
+Storage::~Storage(){
+
+}
+
 bool Storage::save(PasswordPair &password){
 
 

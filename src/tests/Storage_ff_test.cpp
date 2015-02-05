@@ -1,4 +1,4 @@
-#include <Storage/Storage.h>
+#include <Storage/ff.h>
 #include <iostream>
 #include <emul/emulator.h>
 
@@ -9,7 +9,7 @@ int main(){
 
 	FATFS fs;			/* Рабочая область (file system object) для логических дисков */
 	FIL fsrc, fdst;		/* файловые объекты */
-	BYTE buffer[4096] = "Hello World!!!";	/* буфер для копирования данных фала */
+	BYTE buffer[4096];	/* буфер для копирования данных фала */
 	FRESULT res;		/* общий код возврата функций FatFs */
 	UINT br, bw;		/* счетчик чтения/записи файла */
 
@@ -22,12 +22,15 @@ int main(){
 	}
 	cout << "OK" << endl;
 
+	// Отформатировать пространство
+	/*
 	cout << "Trying mkfs" << endl;
 	if(f_mkfs("", 0, 0) != FR_OK){
 		cerr << "FAIL" << endl;
 		return 1;
 	}
 	cout << "OK" << endl;
+	*/
 
 	/* Открыть файл источника на диске 0 */
 	cout << "Trying f_open(&fsrc, \"Hello.txt\", FA_OPEN_EXISTING | FA_READ)" << endl;
@@ -41,9 +44,17 @@ int main(){
 	if (res) cout << "2Hello.txt not created: " << res << endl;
 	else cout << "OK" << endl;
 
+	// Записать в файл буффер в 15 байт
 	/*
 	f_write(&fdst, buffer, 15, &bw);
 	cout << "bw: " << bw << endl;
+	*/
+	
+	// Прочитать из файла в буффер и вывисти на экран как символы
+	/*
+	f_read(&fsrc, buffer, sizeof(buffer), &br);
+	for(UINT i = 0; i < br; cout << (char)buffer[i++]);
+	cout << endl;
 	*/
 
 	/* Копирование данных из файла-источника в файл-копию */
