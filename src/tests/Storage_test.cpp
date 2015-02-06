@@ -7,6 +7,7 @@ using namespace std;
 
 
 int main(){
+	emul_init(STORAGE_INIT);
 	Logger::set_output(&cout);
 
 	DBG << "Trying Storage()" << endl;
