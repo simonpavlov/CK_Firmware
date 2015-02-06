@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include <IO/IO.h>
+#include <IO/CK_String.h>
+#include <IO/CK_PasswordPair.h>
 #include <cstring>
 
 using namespace std;

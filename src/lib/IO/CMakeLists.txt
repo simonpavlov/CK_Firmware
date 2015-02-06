@@ -1,5 +1,5 @@
 set (IO_SRC
-	src/CK_Loger.cpp
+	src/CK_Logger.cpp
 	src/IO_ByteStream.cpp
 	src/CK_Array.cpp
 	src/IO_DeviceInfo.cpp

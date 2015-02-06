@@ -1,6 +1,8 @@
 #include <iostream>
 #include <emul/emulator.h>
 #include <IO/IO.h>
+#include <IO/CK_PasswordPair.h>
+#include <IO/CK_String.h>
 
 using namespace std;
 

@@ -5,6 +5,9 @@
 #include <Storage/ff.h>
 
 class Storage{
+	private:
+		FATFS m_fs;
+
 	public:
 		Storage();
 		~Storage();

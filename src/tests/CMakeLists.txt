@@ -19,8 +19,11 @@ target_link_libraries (CK_Array_test IO emul ${SDL_LIBRARY})
 add_executable (IO_ByteStream_test IO_ByteStream_test.cpp)
 target_link_libraries (IO_ByteStream_test IO emul ${SDL_LIBRARY})
 
-add_executable (CK_Loger_test CK_Loger_test.cpp)
-target_link_libraries (CK_Loger_test IO emul ${SDL_LIBRARY})
+add_executable (CK_Logger_test CK_Logger_test.cpp)
+target_link_libraries (CK_Logger_test IO emul ${SDL_LIBRARY})
 
 add_executable (Storage_ff_test Storage_ff_test.cpp)
 target_link_libraries (Storage_ff_test Storage emul ${SDL_LIBRARY})
+
+add_executable (Storage_test Storage_test.cpp)
+target_link_libraries (Storage_test IO Storage emul ${SDL_LIBRARY})
