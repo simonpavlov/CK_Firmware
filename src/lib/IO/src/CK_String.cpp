@@ -104,8 +104,8 @@ String & String::operator=(const String &str){
 		return *this;
 	}
 
-	m_size	= str.m_size;
-	m_data_len		= str.m_data_len;
+	m_size		= str.m_size;
+	m_data_len	= str.m_data_len;
 
 	if(m_data) delete [] m_data;
 	m_data = new uint16_t[m_size];
@@ -121,7 +121,7 @@ OByteStream & operator<<(OByteStream &stream, const String &str){
 
 	if(str.m_size){
 		m_data_len	= sizeof(uint32_t) + str.m_data_len;
-		buf		= new uint8_t[m_data_len];
+		buf			= new uint8_t[m_data_len];
 
 		uint8_t *buf_w = buf;
 

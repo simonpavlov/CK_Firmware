@@ -2,6 +2,7 @@
 #define CK_PASSWORDPAIR
 
 #include "CK_String.h"
+#include "IO_ByteStream.h"
 #include "IO_Message.h"
 
 class PasswordPair{

@@ -6,11 +6,14 @@
 
 class Storage{
 	private:
-		FATFS m_fs;
+		FATFS	m_fs;
+		bool	m_health;
 
 	public:
 		Storage();
 		~Storage();
+
+		bool get_health(){return m_health;}
 
 		// Password managing
 		bool save(PasswordPair &password);
