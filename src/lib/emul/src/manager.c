@@ -1,20 +1,24 @@
 #include "../manager.h"
 #include <string.h>
 
+unsigned char system_status = 0;
+
 InitStatus emul_init(unsigned char mask){
-	if(mask & VIDEO_INIT)
+	system_status = mask;
+
+	if(system_status & VIDEO_INIT)
 		if(video_init())
 			return VIDEO_ERROR;
 
-	if(mask & NETWORK_INIT)
+	if(system_status & NETWORK_INIT)
 		if(network_init())
 			return NETWORK_ERROR;
 
-	if(mask & STORAGE_INIT)
+	if(system_status & STORAGE_INIT)
 		if(storage_init())
 			return STORAGE_ERROR;
 
-	if(mask & EEPROM_INIT)
+	if(system_status & EEPROM_INIT)
 		if(eeprom_init())
 			return EEPROM_ERROR;
 
@@ -22,5 +26,15 @@ InitStatus emul_init(unsigned char mask){
 }
 
 void emul_quit(){
-	video_quit();
+	if(system_status & VIDEO_INIT)
+		video_quit();
+
+	if(system_status & NETWORK_INIT)
+		//network_quit();
+
+	if(system_status & STORAGE_INIT)
+		storage_quit();
+
+	if(system_status & EEPROM_INIT)
+		eeprom_quit();
 }

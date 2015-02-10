@@ -5,6 +5,8 @@
 #include "IO_ByteStream.h"
 #include "IO_Message.h"
 
+//Realization in src/CK_PasswordPair.cpp
+
 class PasswordPair{
 	public:
 		String login;

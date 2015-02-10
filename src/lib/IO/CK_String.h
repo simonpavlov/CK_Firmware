@@ -22,8 +22,8 @@ class String{
 
 
 		// uint8_t *	serialize();
-		uint32_t	size(){return m_size;}
-		uint32_t	buf_size(){return m_data_len;}
+		uint32_t	size() const {return m_size;}
+		uint32_t	buf_size() const {return m_data_len;}
 		uint16_t &	operator[](uint32_t n){return *(m_data + n);}
 		String &	operator=(const String &str);
 		uint16_t *	operator&(){return m_data;}

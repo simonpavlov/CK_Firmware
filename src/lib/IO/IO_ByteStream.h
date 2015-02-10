@@ -4,6 +4,8 @@
 #include "stdint.h"
 #include "CK_Array.h"
 
+//Realization in src/IO_ByteStream.cpp
+
 /*
 	Этто класс-обёртка он реализует поток чтения из буфера
 */

@@ -9,6 +9,8 @@ class Storage{
 		FATFS	m_fs;
 		bool	m_health;
 
+		static char *	pp_to_file_name(char *str, PasswordPair &pp);
+
 	public:
 		Storage();
 		~Storage();

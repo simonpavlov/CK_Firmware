@@ -2,7 +2,7 @@
 // #include <cstdlib>
 #include <cstring>
 
-// #define DEBUG_CK_ARRAY
+//#define DEBUG_CK_ARRAY 1
 
 Array::Array():
 	m_size(0),
@@ -67,6 +67,10 @@ Array &	Array::operator=(const Array &arr){
 
 bool Array::take_front(uint8_t *buf, uint32_t size){
 	//TODO: проверки
+	#ifdef DEBUG_CK_ARRAY
+	std::cout << "Trying memcpy(buf, m_data, size) where buf, m_data, size: "
+	   << (uint32_t)buf << ", " << (uint32_t)m_data << ", " << size << std::endl;
+	#endif
 
 	memcpy(buf, m_data, size);
 
@@ -78,14 +82,19 @@ bool Array::take_front(uint8_t *buf, uint32_t size){
 
 	memcpy(new_data, m_data + size, data_len);
 
+	#ifdef DEBUG_CK_ARRAY
+	std::cout << "Trying delete" << std::endl;
+	#endif
 	delete [] m_data;
+	#ifdef DEBUG_CK_ARRAY
+	std::cout << "OK" << std::endl;
+	#endif
 
 	m_size = data_len;
 	m_data = new_data;
 
 	return true;
 }
-
 
 bool Array::app_end(const uint8_t *buf, uint32_t size){
 	#ifdef DEBUG_CK_ARRAY
@@ -122,7 +131,7 @@ std::ostream & operator<<(std::ostream &stream, const Array &arr){
 	stream << "{ size:" << arr.m_size;
 	if(arr.m_size && arr.m_size + 1){
 		stream << ", data:";
-		for(int i = 0; i < arr.m_size; i++) stream << std::hex << " 0x" << (int)*(arr.m_data + i);
+		for(uint32_t i = 0; i < arr.m_size; i++) stream << std::hex << " 0x" << (int)*(arr.m_data + i);
 	}
 	stream << " }";
 

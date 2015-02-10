@@ -28,6 +28,10 @@ void eeprom_write_byte(uint32_t addr, char byte) {
 	fputc(byte, eeprom);
 }
 
+void eeprom_quit(){
+	fclose(eeprom);
+}
+
 FILE *storage;
 
 #define STORAGE_SECOTR_SIZE		512
@@ -81,4 +85,8 @@ uint32_t get_storage_sector_count(){
 
 uint32_t get_storage_block_size(){
 	return STORAGE_BLOCK_SIZE;
+}
+
+void storage_quit(){
+	fclose(storage);
 }

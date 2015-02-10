@@ -2,7 +2,9 @@
 #define EMUL_MANAGER
 
 #include <SDL/SDL.h>
-#include "video.h"
+#include "emulator.h"
+
+//Realization in src/manager.c
 
 static const char VIDEO_INIT		= 0x01;
 static const char EEPROM_INIT		= 0x02;

@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <iostream>
 
+//Realization in src/CK_Array.cpp
+
 /*
 	Этот класс реализует линейный буффер
 */
