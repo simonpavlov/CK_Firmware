@@ -6,6 +6,9 @@
 
 #include "UI_Task.h"
 #include "UI_Font.h"
+#include "UI_Main.h"
+
+// Realization in src/UI_SelectBox.cpp
 
 /*
 	Этот клас реализует ... select box
@@ -21,18 +24,19 @@ class SelectBox: public Task{
 		SelectBox(UI &init_ui, std::vector<std::string> &str_mass, Callback *cb);
 		~SelectBox();
 
-		bool 	up();
-		bool	down();
-		bool	select();
-		bool	back(){return false;}
+		result 	up();
+		result	down();
+		result	select();
+		result	back(){return none;}
 		Surface	& draw();
 
 	private:
-		Callback *m_callback;
-		Surface *surf;
+		Callback	*m_callback;
+		Surface		*surf;
+		Font		*m_font;
 		std::vector<std::string> menu_items;
-		unsigned int max_width, max_height;
-		int first_item, cur_item, last_item, max_str, interval, up_set, right_set;
+		unsigned int max_str, last_item, max_width, max_height;
+		int first_item, cur_item, interval, up_set, right_set;
 };
 
 #endif //UI_SELECTBOX

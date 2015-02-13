@@ -91,20 +91,20 @@ void Font::stdout(){
 	}
 }
 
-Surface & Font::gen_surf(char ch){
+Surface * Font::gen_surf(char ch){
 	//TODO: удалить лишнее
 
-	Surface &res_surf = * new Surface(width_byte * 8, height);
+	Surface *res_surf = new Surface(width_byte * 8, height);
 
 	const unsigned char *cur_byte_glyph;
 	unsigned char *cur_byte_surf;
 
-	cur_byte_surf		= res_surf.get_buffer();
+	cur_byte_surf		= res_surf->get_buffer();
 	cur_byte_glyph		= glyphs + (unsigned char)(ch) * char_size;
 
-	int i_line;
+	unsigned int i_line;
 	for(i_line = 0; i_line < height; i_line++){
-		int i_byte;
+		unsigned int i_byte;
 
 		for(i_byte = 0; i_byte < width_byte; i_byte++){
 			*(cur_byte_surf + i_byte) |= *(cur_byte_glyph + i_byte);
@@ -121,7 +121,7 @@ Surface & Font::gen_surf(char ch){
 	return res_surf;
 }
 
-Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int max_size){
+Surface * Font::gen_surf(std::string str, unsigned int max_width, unsigned int max_size){
 	// FIXME: вот этот алгоритм считает не правильный размер поверхности для текста,
 	// плохо обрабатывается максимальная длинна
 	int	str_size		= str.size(),
@@ -148,7 +148,7 @@ Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int m
 		<< "	width: " << width << std::endl;
 	#endif
 
-	Surface &res_surf = * new Surface(surf_width, height);
+	Surface *res_surf = new Surface(surf_width, height);
 
 	#ifdef DEBUG_UI_FONT
 	std::cout
@@ -157,7 +157,9 @@ Surface & Font::gen_surf(std::string str, unsigned int max_width, unsigned int m
 	#endif
 
 	for(int i = 0; i < str_size; i++){
-		res_surf.draw(gen_surf(str[i]), width * i, 0);
+		Surface *char_surf = gen_surf(str[i]);
+		res_surf->draw(*char_surf, width * i, 0);
+		delete char_surf;
 	}
 
 	return res_surf;

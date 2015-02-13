@@ -1,6 +1,8 @@
 #include "../manager.h"
 #include <string.h>
 
+#define DEBUG_MANAGER
+
 unsigned char system_status = 0;
 
 InitStatus emul_init(unsigned char mask){
@@ -26,15 +28,31 @@ InitStatus emul_init(unsigned char mask){
 }
 
 void emul_quit(){
-	if(system_status & VIDEO_INIT)
+	if(system_status & VIDEO_INIT){
+		#ifdef DEBUG_MANAGER
+		printf("video_quit()\n");
 		video_quit();
+		#endif
+	}
 
-	if(system_status & NETWORK_INIT)
+	if(system_status & NETWORK_INIT){
+		#ifdef DEBUG_MANAGER
+		printf("network_quit()\n");
 		//network_quit();
+		#endif
+	}
 
-	if(system_status & STORAGE_INIT)
+	if(system_status & STORAGE_INIT){
+		#ifdef DEBUG_MANAGER
+		printf("storage_quit()\n");
 		storage_quit();
+		#endif
+	}
 
-	if(system_status & EEPROM_INIT)
+	if(system_status & EEPROM_INIT){
+		#ifdef DEBUG_MANAGER
+		printf("eeprom_quit()\n");
 		eeprom_quit();
+		#endif
+	}
 }

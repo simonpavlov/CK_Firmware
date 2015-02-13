@@ -7,23 +7,22 @@ const std::string InputBox::InputCharsRange = "0123456789";
 const unsigned int InputBox::InputLenght = 6;
 
 InputBox::InputBox(UI &stk, const std::string &prompt, InputBox::Callback *init_cb):
-	Task(stk),
+	cur_char(0),
 	m_callback(init_cb),
-	surf(240, stk.get_default_font().get_height() * 2 + 10),
-	cur_char(0)
+	surf(240, stk.get_default_font().get_height() * 2 + 10)
 {
-	Font font = my_UI.get_default_font();
-	Surface &prompt_surf = font.gen_surf(prompt);
+	m_font = &stk.get_default_font();
+	Surface *prompt_surf = m_font->gen_surf(prompt);
 
-	surf.draw(prompt_surf, 3, 0);
+	surf.draw(*prompt_surf, 3, 0);
 	surf.draw_border();
 
-	delete &prompt_surf;
+	delete prompt_surf;
 }
 
 InputBox::~InputBox(){}
 
-bool InputBox::up(){
+Task::result InputBox::up(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::up()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -34,10 +33,11 @@ bool InputBox::up(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX	
 
-	return res_str.size() != InputLenght;
+	if(res_str.size() != InputLenght) return surf_changed;
+	else return none;
 }
 
-bool InputBox::down(){
+Task::result InputBox::down(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::down()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -48,10 +48,11 @@ bool InputBox::down(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX		
 
-	return res_str.size() != InputLenght;
+	if(res_str.size() != InputLenght) return surf_changed;
+	else return none;
 }
 
-bool InputBox::select(){
+Task::result InputBox::select(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::select()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -63,12 +64,13 @@ bool InputBox::select(){
 		std::cout << "m_callback->exec(res_str)" << std::endl;
 		#endif // DEBUG_UI_INPUT_BOX		
 		m_callback->exec(res_str);
+		return complite;
 	}
 
-	return true;
+	return surf_changed;
 }
 
-bool InputBox::back(){
+Task::result InputBox::back(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::back()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -77,7 +79,7 @@ bool InputBox::back(){
 		res_str.erase(res_str.size() - 1);
 	}
 
-	return true;
+	return surf_changed;
 }
 
 Surface & InputBox::draw(){
@@ -86,21 +88,19 @@ Surface & InputBox::draw(){
 	std::cout << "res_str: " << res_str << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
 
-	Font font = my_UI.get_default_font();
-
 	std::string show_str = res_str;
 	if(res_str.size() < InputLenght){
 		show_str.push_back(InputCharsRange[cur_char]);
 		show_str.push_back('<');
-		for(int i = res_str.size(); i < InputLenght - 2; i++) show_str.push_back('.');
+		for(unsigned int i = res_str.size(); i < InputLenght - 2; i++) show_str.push_back('.');
 	}
 
-	Surface &surf_show_str	= font.gen_surf(show_str);
+	Surface *surf_show_str	= m_font->gen_surf(show_str);
 
-	surf.draw(surf_show_str, 3, font.get_height());
+	surf.draw(*surf_show_str, 3, m_font->get_height());
 	surf.draw_border();
 
-	delete &surf_show_str;
+	delete surf_show_str;
 
 	return surf;
 }

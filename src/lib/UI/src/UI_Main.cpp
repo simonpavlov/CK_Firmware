@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cassert>
 
+#define DEBUG_UI_MAIN
+
 UI::UI(ScreenInfo &scr, Font &font): default_font(font){
 	assert(scr.width % 8 == 0);
 
@@ -13,8 +15,7 @@ UI::UI(ScreenInfo &scr, Font &font): default_font(font){
 
 	surf_is_my		= false;
 
-	my_state		= changed;
-	need_refresh	= true;
+	need_refresh	= false;
 }
 
 UI::~UI(){
@@ -22,7 +23,7 @@ UI::~UI(){
 	std::cout << "IN UI::~UI()" << std::endl;
 	#endif
 
-	for(Task *task; !empty(); pop());
+	for(; !empty(); pop());
 }
 
 void UI::push(Task *task){
@@ -60,7 +61,12 @@ void UI::down(){
 }
 
 void UI::select(){
-	if(top()->select()) need_refresh = true;
+	Task::result res;
+
+	res = top()->select();
+
+	if(res == Task::surf_changed) need_refresh = true;
+	else if(res == Task::complite) UI::pop();
 }
 
 void UI::back(){
@@ -69,22 +75,12 @@ void UI::back(){
 
 void UI::draw(){
 	if(need_refresh){
-		my_state = busy;
-
-		#ifdef DEBUG_UI_MAIN
-		std::cout << "state: BUSY" << std::endl;
-		#endif
-		
 		clear();
 
 		Surface &surf = top()->draw();
 		Surface::draw(surf);
 
-		my_state = changed;
-
-		#ifdef DEBUG_UI_MAIN
-		std::cout << "state: CHANGED" << std::endl;
-		#endif
+		refresh_video_buffer();
 
 		need_refresh = false;
 	}

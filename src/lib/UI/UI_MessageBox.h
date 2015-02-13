@@ -5,6 +5,11 @@
 
 #include "UI_Task.h"
 #include "UI_Font.h"
+#include "UI_Main.h"
+
+// Realization in src/UI_MessageBox.cpp
+
+class UI;
 
 /*
 	Класс реализующий задачу отображения информации
@@ -20,10 +25,10 @@ class MessageBox: public Task{
 		MessageBox(UI &init_ui, std::string str, Callback *cb = NULL);
 		~MessageBox();
 
-		bool 	up(){return false;}
-		bool	down(){return false;}
-		bool	select();
-		bool	back(){return false;}
+		result 	up(){return none;}
+		result	down(){return none;}
+		result	select();
+		result	back(){return none;}
 		Surface	& draw();
 
 	private:

@@ -5,6 +5,8 @@
 #include "UI_Main.h"
 #include "UI_Font.h"
 
+// Realization in src/test_task.cpp
+
 class test_task: public Task{
 	public:
 		class Callback{
@@ -15,10 +17,10 @@ class test_task: public Task{
 		test_task(UI &stk, int x = 0, int y = 0, Callback *cb = NULL);
 		~test_task();
 
-		bool 	up();
-		bool	down();
-		bool	select();
-		bool	back();
+		result 	up();
+		result	down();
+		result	select();
+		result	back();
 		Surface	& draw();
 
 	private:

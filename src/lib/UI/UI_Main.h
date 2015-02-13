@@ -8,6 +8,8 @@
 #include "UI_Font.h"
 #include <emul/emulator.h>
 
+// Realization in src/UI_Main.cpp
+
 class Task;
 
 /*
@@ -26,8 +28,6 @@ class Task;
 //TODO: логично будет сделать этот класс static
 class UI: public std::stack <Task*>, public Surface{
 	public:
-		enum state {unchanged, busy, changed};
-
 		//TODO constructor
 		UI(ScreenInfo &scr, Font &font);
 		~UI();
@@ -59,12 +59,8 @@ class UI: public std::stack <Task*>, public Surface{
 		// Очищает видео буфер
 		// void clear_scr();
 
-		// Возвращает текущее состояние апаратного сурфейса
-		state take_state(){return my_state; my_state = unchanged;}
-
 	private:
 		Font default_font;
-		state my_state;
 		bool need_refresh;
 };
 

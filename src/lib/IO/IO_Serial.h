@@ -4,6 +4,8 @@
 #include <queue>
 #include "IO_Message.h"
 
+// Realization in src/IO_Serial.cpp
+
 /*
 	Реализация работы с последавательным портом
  */

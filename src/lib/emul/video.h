@@ -3,6 +3,8 @@
 
 #include <SDL/SDL.h>
 
+// Realization in src/video.c
+
 /*
  * Структуря хроняшая в себе информацию о экране устройства
  */

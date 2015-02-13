@@ -5,6 +5,8 @@
 
 #include <string>
 
+// Realization in src/UI_Font.cpp
+
 class Font{
 	private:
 		unsigned int length;        //количество символов
@@ -33,14 +35,14 @@ class Font{
 		/*
 			Генерирует поверхность из символа
 		*/
-		Surface & gen_surf(char ch);
+		Surface * gen_surf(char ch);
 
 		/*
 			Генерирует поверхность из строки
 			max_count - максимальное количество отрисовываемых символов
 			max_width - максимальная ширина результирующей поверхности
 		*/
-		Surface & gen_surf(std::string str, unsigned int max_width = 0, unsigned int max_size = 0);
+		Surface * gen_surf(std::string str, unsigned int max_width = 0, unsigned int max_size = 0);
 };
 
 

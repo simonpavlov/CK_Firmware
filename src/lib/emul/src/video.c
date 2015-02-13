@@ -1,5 +1,7 @@
 #include "../video.h"
 
+//#define DEBUG_VIDEO
+
 SDL_Surface *Screen	= NULL;
 ScreenInfo MainScreen;
 
@@ -24,7 +26,7 @@ char video_init(){
 	}
 
 	MainScreen.len_byte = (MainScreen.width * MainScreen.height + 7) / 8;
-	if((MainScreen.buffer = malloc(MainScreen.len_byte)) == NULL){
+	if((MainScreen.buffer = (char *)malloc(MainScreen.len_byte)) == NULL){
 		return -1;
 	}
 	memset(MainScreen.buffer, 0, MainScreen.len_byte);
@@ -78,6 +80,21 @@ void refresh_video_buffer(){
 
 void video_quit(){
 	SDL_FreeSurface(Screen);
+
+	#ifdef DEBUG_VIDEO
+	printf("Trying SDL_Quti()\n");
+	#endif
 	SDL_Quit();
+	#ifdef DEBUG_VIDEO
+	printf("SDL_Quti() OK\n");
+	#endif
+
+
+	#ifdef DEBUG_VIDEO
+	printf("Trying free()\n");
+	#endif
 	free(MainScreen.buffer);
+	#ifdef DEBUG_VIDEO
+	printf("free OK\n");
+	#endif
 }

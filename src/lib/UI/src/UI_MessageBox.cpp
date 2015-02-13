@@ -3,22 +3,21 @@
 #include <iostream>
 
 MessageBox::MessageBox(UI &init_ui, std::string str, Callback *cb):
-	Task(init_ui),
 	m_callback(cb),
 	message(str)
 {
-	int	max_width = my_UI.get_width(),
-		max_height = my_UI.get_height();
+	int	max_width = init_ui.get_width(),
+		max_height = init_ui.get_height();
 
-	Font font = my_UI.get_default_font();
+	Font font = init_ui.get_default_font();
 
 	std::string ok = "OK";
 
-	Surface &message_surf = font.gen_surf(str, max_width);
-	Surface &OK_surf = font.gen_surf(ok, max_width);
+	Surface *message_surf = font.gen_surf(str, max_width);
+	Surface *OK_surf = font.gen_surf(ok, max_width);
 
 	int wth, desired_wth;
-	desired_wth = ((message_surf.get_width() + 7) / 8 + 2) * 8;
+	desired_wth = ((message_surf->get_width() + 7) / 8 + 2) * 8;
 	if((signed int) max_width - desired_wth > 0) wth = desired_wth;
 	else wth = max_width;
 
@@ -32,30 +31,25 @@ MessageBox::MessageBox(UI &init_ui, std::string str, Callback *cb):
 	surf = new Surface(wth, 2 * font.get_height() + 12);
 
 	surf->draw_border();
-	surf->draw(message_surf, (surf->get_width() - message_surf.get_width()) / 2, 3);
+	surf->draw(*message_surf, (surf->get_width() - message_surf->get_width()) / 2, 3);
 
-	int	x = (surf->get_width() - OK_surf.get_width()) / 2,
+	int	x = (surf->get_width() - OK_surf->get_width()) / 2,
 		y = 6 + 1 + font.get_height();
-	surf->draw(OK_surf, x, y);
+	surf->draw(*OK_surf, x, y);
 	surf->draw(x - 4, y - 1, font.get_width() * 2 + 6, font.get_height());
 
-	delete &OK_surf;
-	delete &message_surf;
+	delete OK_surf;
+	delete message_surf;
 }
 
 MessageBox::~MessageBox(){
 	delete surf;
 }
 
-bool MessageBox::select(){
-	if(m_callback){
+Task::result MessageBox::select(){
+	if(m_callback)
 		m_callback->exec();
-	}
-	else{
-		suicide();
-	}
-
-	return false;
+	return complite;
 }
 
 Surface & MessageBox::draw(){

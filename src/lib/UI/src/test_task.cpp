@@ -6,10 +6,9 @@
 #define DEBUG_TEST_TASK
 
 test_task::test_task(UI &stk, int x, int y, Callback *cb):
-	Task(stk),
-	font(stk.get_default_font()),
 	m_callback(cb),
-	surf(192, 80)
+	surf(192, 80),
+	font(stk.get_default_font())
 {
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::test_task()" << std::endl;
@@ -25,47 +24,42 @@ test_task::~test_task(){
 	#endif
 }
 
-bool test_task::up(){
+Task::result test_task::up(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::up()" << std::endl;
 	#endif
 
 	Y -= 1;
 
-	return true;
+	return Task::surf_changed;
 }
 
-bool test_task::down(){
+Task::result test_task::down(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::down()" << std::endl;
 	#endif
 
 	Y += 1;
 
-	return true;
+	return Task::surf_changed;
 }
 
-bool test_task::select(){
+Task::result test_task::select(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::select()" << std::endl;
 	#endif
 
-	if(m_callback){
-		m_callback->exec(X);
-	}
-	else{
-		suicide();
-	}
+	m_callback->exec(X);
 
-	return false;
+	return Task::complite;
 }
 
-bool test_task::back(){
+Task::result test_task::back(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::back()" << std::endl;
 	#endif
 
-	return false;
+	return Task::none;
 }
 
 Surface & test_task::draw(){
@@ -82,11 +76,11 @@ Surface & test_task::draw(){
 	sstr_data << Y * 100;
 	std::string str_data = sstr_data.str();
 
-	Surface message_surf	= font.gen_surf(str_message, surf.get_width());
-	Surface data_surf		= font.gen_surf(str_data);
+	Surface *message_surf	= font.gen_surf(str_message, surf.get_width());
+	Surface *data_surf		= font.gen_surf(str_data);
 
-	surf.draw(message_surf);
-	surf.draw(data_surf, 2, 2);
+	surf.draw(*message_surf);
+	surf.draw(*data_surf, 2, 2);
 
 	surf.draw_border();
 
@@ -102,6 +96,8 @@ Surface & test_task::draw(){
 	// 	}
 	// }
 
+	delete message_surf;
+	delete data_surf;
 
 	return surf;
 }

@@ -1,29 +1,24 @@
 #ifndef UI_TASK
 #define UI_TASK
 
-#include "UI_Main.h"
 #include "UI_Surface.h"
 
-class UI;
+// Realization in src/UI_Task.cpp
 
 /*
 	Базовая задача
 */
 class Task {
-	protected:
-		UI &my_UI;
-
 	public:
-		Task(UI &ui);
-		~Task() {};
+		enum result {none, surf_changed, complite};
 
-		virtual bool	up() = 0;
-		virtual bool	down() = 0;
-		virtual bool 	select() = 0;
-		virtual bool	back() = 0;
+		virtual ~Task() {};
+
+		virtual result	up() = 0;
+		virtual result	down() = 0;
+		virtual result 	select() = 0;
+		virtual result	back() = 0;
 		virtual Surface	& draw() = 0;
-
-		void suicide();
 };
 
 #endif //UI_TASK
