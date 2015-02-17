@@ -3,8 +3,8 @@
 #include <iostream>
 #include <ctime>
 
-std::ostream * Logger::output;
 std::ostream str(NULL);
+std::ostream * Logger::output = &str;
 
 std::string Logger::get_time(){
 	time_t rawtime;

@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iostream>
 
+// Realization in src/CK_Logger.cpp
+
 #define DBG Logger(__LINE__).debug()
 
 class Logger{
