@@ -5,7 +5,11 @@
 
 #define DEBUG_UI_MAIN
 
-UI::UI(ScreenInfo &scr, Font &font): default_font(font){
+UI::UI(Font &font): default_font(font){
+	set_screen_res(320, 240);
+	emul_init(VIDEO_INIT);
+
+	ScreenInfo scr = *get_screen_info();
 	assert(scr.width % 8 == 0);
 
 	width			= scr.width;

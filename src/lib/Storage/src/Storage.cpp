@@ -6,7 +6,7 @@
 #include "../Storage.h"
 #include "../ff.h"
 
-#define STORAGE_DEBUG 0
+#define STORAGE_DEBUG 1
 #define LDBG STORAGE_DEBUG && DBG
 
 const char pass_dir_name[] = "psswds";

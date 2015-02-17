@@ -48,13 +48,13 @@ class test_callback: public test_task::Callback{
 };
 
 int main(){
-	set_screen_res(320, 240);
-	emul_init(VIDEO_INIT);
+	//set_screen_res(320, 240);
+	//emul_init(VIDEO_INIT);
 	atexit(emul_quit);
 
 	Font f(Uni3_Terminus20x10_psf);
 	// f.stdout();
-	UI main_UI(*get_screen_info(), f);
+	UI main_UI(f);
 
 	vector<string> str_mass;
 

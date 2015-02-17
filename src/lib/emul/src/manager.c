@@ -1,7 +1,7 @@
 #include "../manager.h"
 #include <string.h>
 
-//#define DEBUG_MANAGER
+#define DEBUG_MANAGER
 
 unsigned char system_status = 0;
 

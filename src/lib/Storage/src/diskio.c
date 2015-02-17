@@ -52,7 +52,10 @@ DSTATUS disk_initialize (
 	#endif //DEBUG_DISKIO
 
 	if(pdrv != FLASH) return STA_NOINIT;
-	else return 0;
+	else{
+		emul_init(STORAGE_INIT);
+		return 0;
+	}
 }
 
 
