@@ -71,8 +71,10 @@ uint32_t storage_write(const uint8_t *buff, uint32_t sector, uint32_t count){
 	if (fseek(storage, STORAGE_BLOCK_SIZE * sector, SEEK_SET)) return 0;
 	return fwrite(buff, STORAGE_BLOCK_SIZE, count, storage);
 
-	//Необходимость следующей строки под вопросом
-	fflush(storage);
+}
+
+int storage_flush(){
+	return fflush(storage);
 }
 
 uint32_t get_storage_sector_size(){

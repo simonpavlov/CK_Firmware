@@ -5,8 +5,7 @@
 using namespace std;
 
 int main(){
-	emul_init(STORAGE_INIT);
-	atexit(emul_quit);
+	emul_init(STORAGE_SYS);
 
 	FATFS fs;			/* Рабочая область (file system object) для логических дисков */
 	FIL fsrc, fdst;		/* файловые объекты */
@@ -72,4 +71,6 @@ int main(){
 
 	/* Дерегистрация и отмена рабочих областей */
 	f_mount(NULL, "", 0);
+
+	emul_quit(NETWORK_SYS);
 }

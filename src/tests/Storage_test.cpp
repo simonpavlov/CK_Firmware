@@ -11,8 +11,7 @@ using namespace std;
 #define REMOVE_TEST_PP
 
 int main(){
-	emul_init(STORAGE_INIT);
-	atexit(emul_quit);
+	emul_init(STORAGE_SYS);
 
 	Logger::set_output(&cout);
 
@@ -51,6 +50,8 @@ int main(){
 	else
 		DBG << "FAIL" << std::endl;
 	#endif
+
+	emul_quit(NETWORK_SYS);
 
 	return 0;
 }

@@ -29,7 +29,7 @@ class Task;
 class UI: public std::stack <Task*>, public Surface{
 	public:
 		//TODO constructor
-		UI(Font &font);
+		UI(Font font);
 		~UI();
 
 		// Обёртка для stack::push()

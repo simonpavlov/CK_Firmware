@@ -49,12 +49,10 @@ class test_callback: public test_task::Callback{
 
 int main(){
 	//set_screen_res(320, 240);
-	//emul_init(VIDEO_INIT);
-	atexit(emul_quit);
+	//emul_init(VIDEO_SYS);
 
-	Font f(Uni3_Terminus20x10_psf);
 	// f.stdout();
-	UI main_UI(f);
+	UI main_UI = UI(Font(Uni3_Terminus20x10_psf));
 
 	vector<string> str_mass;
 
@@ -103,7 +101,7 @@ int main(){
 
 	while(!main_UI.empty()){
 		// Графическая часть
-		switch(get_event()){
+		switch(char(get_event())){
 			case EVT_EXIT:
 				cout << "Goodbye!" << endl;
 				return 0;

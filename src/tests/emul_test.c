@@ -6,14 +6,12 @@
 #define DISPW 32
 #define DISPH 24
 
-int main(int argc, char **argv){
+int main(){
 	set_screen_res(DISPW, DISPH);
 
-	if(emul_init(VIDEO_INIT) != ALL_RIGHT){ //Инициализация эмулятора
+	if(emul_init(VIDEO_SYS) != ALL_RIGHT){ //Инициализация эмулятора
 		return 1;
 	}
-	atexit(emul_quit); //Добавление уничтожения эмулятора на авто выполнение,
-					   //при завершении программы
 	printf("***\n");
 
 	char *buf = get_screen_info()->buffer;
@@ -38,6 +36,7 @@ int main(int argc, char **argv){
 	while(1){ //Зацикливание до тех пор пока не закроем эмулятор
 		if(get_event() == EVT_EXIT){
 			printf("Goodbye!\n");
+			emul_quit(VIDEO_SYS);
 			return 0;
 		}
 

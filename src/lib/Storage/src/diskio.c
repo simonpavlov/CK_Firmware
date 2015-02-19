@@ -53,7 +53,6 @@ DSTATUS disk_initialize (
 
 	if(pdrv != FLASH) return STA_NOINIT;
 	else{
-		emul_init(STORAGE_INIT);
 		return 0;
 	}
 }
@@ -126,6 +125,7 @@ DRESULT disk_ioctl (
 
 	switch (cmd) {
 		case CTRL_SYNC:
+			storage_flush();
 			break;
 
 		case GET_SECTOR_SIZE:

@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
 
-	emul_init(NETWORK_INIT);
+	emul_init(NETWORK_SYS);
 
 	while(1){
 		// cout << "***" << endl;
@@ -145,6 +145,8 @@ int main(){
 			}
 		}
 	}
+
+	emul_quit(NETWORK_SYS);
 
 	return 0;
 }

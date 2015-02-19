@@ -5,9 +5,13 @@
 
 #define DEBUG_UI_MAIN
 
-UI::UI(Font &font): default_font(font){
+UI::UI(Font font): default_font(font){
+	#ifdef DEBUG_UI_MAIN
+	std::cout << "IN UI::UI()" << std::endl;
+	#endif
+
 	set_screen_res(320, 240);
-	emul_init(VIDEO_INIT);
+	emul_init(VIDEO_SYS);
 
 	ScreenInfo scr = *get_screen_info();
 	assert(scr.width % 8 == 0);
@@ -28,6 +32,7 @@ UI::~UI(){
 	#endif
 
 	for(; !empty(); pop());
+	emul_quit(VIDEO_SYS);
 }
 
 void UI::push(Task *task){
@@ -49,7 +54,6 @@ void UI::pop(){
 		#ifdef DEBUG_UI_MAIN
 		std::cout << "NEED REFRESH" << std::endl;
 		#endif
-
 
 		need_refresh = true;
 	}
@@ -78,6 +82,8 @@ void UI::back(){
 }
 
 void UI::draw(){
+	if(empty()) return;
+
 	if(need_refresh){
 		clear();
 

@@ -9,7 +9,7 @@ using namespace std;
 
 int main(){
 	// set_screen_res(640, 480);
-	emul_init(NETWORK_INIT);
+	emul_init(NETWORK_SYS);
 
 	while(1){
 
@@ -39,6 +39,8 @@ int main(){
 
 		
 	}
+
+	emul_quit(NETWORK_SYS);
 
 	return 0;
 }

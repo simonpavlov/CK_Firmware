@@ -49,8 +49,20 @@ uint32_t storage_read(uint8_t *buff, uint32_t sector, uint32_t count);
 uint32_t storage_write(const uint8_t *buff, uint32_t sector, uint32_t count);
 
 /*
+ * Збасывает буффер
+ */
+int storage_flush();
+
+/*
  * Завершение работы с storage
  */
 void storage_quit();
+
+/*
+ * Возвращают соответствующие значения
+ */
+uint32_t get_storage_sector_size();
+uint32_t get_storage_block_size();
+uint32_t get_storage_sector_count();
 
 #endif

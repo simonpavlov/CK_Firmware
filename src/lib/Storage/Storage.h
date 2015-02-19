@@ -4,6 +4,8 @@
 #include <IO/CK_PasswordPair.h>
 #include <Storage/ff.h>
 
+// Realization in src/Storage.cpp
+
 class Storage{
 	private:
 		FATFS	m_fs;

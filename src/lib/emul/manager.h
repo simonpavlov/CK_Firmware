@@ -6,10 +6,10 @@
 
 //Realization in src/manager.c
 
-static const char VIDEO_INIT		= 0x01;
-static const char EEPROM_INIT		= 0x02;
-static const char STORAGE_INIT		= 0x04;
-static const char NETWORK_INIT		= 0x08;
+static const char VIDEO_SYS		= 0x01;
+static const char EEPROM_SYS	= 0x02;
+static const char STORAGE_SYS	= 0x04;
+static const char NETWORK_SYS	= 0x08;
 
 /*
  * Статус инициализации 
@@ -26,11 +26,11 @@ typedef enum {
  * Инициализация эмулятора, параметры - ширина и высота эктана
  * returns: случае неудачи вернёт *_ERROR
  */
-InitStatus emul_init(unsigned char mask); 
+InitStatus emul_init(unsigned char new_system_status); 
 
 /*
  * Завершение работы эмулятора
  */
-void emul_quit();
+void emul_quit(unsigned char system_off);
 
 #endif

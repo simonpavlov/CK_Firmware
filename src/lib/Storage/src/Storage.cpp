@@ -3,6 +3,7 @@
 #include <IO/IO_ByteStream.h>
 #include <IO/CK_Array.h>
 #include <iostream>
+#include <emul/emulator.h>
 #include "../Storage.h"
 #include "../ff.h"
 
@@ -29,6 +30,9 @@ char * Storage::pp_to_file_name(char *str, PasswordPair &pp){
 
 Storage::Storage(){
 	Logger::set_output(&std::cout);
+	LDBG << "IN Storage::Storage()" << std::endl;
+
+	emul_init(STORAGE_SYS);
 
 	m_health = false;
 
@@ -85,7 +89,10 @@ Storage::Storage(){
 }
 
 Storage::~Storage(){
+	LDBG << "IN Storage::~Storage()" << std::endl;
+
 	f_mount(NULL, "", 0);
+	emul_quit(STORAGE_SYS);
 }
 
 bool Storage::save(PasswordPair &pp){
