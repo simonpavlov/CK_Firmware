@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-SelectBox::SelectBox(UI &init_ui, std::vector<std::string> &str_mass, Callback *cb):
+SelectBox::SelectBox(std::vector<std::string> &str_mass, Callback *cb):
 	m_callback(cb),
 	menu_items(str_mass),
-	max_width(init_ui.get_width()),
-	max_height(init_ui.get_height()),
+	max_width(o_ui->get_width()),
+	max_height(o_ui->get_height()),
 	first_item(0),
 	cur_item(0),
 	interval(0),
@@ -14,7 +14,7 @@ SelectBox::SelectBox(UI &init_ui, std::vector<std::string> &str_mass, Callback *
 	right_set(0)
 {
 	//TODO: переделать инициализацию
-	m_font = &init_ui.get_default_font();
+	m_font = &o_ui->get_default_font();
 
 	max_str = (max_height - up_set) / (m_font->get_height() + interval);
 
@@ -41,7 +41,7 @@ SelectBox::~SelectBox(){
 	delete surf;
 }
 
-Task::result SelectBox::up(){
+Box::result SelectBox::up(){
 	if(menu_items.size() <= 1) return none;
 
 	cur_item--;
@@ -60,15 +60,15 @@ Task::result SelectBox::up(){
 	return surf_changed;
 }
 
-Task::result SelectBox::down(){
+Box::result SelectBox::down(){
 	if(menu_items.size() <= 1) return none;
 
 	cur_item++;
-	if(cur_item == last_item && last_item != menu_items.size() - 1){
+	if(cur_item == int(last_item) && last_item != menu_items.size() - 1){
 		first_item++;
 		last_item++;
 	}
-	if(cur_item > menu_items.size() - 1){
+	if(cur_item > int(menu_items.size() - 1)){
 		cur_item = 0;
 		first_item = 0;
 		last_item = first_item + max_str - 1;
@@ -77,7 +77,7 @@ Task::result SelectBox::down(){
 	return surf_changed;
 }
 
-Task::result SelectBox::select(){
+Box::result SelectBox::select(){
 	m_callback->exec(cur_item);
 
 	return complite;

@@ -6,12 +6,12 @@
 const std::string InputBox::InputCharsRange = "0123456789";
 const unsigned int InputBox::InputLenght = 6;
 
-InputBox::InputBox(UI &stk, const std::string &prompt, InputBox::Callback *init_cb):
+InputBox::InputBox(const std::string &prompt, InputBox::Callback *init_cb):
 	cur_char(0),
 	m_callback(init_cb),
-	surf(240, stk.get_default_font().get_height() * 2 + 10)
+	surf(240, o_ui->get_default_font().get_height() * 2 + 10)
 {
-	m_font = &stk.get_default_font();
+	m_font = &o_ui->get_default_font();
 	Surface *prompt_surf = m_font->gen_surf(prompt);
 
 	surf.draw(*prompt_surf, 3, 0);
@@ -22,7 +22,7 @@ InputBox::InputBox(UI &stk, const std::string &prompt, InputBox::Callback *init_
 
 InputBox::~InputBox(){}
 
-Task::result InputBox::up(){
+Box::result InputBox::up(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::up()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -37,7 +37,7 @@ Task::result InputBox::up(){
 	else return none;
 }
 
-Task::result InputBox::down(){
+Box::result InputBox::down(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::down()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -52,7 +52,7 @@ Task::result InputBox::down(){
 	else return none;
 }
 
-Task::result InputBox::select(){
+Box::result InputBox::select(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::select()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -70,7 +70,7 @@ Task::result InputBox::select(){
 	return surf_changed;
 }
 
-Task::result InputBox::back(){
+Box::result InputBox::back(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::back()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX

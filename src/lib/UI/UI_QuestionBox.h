@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 
-#include "UI_Task.h"
+#include "UI_Box.h"
 #include "UI_Font.h"
 #include "UI_Main.h"
 
@@ -14,7 +14,7 @@
 	Этот класс реализует окно - вопрос
 */
 
-class QuestionBox: public Task{
+class QuestionBox: public Box{
 	public:
 		class Callback{
 			public:
@@ -22,7 +22,7 @@ class QuestionBox: public Task{
 		};
 
 		// str - Вопрос, cb - обработчик
-		QuestionBox(UI &init_ui, std::string str, Callback *cb);
+		QuestionBox(std::string str, Callback *cb);
 		~QuestionBox();
 
 		result 	up();

@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "UI_Task.h"
+#include "UI_Box.h"
 #include "UI_Font.h"
 #include "UI_Main.h"
 
@@ -14,7 +14,7 @@ class UI;
 /*
 	Класс реализующий задачу отображения информации
 */
-class MessageBox: public Task{
+class MessageBox: public Box{
 	public:
 		class Callback{
 			public:
@@ -22,7 +22,7 @@ class MessageBox: public Task{
 		};
 
 		// Единственный параметр - отображаемая информация
-		MessageBox(UI &init_ui, std::string str, Callback *cb = NULL);
+		MessageBox(std::string str, Callback *cb = NULL);
 		~MessageBox();
 
 		result 	up(){return none;}

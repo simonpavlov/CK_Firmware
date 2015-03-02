@@ -1,5 +1,5 @@
 set (MENU_SRC
-	src/UI_Task.cpp
+	src/UI_Box.cpp
 	src/UI_InputBox.cpp
 	src/UI_QuestionBox.cpp
 	src/UI_SelectBox.cpp

@@ -3,14 +3,14 @@
 
 #include <stack>
 
-#include "UI_Task.h"
+#include "UI_Box.h"
 #include "UI_Surface.h"
 #include "UI_Font.h"
 #include <emul/emulator.h>
 
 // Realization in src/UI_Main.cpp
 
-class Task;
+class Box;
 
 /*
 	Этот класс реализует работу со стеком задач
@@ -26,14 +26,14 @@ class Task;
 	swap	- Swap contents (public member function )
 */
 //TODO: логично будет сделать этот класс static
-class UI: public std::stack <Task*>, public Surface{
+class UI: public std::stack <Box*>, public Surface{
 	public:
 		//TODO constructor
 		UI(Font font);
 		~UI();
 
 		// Обёртка для stack::push()
-		void push(Task *task);
+		void push(Box *task);
 
 		// Обёртка для stack::pop()
 		void pop();

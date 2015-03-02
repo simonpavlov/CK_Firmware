@@ -54,6 +54,8 @@ int main(){
 	// f.stdout();
 	UI main_UI = UI(Font(Uni3_Terminus20x10_psf));
 
+	Box::init_Boxis(main_UI);
+
 	vector<string> str_mass;
 
 	test_callback		cb_test_task;
@@ -83,11 +85,11 @@ int main(){
 	str_mass.push_back(string("19 Before me like a vision fleeting,"));
 	str_mass.push_back(string("20 A beauty's angel pure and clear."));
 
-	main_UI.push(new MessageBox(main_UI, "This is MessageBox", &cb_message_box));
-	main_UI.push(new QuestionBox(main_UI, "This is QuestionBox?", &cb_question_box));
-	main_UI.push(new SelectBox(main_UI, str_mass, &cb_select_box));
-	main_UI.push(new InputBox(main_UI, "This is InputBox:", &cb_input_box));
-	main_UI.push(new test_task(main_UI, 10, 10, &cb_test_task));
+	main_UI.push(new MessageBox("This is MessageBox", &cb_message_box));
+	main_UI.push(new QuestionBox("This is QuestionBox?", &cb_question_box));
+	main_UI.push(new SelectBox(str_mass, &cb_select_box));
+	main_UI.push(new InputBox("This is InputBox:", &cb_input_box));
+	main_UI.push(new test_task(10, 10, &cb_test_task));
 
 	// Test for surface
 	// Surface surf_a(17, 20), surf_b(10, 20);

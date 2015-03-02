@@ -1,20 +1,20 @@
 #include "../UI_QuestionBox.h"
 
-QuestionBox::QuestionBox(UI &init_ui, std::string str, Callback *cb):
+QuestionBox::QuestionBox(std::string str, Callback *cb):
 	m_callback(cb),
 	cur_item(0)
 {
-	m_font = &init_ui.get_default_font();
+	m_font = &o_ui->get_default_font();
 
 	int wht, hht,
-		max_width = init_ui.get_width(),
-		max_height = init_ui.get_height();
+		max_width = o_ui->get_width(),
+		max_height = o_ui->get_height();
 
-	quest_surf	= m_font->gen_surf(str, init_ui.get_width());
+	quest_surf	= m_font->gen_surf(str, o_ui->get_width());
 	yes_surf	= m_font->gen_surf(std::string("Yes"));
 	no_surf		= m_font->gen_surf(std::string("No"));
 
-	wht = std::max(std::min(init_ui.get_width(), quest_surf->get_width() + 16), no_surf->get_width() + yes_surf->get_width() + 24);
+	wht = std::max(std::min(o_ui->get_width(), quest_surf->get_width() + 16), no_surf->get_width() + yes_surf->get_width() + 24);
 	hht = 2 * m_font->get_height() + 12;
 
 	surf = new Surface(wht, hht);
@@ -27,19 +27,19 @@ QuestionBox::~QuestionBox(){
 	delete surf;
 }
 
-Task::result QuestionBox::up(){
+Box::result QuestionBox::up(){
 	cur_item = (cur_item + 1) % 2;
 
 	return surf_changed;
 }
 
-Task::result QuestionBox::down(){
+Box::result QuestionBox::down(){
 	cur_item = (cur_item + 1) % 2;
 
 	return surf_changed;
 }
 
-Task::result QuestionBox::select(){
+Box::result QuestionBox::select(){
 	bool res = cur_item;
 	m_callback->exec(res);
 

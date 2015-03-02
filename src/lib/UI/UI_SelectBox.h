@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "UI_Task.h"
+#include "UI_Box.h"
 #include "UI_Font.h"
 #include "UI_Main.h"
 
@@ -13,7 +13,7 @@
 /*
 	Этот клас реализует ... select box
 */
-class SelectBox: public Task{
+class SelectBox: public Box{
 	public:
 		class Callback{
 			public:
@@ -21,7 +21,7 @@ class SelectBox: public Task{
 		};
 
 		// str_mass - пункты меню, callback_f - обработчик
-		SelectBox(UI &init_ui, std::vector<std::string> &str_mass, Callback *cb);
+		SelectBox(std::vector<std::string> &str_mass, Callback *cb);
 		~SelectBox();
 
 		result 	up();

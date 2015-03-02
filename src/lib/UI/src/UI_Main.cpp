@@ -35,8 +35,8 @@ UI::~UI(){
 	emul_quit(VIDEO_SYS);
 }
 
-void UI::push(Task *task){
-	std::stack<Task*>::push(task);
+void UI::push(Box *task){
+	std::stack<Box*>::push(task);
 
 	#ifdef DEBUG_UI_MAIN
 	std::cout << "NEED REFRESH" << std::endl;
@@ -45,10 +45,9 @@ void UI::push(Task *task){
 	need_refresh = true;
 }
 
-
 void UI::pop(){
 	delete this->top();
-	std::stack<Task*>::pop();
+	std::stack<Box*>::pop();
 
 	if(!empty()){
 		#ifdef DEBUG_UI_MAIN
@@ -65,15 +64,14 @@ void UI::up(){
 
 void UI::down(){
 	if(top()->down()) need_refresh = true;
-
 }
 
 void UI::select(){
-	Task::result res;
+	Box::result res;
 
 	res = top()->select();
 
-	if(res == Task::surf_changed) need_refresh = true;
+	if(res == Box::surf_changed) need_refresh = true;
 }
 
 void UI::back(){

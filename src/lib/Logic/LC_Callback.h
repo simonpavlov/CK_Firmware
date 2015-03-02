@@ -3,27 +3,29 @@
 
 #include <Logic/Logic.h>
 #include <UI/UI.h>
+#include <string>
 
 // Realization in src/LC_Callback.cpp
 
 class Logic;
 
 class Callback{
+	protected:
+		static Logic *o_lc;
+
 	public:
+		static  void init_Callbacks(Logic *lc) {o_lc = lc;}
 		virtual void run()	= 0;
 		virtual ~Callback(){};
 };
 
-class select_callback: public SelectBox::Callback, public Callback{
-	public:
+class main_list: public SelectBox::Callback, public Callback{
+	private:
 		bool	new_res;
 		int		res;
-		Logic	*m_logic;
 
-		select_callback(Logic *init_logic):
-			new_res(false),
-			m_logic(init_logic)
-		{}
+	public:
+		main_list();
 
 		void exec(int number){
 			res		= number;
@@ -33,10 +35,18 @@ class select_callback: public SelectBox::Callback, public Callback{
 		void run();
 };
 
-class message_callback: public MessageBox::Callback{
+class message_callback: public MessageBox::Callback, public Callback{
+	private:
+		bool	new_res;
+
 	public:
+		message_callback(std::string str);
+
 		void exec(){
+			new_res = true;
 		}
+
+		void run();
 };
 
 #endif //LC_CALLBACK

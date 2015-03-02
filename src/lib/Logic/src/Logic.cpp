@@ -20,18 +20,10 @@ Logic::Logic():
 	Logger::set_output(&std::cout);
 	LDBG << "IN Logic::Logic()" << std::endl;
 
-	select_callback *cb_select = new select_callback(this);
+	Box::init_Boxis(m_ui);
+	Callback::init_Callbacks(this);
 
-	std::vector<std::string> str_mass;
-
-	str_mass.push_back("Passwords");
-	str_mass.push_back("Settings");
-	str_mass.push_back("About Crypto Key");
-	str_mass.push_back("Exit");
-
-	m_ui.push(new SelectBox(m_ui, str_mass, cb_select));
-
-	callback = cb_select;
+	callbacks.push(new main_list());
 }
 
 Logic::~Logic(){
@@ -69,9 +61,7 @@ void Logic::loop(){
 		}
 
 		m_ui.draw();
-		callback->run();
+		callbacks.top()->run();
 		if(m_ui.empty()) run_flag = false;
 	}
-
-	delete callback;
 }

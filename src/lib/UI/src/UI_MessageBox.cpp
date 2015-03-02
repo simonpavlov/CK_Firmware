@@ -2,14 +2,14 @@
 
 #include <iostream>
 
-MessageBox::MessageBox(UI &init_ui, std::string str, Callback *cb):
+MessageBox::MessageBox(std::string str, Callback *cb):
 	m_callback(cb),
 	message(str)
 {
-	int	max_width = init_ui.get_width(),
-		max_height = init_ui.get_height();
+	int	max_width = o_ui->get_width(),
+		max_height = o_ui->get_height();
 
-	Font font = init_ui.get_default_font();
+	Font font = o_ui->get_default_font();
 
 	std::string ok = "OK";
 
@@ -46,7 +46,7 @@ MessageBox::~MessageBox(){
 	delete surf;
 }
 
-Task::result MessageBox::select(){
+Box::result MessageBox::select(){
 	if(m_callback)
 		m_callback->exec();
 	return complite;

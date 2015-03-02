@@ -3,21 +3,21 @@
 
 #include <string>
 
-#include "UI_Task.h"
+#include "UI_Box.h"
 #include "UI_Font.h"
 #include "UI_Main.h"
 
 // Realization in src/UI_InputBox.cpp
 
 
-class InputBox: public Task{
+class InputBox: public Box{
 	public:
 		class Callback{
 			public:
 				virtual void exec(const std::string &str) = 0;
 		};
 
-		InputBox(UI &stk, const std::string &prompt, InputBox::Callback *init_cb);
+		InputBox(const std::string &prompt, InputBox::Callback *init_cb);
 		~InputBox();
 
 		result 	up();

@@ -5,10 +5,10 @@
 
 #define DEBUG_TEST_TASK
 
-test_task::test_task(UI &stk, int x, int y, Callback *cb):
+test_task::test_task(int x, int y, Callback *cb):
 	m_callback(cb),
 	surf(192, 80),
-	font(stk.get_default_font())
+	font(o_ui->get_default_font())
 {
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::test_task()" << std::endl;
@@ -24,42 +24,42 @@ test_task::~test_task(){
 	#endif
 }
 
-Task::result test_task::up(){
+Box::result test_task::up(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::up()" << std::endl;
 	#endif
 
 	Y -= 1;
 
-	return Task::surf_changed;
+	return Box::surf_changed;
 }
 
-Task::result test_task::down(){
+Box::result test_task::down(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::down()" << std::endl;
 	#endif
 
 	Y += 1;
 
-	return Task::surf_changed;
+	return Box::surf_changed;
 }
 
-Task::result test_task::select(){
+Box::result test_task::select(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::select()" << std::endl;
 	#endif
 
 	m_callback->exec(X);
 
-	return Task::complite;
+	return Box::complite;
 }
 
-Task::result test_task::back(){
+Box::result test_task::back(){
 	#ifdef DEBUG_TEST_TASK
 	std::cout << "IN test_task::back()" << std::endl;
 	#endif
 
-	return Task::none;
+	return Box::none;
 }
 
 Surface & test_task::draw(){
