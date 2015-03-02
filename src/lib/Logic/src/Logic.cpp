@@ -1,5 +1,6 @@
 #include "../Logic.h"
 
+#include <IO/CK_Logger.h>
 #include <emul/emulator.h>
 #include <IO/CK_Logger.h>
 #include <Uni3_Terminus20x10_psf.h>
@@ -11,7 +12,6 @@
 #define DEBUG_LOGIC 1
 #define LDBG DEBUG_LOGIC && DBG
 
-
 Logic::Logic():
 	m_stor(),
 	m_ui(Font(Uni3_Terminus20x10_psf))
@@ -20,13 +20,18 @@ Logic::Logic():
 	Logger::set_output(&std::cout);
 	LDBG << "IN Logic::Logic()" << std::endl;
 
+	select_callback *cb_select = new select_callback(this);
+
 	std::vector<std::string> str_mass;
 
 	str_mass.push_back("Passwords");
 	str_mass.push_back("Settings");
 	str_mass.push_back("About Crypto Key");
+	str_mass.push_back("Exit");
 
-	m_ui.push(new SelectBox(m_ui, str_mass, &cb_select));
+	m_ui.push(new SelectBox(m_ui, str_mass, cb_select));
+
+	callback = cb_select;
 }
 
 Logic::~Logic(){
@@ -55,14 +60,6 @@ void Logic::loop(){
 			case EVT_PRESS_ENTER:
 				LDBG << "EVT_PRESS_ENTER" << std::endl;
 				m_ui.select();
-				LDBG << "Res: " << cb_select.res << std::endl;
-				if(cb_select.res == 2){
-					m_ui.push(new MessageBox(m_ui, ":-)", &cb_message));
-					cb_select.res = -1;
-				}
-				else{
-					run_flag = false;
-				}
 			break;
 
 			case EVT_PRESS_BACK:
@@ -72,5 +69,9 @@ void Logic::loop(){
 		}
 
 		m_ui.draw();
+		callback->run();
+		if(m_ui.empty()) run_flag = false;
 	}
+
+	delete callback;
 }

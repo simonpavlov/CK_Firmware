@@ -74,7 +74,6 @@ void UI::select(){
 	res = top()->select();
 
 	if(res == Task::surf_changed) need_refresh = true;
-	else if(res == Task::complite) UI::pop();
 }
 
 void UI::back(){

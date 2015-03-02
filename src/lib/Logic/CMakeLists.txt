@@ -1,4 +1,5 @@
 set (LOGIC_SRC
+	src/LC_Callback.cpp
 	src/Logic.cpp
 	)
 
