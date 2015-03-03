@@ -20,10 +20,10 @@ class InputBox: public Box{
 		InputBox(const std::string &prompt, InputBox::Callback *init_cb);
 		~InputBox();
 
-		result 	up();
-		result	down();
-		result	select();
-		result	back();
+		Status 	up();
+		Status	down();
+		Status	select();
+		Status	back();
 		Surface	& draw();
 
 	private:

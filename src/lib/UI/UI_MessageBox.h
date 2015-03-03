@@ -16,24 +16,17 @@ class UI;
 */
 class MessageBox: public Box{
 	public:
-		class Callback{
-			public:
-				virtual void exec() = 0;
-		};
-
 		// Единственный параметр - отображаемая информация
-		MessageBox(std::string str, Callback *cb = NULL);
+		MessageBox(std::string str);
 		~MessageBox();
 
-		result 	up(){return none;}
-		result	down(){return none;}
-		result	select();
-		result	back(){return none;}
+		Status 	up(){return m_stat = none;}
+		Status	down(){return m_stat = none;}
+		Status	select();
+		Status	back(){return m_stat = none;}
 		Surface	& draw();
 
 	private:
-		Callback *m_callback;
-
 		std::string message;
 		Surface *surf;
 };

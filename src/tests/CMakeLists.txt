@@ -28,5 +28,5 @@ target_link_libraries (Storage_ff_test Storage emul ${SDL_LIBRARY})
 add_executable (Storage_test Storage_test.cpp)
 target_link_libraries (Storage_test IO Storage emul ${SDL_LIBRARY})
 
-add_executable (Logic_test Logic_test.cpp)
-target_link_libraries (Logic_test Logic UI Storage IO emul ${SDL_LIBRARY})
+add_executable (LC_test LC_test.cpp)
+target_link_libraries (LC_test Logic UI Storage IO emul ${SDL_LIBRARY})

@@ -1,4 +1,4 @@
-#include "../Logic.h"
+#include "../LC_Main.h"
 
 #include <IO/CK_Logger.h>
 #include <emul/emulator.h>
@@ -62,6 +62,6 @@ void Logic::loop(){
 
 		m_ui.draw();
 		callbacks.top()->run();
-		if(m_ui.empty()) run_flag = false;
+		if(!m_ui.get_box()) run_flag = false;
 	}
 }

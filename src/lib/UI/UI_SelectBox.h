@@ -24,10 +24,10 @@ class SelectBox: public Box{
 		SelectBox(std::vector<std::string> &str_mass, Callback *cb);
 		~SelectBox();
 
-		result 	up();
-		result	down();
-		result	select();
-		result	back(){return none;}
+		Status 	up();
+		Status	down();
+		Status	select();
+		Status	back(){return none;}
 		Surface	& draw();
 
 	private:

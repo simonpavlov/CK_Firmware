@@ -4,18 +4,10 @@
 
 #include <emul/emulator.h>
 #include <UI/UI.h>
-#include <UI/test_task.h>
 
 #include <Uni3_Terminus20x10_psf.h>
 
 using namespace std;
-
-class message_callback: public MessageBox::Callback{
-	public:
-		void exec(){
-			cout << "ok" << endl;
-		}
-};
 
 class question_callback: public QuestionBox::Callback{
 	public:
@@ -40,13 +32,6 @@ class input_callback: public InputBox::Callback{
 		}
 };
 
-class test_callback: public test_task::Callback{
-	public:
-		void exec(int x){
-			cout << "X: " << x << endl;
-		}
-};
-
 int main(){
 	//set_screen_res(320, 240);
 	//emul_init(VIDEO_SYS);
@@ -58,8 +43,6 @@ int main(){
 
 	vector<string> str_mass;
 
-	test_callback		cb_test_task;
-	message_callback	cb_message_box;
 	question_callback	cb_question_box;
 	select_callback		cb_select_box;
 	input_callback		cb_input_box;
@@ -85,11 +68,10 @@ int main(){
 	str_mass.push_back(string("19 Before me like a vision fleeting,"));
 	str_mass.push_back(string("20 A beauty's angel pure and clear."));
 
-	main_UI.push(new MessageBox("This is MessageBox", &cb_message_box));
-	main_UI.push(new QuestionBox("This is QuestionBox?", &cb_question_box));
-	main_UI.push(new SelectBox(str_mass, &cb_select_box));
-	main_UI.push(new InputBox("This is InputBox:", &cb_input_box));
-	main_UI.push(new test_task(10, 10, &cb_test_task));
+	main_UI.push(new MessageBox("This is MessageBox"));
+	//main_UI.push(new QuestionBox("This is QuestionBox?", &cb_question_box));
+	//main_UI.push(new SelectBox(str_mass, &cb_select_box));
+	//main_UI.push(new InputBox("This is InputBox:", &cb_input_box));
 
 	// Test for surface
 	// Surface surf_a(17, 20), surf_b(10, 20);
@@ -101,7 +83,7 @@ int main(){
 
 	main_UI.draw();
 
-	while(!main_UI.empty()){
+	while(1){
 		// Графическая часть
 		switch(char(get_event())){
 			case EVT_EXIT:
@@ -128,7 +110,11 @@ int main(){
 				break;
 		}
 
-		if(main_UI.empty()){
+		if(main_UI.get_box()->get_stat() == Box::complite){
+			delete main_UI.pop();
+		}
+
+		if(!main_UI.get_box()){
 			break;
 		}
 

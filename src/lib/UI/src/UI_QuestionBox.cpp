@@ -27,19 +27,19 @@ QuestionBox::~QuestionBox(){
 	delete surf;
 }
 
-Box::result QuestionBox::up(){
+Box::Status QuestionBox::up(){
 	cur_item = (cur_item + 1) % 2;
 
 	return surf_changed;
 }
 
-Box::result QuestionBox::down(){
+Box::Status QuestionBox::down(){
 	cur_item = (cur_item + 1) % 2;
 
 	return surf_changed;
 }
 
-Box::result QuestionBox::select(){
+Box::Status QuestionBox::select(){
 	bool res = cur_item;
 	m_callback->exec(res);
 

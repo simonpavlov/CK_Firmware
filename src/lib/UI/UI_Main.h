@@ -1,8 +1,6 @@
 #ifndef UI_MAIN
 #define UI_MAIN
 
-#include <stack>
-
 #include "UI_Box.h"
 #include "UI_Surface.h"
 #include "UI_Font.h"
@@ -26,21 +24,28 @@ class Box;
 	swap	- Swap contents (public member function )
 */
 //TODO: логично будет сделать этот класс static
-class UI: public std::stack <Box*>, public Surface{
+class UI: public Surface{
+	private:
+		Box		*m_box;
+
+		Font	default_font;
+		bool	need_refresh;
+
 	public:
-		//TODO constructor
 		UI(Font font);
 		~UI();
 
-		// Обёртка для stack::push()
-		void push(Box *task);
-
-		// Обёртка для stack::pop()
-		void pop();
+		Box *	push(Box *task);
+		Box *	pop();
+		Box *	get_box() {return m_box;} 
 
 		// Возвращает шрифт "по умолчанию"
 		Font &get_default_font() {return default_font;};
 
+		// Обработка события
+		bool process(Event evt);
+
+	//+++++ Может быть сделать закрытыми
 		// Обработать нажатие вверх
 		void up();
 
@@ -52,16 +57,13 @@ class UI: public std::stack <Box*>, public Surface{
 
 		// Обработать нажатие назад
 		void back();
+	//-----
 
 		// Отрисовка поьзовательского интерфейса
 		void draw();
 
 		// Очищает видео буфер
 		// void clear_scr();
-
-	private:
-		Font default_font;
-		bool need_refresh;
 };
 
 #endif //UI_MAIN

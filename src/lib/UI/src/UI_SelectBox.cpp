@@ -41,7 +41,7 @@ SelectBox::~SelectBox(){
 	delete surf;
 }
 
-Box::result SelectBox::up(){
+Box::Status SelectBox::up(){
 	if(menu_items.size() <= 1) return none;
 
 	cur_item--;
@@ -60,7 +60,7 @@ Box::result SelectBox::up(){
 	return surf_changed;
 }
 
-Box::result SelectBox::down(){
+Box::Status SelectBox::down(){
 	if(menu_items.size() <= 1) return none;
 
 	cur_item++;
@@ -77,7 +77,7 @@ Box::result SelectBox::down(){
 	return surf_changed;
 }
 
-Box::result SelectBox::select(){
+Box::Status SelectBox::select(){
 	m_callback->exec(cur_item);
 
 	return complite;

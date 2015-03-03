@@ -5,7 +5,10 @@
 
 #define DEBUG_UI_MAIN
 
-UI::UI(Font font): default_font(font){
+UI::UI(Font font):
+	m_box(NULL),
+	default_font(font)
+{
 	#ifdef DEBUG_UI_MAIN
 	std::cout << "IN UI::UI()" << std::endl;
 	#endif
@@ -31,60 +34,84 @@ UI::~UI(){
 	std::cout << "IN UI::~UI()" << std::endl;
 	#endif
 
-	for(; !empty(); pop());
 	emul_quit(VIDEO_SYS);
 }
 
-void UI::push(Box *task){
-	std::stack<Box*>::push(task);
+Box * UI::push(Box *box){
+	Box *last_box;
+
+	last_box	= m_box;
+	m_box		= box;
 
 	#ifdef DEBUG_UI_MAIN
 	std::cout << "NEED REFRESH" << std::endl;
 	#endif
 
 	need_refresh = true;
+
+	return last_box;
 }
 
-void UI::pop(){
-	delete this->top();
-	std::stack<Box*>::pop();
+Box * UI::pop(){
+	Box *last_box;
 
-	if(!empty()){
-		#ifdef DEBUG_UI_MAIN
-		std::cout << "NEED REFRESH" << std::endl;
-		#endif
+	last_box	= m_box;
+	m_box		= NULL;
 
-		need_refresh = true;
+	//need_refresh = false;
+
+	return last_box;
+}
+
+bool UI::process(Event evt){
+	switch(char(evt)){
+		case EVT_PRESS_UP:
+			up();
+			break;
+
+		case EVT_PRESS_DOWN:
+			down();
+			break;
+
+		case EVT_PRESS_ENTER:
+			select();
+			break;
+
+		case EVT_PRESS_BACK:
+			back();
+			break;
 	}
+
+	return false;
 }
 
 void UI::up(){
-	if(top()->up()) need_refresh = true;
+	if(m_box->up()) need_refresh = true;
 }
 
 void UI::down(){
-	if(top()->down()) need_refresh = true;
+	if(m_box->down()) need_refresh = true;
 }
 
 void UI::select(){
-	Box::result res;
+	Box::Status res;
 
-	res = top()->select();
+	res = m_box->select();
 
 	if(res == Box::surf_changed) need_refresh = true;
 }
 
 void UI::back(){
-	if(top()->back()) need_refresh = true;
+	if(m_box->back()) need_refresh = true;
 }
 
 void UI::draw(){
-	if(empty()) return;
+	if(!m_box) return;
 
 	if(need_refresh){
 		clear();
 
-		Surface &surf = top()->draw();
+		Surface &surf = m_box->draw();
 		Surface::draw(surf);
 
 		refresh_video_buffer();

@@ -12,23 +12,26 @@ class UI;
 	Базовая задача
 */
 class Box {
-	protected:
-		static UI *o_ui;
-
 	public:
-		enum result {none, surf_changed, complite};
+		enum Status {none, surf_changed, complite};
 
-		static void init_Boxis(UI &ui){
-			o_ui = &ui;
-		}
-
+		static void init_Boxis(UI &ui) {o_ui = &ui;}
+		
+		Box(): m_stat(surf_changed) {}
 		virtual ~Box() {};
 
-		virtual result	up() = 0;
-		virtual result	down() = 0;
-		virtual result 	select() = 0;
-		virtual result	back() = 0;
+		virtual Status	up() = 0;
+		virtual Status	down() = 0;
+		virtual Status 	select() = 0;
+		virtual Status	back() = 0;
 		virtual Surface	& draw() = 0;
+
+		Status			get_stat() {return m_stat;}
+
+	protected:
+		static UI	*o_ui;
+
+		Status		m_stat;
 };
 
 #endif //UI_TASK

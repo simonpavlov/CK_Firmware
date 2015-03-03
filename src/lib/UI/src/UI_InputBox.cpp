@@ -22,7 +22,7 @@ InputBox::InputBox(const std::string &prompt, InputBox::Callback *init_cb):
 
 InputBox::~InputBox(){}
 
-Box::result InputBox::up(){
+Box::Status InputBox::up(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::up()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -37,7 +37,7 @@ Box::result InputBox::up(){
 	else return none;
 }
 
-Box::result InputBox::down(){
+Box::Status InputBox::down(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::down()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -52,7 +52,7 @@ Box::result InputBox::down(){
 	else return none;
 }
 
-Box::result InputBox::select(){
+Box::Status InputBox::select(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::select()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -70,7 +70,7 @@ Box::result InputBox::select(){
 	return surf_changed;
 }
 
-Box::result InputBox::back(){
+Box::Status InputBox::back(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::back()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX

@@ -25,10 +25,10 @@ class QuestionBox: public Box{
 		QuestionBox(std::string str, Callback *cb);
 		~QuestionBox();
 
-		result 	up();
-		result	down();
-		result	select();
-		result	back(){return none;}
+		Status 	up();
+		Status	down();
+		Status	select();
+		Status	back(){return none;}
 		Surface	& draw();
 
 	private:

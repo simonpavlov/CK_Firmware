@@ -10,6 +10,7 @@ Logic *Callback::o_lc = NULL;
 main_list::main_list():
 	new_res(false)
 {
+	/*
 	std::vector<std::string> str_mass;
 
 	str_mass.push_back("Passwords");
@@ -18,9 +19,11 @@ main_list::main_list():
 	str_mass.push_back("Exit");
 
 	o_lc->m_ui.push(new SelectBox(str_mass, this));
+	*/
 }
 
 void main_list::run(){
+	/*
 	if(!new_res) return;
 	LDBG << "new_res: " << new_res << " res: " << res << std::endl;
 
@@ -35,19 +38,22 @@ void main_list::run(){
 		o_lc->callbacks.pop();
 		delete this;
 	}
+	*/
 }
 
-message_callback::message_callback(std::string str):
-	new_res(false)
-{
-	o_lc->m_ui.push(new MessageBox(str, this));
+message_callback::message_callback(std::string str){
+	/*
+	o_lc->m_ui.push(new MessageBox(str));
+	*/
 }
 
 void message_callback::run(){
+	/*
 	if(new_res){
 		LDBG << "message_callback done" << std::endl;
 		o_lc->m_ui.pop();
 		o_lc->callbacks.pop();
 		delete this;
 	}
+	*/
 }

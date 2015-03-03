@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-MessageBox::MessageBox(std::string str, Callback *cb):
-	m_callback(cb),
+MessageBox::MessageBox(std::string str):
 	message(str)
 {
-	int	max_width = o_ui->get_width(),
-		max_height = o_ui->get_height();
+	int	max_width = o_ui->get_width();
+		// max_height = o_ui->get_height();
 
 	Font font = o_ui->get_default_font();
 
@@ -46,10 +45,9 @@ MessageBox::~MessageBox(){
 	delete surf;
 }
 
-Box::result MessageBox::select(){
-	if(m_callback)
-		m_callback->exec();
-	return complite;
+Box::Status MessageBox::select(){
+	m_stat = complite;
+	return m_stat;
 }
 
 Surface & MessageBox::draw(){

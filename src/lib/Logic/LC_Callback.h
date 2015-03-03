@@ -1,7 +1,7 @@
 #ifndef LC_CALLBACK
 #define LC_CALLBACK
 
-#include <Logic/Logic.h>
+#include <Logic/LC_Main.h>
 #include <UI/UI.h>
 #include <string>
 
@@ -35,16 +35,9 @@ class main_list: public SelectBox::Callback, public Callback{
 		void run();
 };
 
-class message_callback: public MessageBox::Callback, public Callback{
-	private:
-		bool	new_res;
-
+class message_callback: public Callback{
 	public:
 		message_callback(std::string str);
-
-		void exec(){
-			new_res = true;
-		}
 
 		void run();
 };
