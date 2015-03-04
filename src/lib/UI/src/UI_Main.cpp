@@ -2,16 +2,16 @@
 
 #include <iostream>
 #include <cassert>
+#include <IO/CK_Logger.h>
 
-#define DEBUG_UI_MAIN
+#define DEBUG_UI_MAIN 1
+#define LDBG DEBUG_UI_MAIN && DBG
 
 UI::UI(Font font):
 	m_box(NULL),
 	default_font(font)
 {
-	#ifdef DEBUG_UI_MAIN
-	std::cout << "IN UI::UI()" << std::endl;
-	#endif
+	LDBG << "IN UI::UI()" << std::endl;
 
 	set_screen_res(320, 240);
 	emul_init(VIDEO_SYS);
@@ -30,9 +30,7 @@ UI::UI(Font font):
 }
 
 UI::~UI(){
-	#ifdef DEBUG_UI_MAIN
-	std::cout << "IN UI::~UI()" << std::endl;
-	#endif
+	LDBG << "IN UI::~UI()" << std::endl;
 
 	emul_quit(VIDEO_SYS);
 }
@@ -43,9 +41,7 @@ Box * UI::push(Box *box){
 	last_box	= m_box;
 	m_box		= box;
 
-	#ifdef DEBUG_UI_MAIN
-	std::cout << "NEED REFRESH" << std::endl;
-	#endif
+	LDBG << "NEED REFRESH" << std::endl;
 
 	need_refresh = true;
 
@@ -66,20 +62,24 @@ Box * UI::pop(){
 bool UI::process(Event evt){
 	switch(char(evt)){
 		case EVT_PRESS_UP:
+			LDBG << "EVT_PRESS_UP" << std::endl;
 			up();
-			break;
+			return true;
 
 		case EVT_PRESS_DOWN:
+			LDBG << "EVT_PRESS_DOWN" << std::endl;
 			down();
-			break;
+			return true;
 
 		case EVT_PRESS_ENTER:
+			LDBG << "EVT_PRESS_ENTER" << std::endl;
 			select();
-			break;
+			return true;
 
 		case EVT_PRESS_BACK:
+			LDBG << "EVT_PRESS_BACK" << std::endl;
 			back();
-			break;
+			return true;
 	}
 
 	return false;
@@ -122,9 +122,7 @@ void UI::draw(){
 
 /*
 void UI::clear_scr(){
-	#ifdef DEBUG_UI_MAIN
-	std::cout << "IN UI::clear_scr()" << std::endl;
-	#endif
+	LDBG << "IN UI::clear_scr()" << std::endl;
 
 	clear();
 }

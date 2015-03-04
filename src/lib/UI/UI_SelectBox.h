@@ -15,23 +15,21 @@
 */
 class SelectBox: public Box{
 	public:
-		class Callback{
-			public:
-				virtual void exec(int number) = 0;
-		};
-
 		// str_mass - пункты меню, callback_f - обработчик
-		SelectBox(std::vector<std::string> &str_mass, Callback *cb);
+		SelectBox(std::vector<std::string> &str_mass);
 		~SelectBox();
+
+		size_t	get_res(){m_stat = none; return m_res;}
 
 		Status 	up();
 		Status	down();
 		Status	select();
-		Status	back(){return none;}
+		Status	back(){return m_stat = none;}
 		Surface	& draw();
 
 	private:
-		Callback	*m_callback;
+		size_t		m_res;
+
 		Surface		*surf;
 		Font		*m_font;
 		std::vector<std::string> menu_items;

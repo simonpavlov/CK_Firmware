@@ -7,27 +7,24 @@
 
 Logic *Callback::o_lc = NULL;
 
-main_list::main_list():
-	new_res(false)
-{
-	/*
+main_list::main_list(){
 	std::vector<std::string> str_mass;
 
 	str_mass.push_back("Passwords");
 	str_mass.push_back("Settings");
 	str_mass.push_back("About Crypto Key");
-	str_mass.push_back("Exit");
+	str_mass.push_back("Shutdown");
 
-	o_lc->m_ui.push(new SelectBox(str_mass, this));
-	*/
+	m_select_box = new SelectBox(str_mass);
+	o_lc->m_ui.push(m_select_box);
 }
 
 void main_list::run(){
-	/*
-	if(!new_res) return;
-	LDBG << "new_res: " << new_res << " res: " << res << std::endl;
+	if(m_select_box->get_stat() != Box::complite){
+		return;
+	}
 
-	new_res = false;
+	size_t res = m_select_box->get_res();
 
 	if(res == 2){
 		o_lc->callbacks.push(new message_callback(":-)"));
@@ -38,22 +35,20 @@ void main_list::run(){
 		o_lc->callbacks.pop();
 		delete this;
 	}
-	*/
 }
 
 message_callback::message_callback(std::string str){
-	/*
-	o_lc->m_ui.push(new MessageBox(str));
-	*/
+	m_message_box = new MessageBox(str);
+	o_lc->m_ui.push(m_message_box);
 }
 
 void message_callback::run(){
-	/*
-	if(new_res){
-		LDBG << "message_callback done" << std::endl;
-		o_lc->m_ui.pop();
-		o_lc->callbacks.pop();
-		delete this;
+	if(m_message_box->get_stat() != Box::complite){
+		return;
 	}
-	*/
+
+	LDBG << "message_callback done" << std::endl;
+	o_lc->m_ui.pop();
+	o_lc->callbacks.pop();
+	delete this;
 }

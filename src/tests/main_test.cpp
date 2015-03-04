@@ -18,13 +18,6 @@ class question_callback: public QuestionBox::Callback{
 		}
 };
 
-class select_callback: public SelectBox::Callback{
-	public:
-		void exec(int number){
-			cout << "number: " << number << endl;
-		}
-};
-
 class input_callback: public InputBox::Callback{
 	public:
 		void exec(const string &str){
@@ -44,7 +37,6 @@ int main(){
 	vector<string> str_mass;
 
 	question_callback	cb_question_box;
-	select_callback		cb_select_box;
 	input_callback		cb_input_box;
 
 	str_mass.push_back(string(" 1 The wondrous moment of our meeting..."));
@@ -70,7 +62,7 @@ int main(){
 
 	main_UI.push(new MessageBox("This is MessageBox"));
 	//main_UI.push(new QuestionBox("This is QuestionBox?", &cb_question_box));
-	//main_UI.push(new SelectBox(str_mass, &cb_select_box));
+	//main_UI.push(new SelectBox(str_mass));
 	//main_UI.push(new InputBox("This is InputBox:", &cb_input_box));
 
 	// Test for surface

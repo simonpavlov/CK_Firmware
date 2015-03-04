@@ -33,35 +33,23 @@ Logic::~Logic(){
 void Logic::loop(){
 	bool run_flag = true;
 	while(run_flag){
-		switch(char(get_event())){
+		Event evt = get_event();
+		switch(char(evt)){
 			case EVT_EXIT:
 				LDBG << "EVT_EXIT" << std::endl;
 				run_flag = false;
 			break;
 
 			case EVT_PRESS_UP:
-				LDBG << "EVT_PRESS_UP" << std::endl;
-				m_ui.up();
-			break;
-
 			case EVT_PRESS_DOWN:
-				LDBG << "EVT_PRESS_DOWN" << std::endl;
-				m_ui.down();
-			break;
-
 			case EVT_PRESS_ENTER:
-				LDBG << "EVT_PRESS_ENTER" << std::endl;
-				m_ui.select();
-			break;
-
 			case EVT_PRESS_BACK:
-				LDBG << "EVT_PRESS_BACK" << std::endl;
-				m_ui.back();
+				m_ui.process(evt);
 			break;
 		}
 
-		m_ui.draw();
 		callbacks.top()->run();
-		if(!m_ui.get_box()) run_flag = false;
+		m_ui.draw();
+		if(callbacks.empty()) run_flag = false;
 	}
 }

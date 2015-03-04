@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-SelectBox::SelectBox(std::vector<std::string> &str_mass, Callback *cb):
-	m_callback(cb),
+SelectBox::SelectBox(std::vector<std::string> &str_mass):
 	menu_items(str_mass),
 	max_width(o_ui->get_width()),
 	max_height(o_ui->get_height()),
@@ -42,7 +41,7 @@ SelectBox::~SelectBox(){
 }
 
 Box::Status SelectBox::up(){
-	if(menu_items.size() <= 1) return none;
+	if(menu_items.size() <= 1) return m_stat = none;
 
 	cur_item--;
 
@@ -57,11 +56,11 @@ Box::Status SelectBox::up(){
 		last_item = first_item + max_str;
 	}
 
-	return surf_changed;
+	return m_stat = surf_changed;
 }
 
 Box::Status SelectBox::down(){
-	if(menu_items.size() <= 1) return none;
+	if(menu_items.size() <= 1) return m_stat = none;
 
 	cur_item++;
 	if(cur_item == int(last_item) && last_item != menu_items.size() - 1){
@@ -74,13 +73,13 @@ Box::Status SelectBox::down(){
 		last_item = first_item + max_str - 1;
 	}
 
-	return surf_changed;
+	return m_stat = surf_changed;
 }
 
 Box::Status SelectBox::select(){
-	m_callback->exec(cur_item);
+	m_res = cur_item;
 
-	return complite;
+	return m_stat = complite;
 }
 
 Surface & SelectBox::draw(){

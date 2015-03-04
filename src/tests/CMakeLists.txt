@@ -1,5 +1,5 @@
 add_executable (main_test main_test.cpp)
-target_link_libraries (main_test UI emul ${SDL_LIBRARY})
+target_link_libraries (main_test UI IO emul ${SDL_LIBRARY})
 
 add_executable (emul_test emul_test.c)
 target_link_libraries (emul_test emul ${SDL_LIBRARY})

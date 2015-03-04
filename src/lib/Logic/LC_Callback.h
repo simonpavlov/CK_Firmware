@@ -19,23 +19,20 @@ class Callback{
 		virtual ~Callback(){};
 };
 
-class main_list: public SelectBox::Callback, public Callback{
+class main_list: public Callback{
 	private:
-		bool	new_res;
-		int		res;
+		SelectBox *m_select_box;
 
 	public:
 		main_list();
-
-		void exec(int number){
-			res		= number;
-			new_res = true;
-		}
 
 		void run();
 };
 
 class message_callback: public Callback{
+	private:
+		MessageBox *m_message_box;
+
 	public:
 		message_callback(std::string str);
 
