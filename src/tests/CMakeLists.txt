@@ -1,5 +1,5 @@
 add_executable (main_test main_test.cpp)
-target_link_libraries (main_test UI IO emul ${SDL_LIBRARY})
+target_link_libraries (main_test Logic UI Storage IO emul ${SDL_LIBRARY})
 
 add_executable (emul_test emul_test.c)
 target_link_libraries (emul_test emul ${SDL_LIBRARY})
@@ -28,5 +28,5 @@ target_link_libraries (Storage_ff_test Storage emul ${SDL_LIBRARY})
 add_executable (Storage_test Storage_test.cpp)
 target_link_libraries (Storage_test IO Storage emul ${SDL_LIBRARY})
 
-add_executable (LC_test LC_test.cpp)
-target_link_libraries (LC_test Logic UI Storage IO emul ${SDL_LIBRARY})
+#add_executable (UI_test UI_test.cpp)
+#target_link_libraries (UI_test UI IO emul ${SDL_LIBRARY})

@@ -40,8 +40,8 @@ SelectBox::~SelectBox(){
 	delete surf;
 }
 
-Box::Status SelectBox::up(){
-	if(menu_items.size() <= 1) return m_stat = none;
+bool SelectBox::up(){
+	if(menu_items.size() <= 1) return false;
 
 	cur_item--;
 
@@ -56,11 +56,11 @@ Box::Status SelectBox::up(){
 		last_item = first_item + max_str;
 	}
 
-	return m_stat = surf_changed;
+	return true;
 }
 
-Box::Status SelectBox::down(){
-	if(menu_items.size() <= 1) return m_stat = none;
+bool SelectBox::down(){
+	if(menu_items.size() <= 1) return false;
 
 	cur_item++;
 	if(cur_item == int(last_item) && last_item != menu_items.size() - 1){
@@ -73,13 +73,14 @@ Box::Status SelectBox::down(){
 		last_item = first_item + max_str - 1;
 	}
 
-	return m_stat = surf_changed;
+	return true;
 }
 
-Box::Status SelectBox::select(){
-	m_res = cur_item;
+bool SelectBox::select(){
+	m_res	= cur_item;
+	m_stat	= HAVE_RESULT;
 
-	return m_stat = complite;
+	return false;
 }
 
 Surface & SelectBox::draw(){

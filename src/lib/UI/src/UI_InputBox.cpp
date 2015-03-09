@@ -22,7 +22,7 @@ InputBox::InputBox(const std::string &prompt, InputBox::Callback *init_cb):
 
 InputBox::~InputBox(){}
 
-Box::Status InputBox::up(){
+bool InputBox::up(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::up()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -33,11 +33,11 @@ Box::Status InputBox::up(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX	
 
-	if(res_str.size() != InputLenght) return surf_changed;
-	else return none;
+	if(res_str.size() != InputLenght) return true;
+	else return false;
 }
 
-Box::Status InputBox::down(){
+bool InputBox::down(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::down()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -48,11 +48,11 @@ Box::Status InputBox::down(){
 	std::cout << "cur_char: " << cur_char << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX		
 
-	if(res_str.size() != InputLenght) return surf_changed;
-	else return none;
+	if(res_str.size() != InputLenght) return true;
+	else return false;
 }
 
-Box::Status InputBox::select(){
+bool InputBox::select(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::select()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -64,13 +64,13 @@ Box::Status InputBox::select(){
 		std::cout << "m_callback->exec(res_str)" << std::endl;
 		#endif // DEBUG_UI_INPUT_BOX		
 		m_callback->exec(res_str);
-		return complite;
+		//return complite;
 	}
 
-	return surf_changed;
+	return true;
 }
 
-Box::Status InputBox::back(){
+bool InputBox::back(){
 	#ifdef DEBUG_UI_INPUT_BOX
 	std::cout << "IN InputBox::back()" << std::endl;
 	#endif // DEBUG_UI_INPUT_BOX
@@ -79,7 +79,7 @@ Box::Status InputBox::back(){
 		res_str.erase(res_str.size() - 1);
 	}
 
-	return surf_changed;
+	return true;
 }
 
 Surface & InputBox::draw(){

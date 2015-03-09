@@ -1,4 +1,4 @@
-#include "../LC_Main.h"
+#include "../LC_App.h"
 
 #include <IO/CK_Logger.h>
 #include <emul/emulator.h>
@@ -12,27 +12,29 @@
 #define DEBUG_LOGIC 1
 #define LDBG DEBUG_LOGIC && DBG
 
-Logic::Logic():
+App::App():
 	m_stor(),
-	m_ui(Font(Uni3_Terminus20x10_psf))
+	m_ui(Font(Uni3_Terminus20x10_psf)),
+	m_tm(m_ui, m_stor)
 {
 	// Logger initialization
 	Logger::set_output(&std::cout);
-	LDBG << "IN Logic::Logic()" << std::endl;
+	LDBG << "IN App::App()" << std::endl;
 
+	// Это можно засунуть в конструктор UI
 	Box::init_Boxis(m_ui);
-	Callback::init_Callbacks(this);
 
-	callbacks.push(new main_list());
+	m_tm.push(new MainListTask());
 }
 
-Logic::~Logic(){
-	LDBG << "IN Logic::~Logic()" << std::endl;
+App::~App(){
+	LDBG << "IN App::~App()" << std::endl;
 }
 
-void Logic::loop(){
+void App::loop(){
 	bool run_flag = true;
 	while(run_flag){
+
 		Event evt = get_event();
 		switch(char(evt)){
 			case EVT_EXIT:
@@ -48,8 +50,13 @@ void Logic::loop(){
 			break;
 		}
 
-		callbacks.top()->run();
+		m_tm.run();
+
+		if(m_tm.empty()){
+			run_flag = false;
+			continue;
+		}
+
 		m_ui.draw();
-		if(callbacks.empty()) run_flag = false;
 	}
 }

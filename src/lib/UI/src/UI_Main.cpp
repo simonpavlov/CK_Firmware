@@ -94,11 +94,11 @@ void UI::down(){
 }
 
 void UI::select(){
-	Box::Status res;
+	bool res;
 
 	res = m_box->select();
 
-	if(res == Box::surf_changed) need_refresh = true;
+	need_refresh |= res;
 }
 
 void UI::back(){

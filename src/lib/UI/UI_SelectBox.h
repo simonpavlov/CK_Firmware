@@ -19,12 +19,12 @@ class SelectBox: public Box{
 		SelectBox(std::vector<std::string> &str_mass);
 		~SelectBox();
 
-		size_t	get_res(){m_stat = none; return m_res;}
+		size_t	get_res(){m_stat = RUNNING; return m_res;}
 
-		Status 	up();
-		Status	down();
-		Status	select();
-		Status	back(){return m_stat = none;}
+		bool 	up();
+		bool	down();
+		bool	select();
+		bool	back(){return false;}
 		Surface	& draw();
 
 	private:

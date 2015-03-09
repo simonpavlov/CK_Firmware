@@ -45,9 +45,9 @@ MessageBox::~MessageBox(){
 	delete surf;
 }
 
-Box::Status MessageBox::select(){
-	m_stat = complite;
-	return m_stat;
+bool MessageBox::select(){
+	m_stat = HAVE_RESULT;
+	return false;
 }
 
 Surface & MessageBox::draw(){

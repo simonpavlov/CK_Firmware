@@ -13,17 +13,17 @@ class UI;
 */
 class Box {
 	public:
-		enum Status {none, surf_changed, complite};
+		enum Status {RUNNING, HAVE_RESULT};
 
 		static void init_Boxis(UI &ui) {o_ui = &ui;}
 		
-		Box(): m_stat(surf_changed) {}
+		Box(): m_stat(RUNNING) {}
 		virtual ~Box() {};
 
-		virtual Status	up() = 0;
-		virtual Status	down() = 0;
-		virtual Status 	select() = 0;
-		virtual Status	back() = 0;
+		virtual bool	up() = 0;
+		virtual bool	down() = 0;
+		virtual bool 	select() = 0;
+		virtual bool	back() = 0;
 		virtual Surface	& draw() = 0;
 
 		Status			get_stat() {return m_stat;}

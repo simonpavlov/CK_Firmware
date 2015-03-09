@@ -27,23 +27,23 @@ QuestionBox::~QuestionBox(){
 	delete surf;
 }
 
-Box::Status QuestionBox::up(){
+bool QuestionBox::up(){
 	cur_item = (cur_item + 1) % 2;
 
-	return surf_changed;
+	return true;
 }
 
-Box::Status QuestionBox::down(){
+bool QuestionBox::down(){
 	cur_item = (cur_item + 1) % 2;
 
-	return surf_changed;
+	return true;
 }
 
-Box::Status QuestionBox::select(){
+bool QuestionBox::select(){
 	bool res = cur_item;
 	m_callback->exec(res);
 
-	return complite;
+	return true;
 }
 
 Surface	& QuestionBox::draw(){

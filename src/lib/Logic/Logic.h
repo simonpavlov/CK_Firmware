@@ -1,7 +1,8 @@
 #ifndef LOGIC
 #define LOGIC
 
-#include "LC_Main.h"
-#include "LC_Callback.h"
+#include "LC_App.h"
+#include "LC_Task.h"
+#include "LC_TaskManager.h"
 
 #endif

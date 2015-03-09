@@ -20,10 +20,10 @@ class MessageBox: public Box{
 		MessageBox(std::string str);
 		~MessageBox();
 
-		Status 	up(){return m_stat = none;}
-		Status	down(){return m_stat = none;}
-		Status	select();
-		Status	back(){return m_stat = none;}
+		bool 	up(){return false;}
+		bool	down(){return false;}
+		bool	select();
+		bool	back(){return false;}
 		Surface	& draw();
 
 	private:
