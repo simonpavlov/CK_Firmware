@@ -1,4 +1,6 @@
 set (LOGIC_SRC
+	src/LC_MessageTask.cpp
+	src/LC_MainTask.cpp
 	src/LC_TaskManager.cpp
 	src/LC_Task.cpp
 	src/LC_App.cpp

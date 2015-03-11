@@ -24,7 +24,7 @@ App::App():
 	// Это можно засунуть в конструктор UI
 	Box::init_Boxis(m_ui);
 
-	m_tm.push(new MainListTask());
+	m_tm.push(new MainTask());
 }
 
 App::~App(){

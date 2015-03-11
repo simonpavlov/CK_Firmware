@@ -14,9 +14,16 @@
  *	при этом выполняя собственный код.
  */
 class Task{
+	private:
+		Box	*m_prev_box;
+
 	protected:
 		static UI		*o_ui;
 		static Storage	*o_stor;
+
+		// (!) Эта функция обязательно вызывается в деструкторе наследника.
+		// Она восстанавливает предидущий Box.
+		void restore_box(){o_ui->push(m_prev_box);}
 
 	public:
 		// Коды - результаты выполнения метода run()
@@ -31,6 +38,10 @@ class Task{
 		// Инициализация статических переменных
 		static void		init_Tasks(UI &ui, Storage &stor) {o_ui = &ui; o_stor = &stor;}
 
+		// В конструкторе запоминается текущий Box
+		Task(){m_prev_box = o_ui->get_box();}
+
+		// В деструкторе Task должен обязательно восстановить предидущий Box
 		virtual			~Task(){};
 
 		// Сам run()
@@ -39,31 +50,6 @@ class Task{
 		// Метод возвращающий сгенерированную задачу
 		// (!) Владельцом задач считается TaskManager
 		virtual Task	*pop_task(){return NULL;};
-};
-
-class MainListTask: public Task{
-	private:
-		SelectBox	*m_select_box;
-		Task		*m_new_task;
-
-	public:
-		MainListTask();
-		~MainListTask();
-
-		RunCode run();
-		Task	*pop_task(){Task *task = m_new_task; m_new_task = NULL; return task;}
-};
-
-class MessageTask: public Task{
-	private:
-		MessageBox	*m_message_box;
-		Box			*m_last_box;
-
-	public:
-		MessageTask(std::string str);
-		~MessageTask();
-
-		RunCode run();
 };
 
 #endif //LC_CALLBACK

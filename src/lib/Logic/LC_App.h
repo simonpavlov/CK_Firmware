@@ -1,8 +1,8 @@
 #ifndef LC_APP
 #define LC_APP
 
-#include <Logic/LC_Task.h>
 #include <Logic/LC_TaskManager.h>
+#include <Logic/LC_MainTask.h>
 #include <Storage/Storage.h>
 #include <UI/UI.h>
 #include <stack>
