@@ -95,6 +95,59 @@ Storage::~Storage(){
 	emul_quit(STORAGE_SYS);
 }
 
+std::vector<std::string> Storage::get_pp_list(){
+	LDBG << "IN Storage::get_pp_list()" << std::endl;
+
+	std::vector<std::string>	list;
+
+	if(!m_health){
+		LDBG << "FAIL: Storage in not initialized" << std::endl;
+		return std::vector<std::string>();
+	}
+
+	FRESULT						res;
+	FILINFO						finf;
+	DIR							dir;
+	
+	char						*fname;
+
+	#if _USE_LFN
+	char lfname[_MAX_LFN + 1];
+	finf.lfname = lfname;
+	finf.lfsize = sizeof(lfname);
+	#endif
+
+	res = f_opendir(&dir, pass_dir_name);
+	if(res != FR_OK){
+		LDBG << "FAIL: Storage is broken" << std::endl;
+		m_health = false;
+		return std::vector<std::string>();
+	}
+
+	while(true){
+		res = f_readdir(&dir, &finf);
+		if(res != FR_OK){
+			LDBG << "FAIL: Storage is broken" << std::endl;
+			m_health = false;
+			return std::vector<std::string>();
+		}
+		if(finf.fname[0] == 0) break;
+		if(	finf.fname[0] == '.' ||
+			finf.fattrib & AM_DIR) continue;
+
+		#if _USE_LFN
+		fname = *finf.lfname ? finfo.lfname : finfo.fname;
+		#else
+		fname = finf.fname;
+		#endif
+
+		LDBG << "file: " << fname << std::endl;
+		list.push_back(fname);
+	}
+
+	return list;
+}
+
 bool Storage::save(PasswordPair &pp){
 	if(!m_health) return false;
 

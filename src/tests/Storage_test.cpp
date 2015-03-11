@@ -3,12 +3,15 @@
 #include <IO/CK_Logger.h>
 #include <emul/emulator.h>
 #include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
-#define WRITE_TEST_PP
-#define READ_TEST_PP
-#define REMOVE_TEST_PP
+//#define WRITE_TEST_PP
+//#define READ_TEST_PP
+//#define REMOVE_TEST_PP
+#define PP_LIST_TEST
 
 int main(){
 	emul_init(STORAGE_SYS);
@@ -23,7 +26,7 @@ int main(){
 		DBG << "FAIL" << std::endl;
 
 	#ifdef WRITE_TEST_PP
-	PasswordPair pp1("name", "password");
+	PasswordPair pp1("name2", "password");
 	DBG << "Trying stor.save()" << std::endl;
 	if(stor.save(pp1))
 		DBG << "OK" << std::endl;
@@ -49,6 +52,13 @@ int main(){
 		DBG << "OK" << std::endl;
 	else
 		DBG << "FAIL" << std::endl;
+	#endif
+
+	#ifdef PP_LIST_TEST
+	vector<string> strs;
+	strs = stor.get_pp_list();
+	for(unsigned long i = 0; i < strs.size(); i++)
+		cout << i + 1 << ": " << strs[i] << std::endl; 
 	#endif
 
 	emul_quit(NETWORK_SYS);

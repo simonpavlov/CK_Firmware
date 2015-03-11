@@ -4,6 +4,9 @@
 #include <IO/CK_PasswordPair.h>
 #include <Storage/ff.h>
 
+#include <vector>
+#include <string>
+
 // Realization in src/Storage.cpp
 
 class Storage{
@@ -20,9 +23,10 @@ class Storage{
 		bool get_health(){return m_health;}
 
 		// Password managing
-		bool save(PasswordPair &password);
-		bool load(PasswordPair &password);
-		bool remove(PasswordPair &password);
+		std::vector<std::string>	get_pp_list();
+		bool						save(PasswordPair &password);
+		bool						load(PasswordPair &password);
+		bool						remove(PasswordPair &password);
 };
 
 #endif // STORAGE
