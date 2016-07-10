@@ -1,6 +1,8 @@
 #ifndef EMUL_EVENTS
 #define EMUL_EVENTS
 
+// Realization in src/events.c
+
 #include <SDL/SDL.h>
 
 enum Event {

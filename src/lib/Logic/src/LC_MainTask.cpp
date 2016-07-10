@@ -32,7 +32,11 @@ Task::RunCode MainTask::run(){
 
 	size_t res = m_select_box->get_res();
 
-	if(res == 2){
+	if(res == 0){
+		m_new_task = new PasswordsTask();
+		return HAVE_CHILD;
+	}
+	else if(res == 2){
 		m_new_task = new MessageTask(":-)");
 		return HAVE_CHILD;
 	}

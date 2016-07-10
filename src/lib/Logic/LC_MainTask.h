@@ -1,7 +1,10 @@
 #ifndef LC_MAINTASK
 #define LC_MAINTASK
 
+#include <UI/UI_SelectBox.h>
 #include <Logic/LC_Task.h>
+#include <Logic/LC_PasswordsTask.h>
+#include <Logic/LC_MessageTask.h>
 
 // Realization in src/LC_MainTask.cpp
 

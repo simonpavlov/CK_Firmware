@@ -4,6 +4,7 @@
 // Realization in src/LC_MessageTask.cpp
 
 #include <Logic/LC_Task.h>
+#include <UI/UI_MessageBox.h>
 
 class MessageTask: public Task{
 	private:

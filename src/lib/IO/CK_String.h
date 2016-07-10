@@ -5,6 +5,8 @@
 #include <iostream>
 #include "IO_ByteStream.h"
 
+#include <string>
+
 //Realization in src/CK_String.cpp
 
 class String{
@@ -17,6 +19,7 @@ class String{
 		String();
 		String(const char *c_str);
 		String(const String &str);
+		String(const std::string str){String(str.c_str());}
 
 		~String();
 
